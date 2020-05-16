@@ -1,26 +1,24 @@
 package sample;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-
 public class Controller {
-    @FXML TextField textCustomerName, textCustomerPhoneNO, textCustomerMail;
-    @FXML Button buttonCreateCustomer;
+
+    @FXML
+    private TextField orderCustomerID,deliveryPointID;
 
 
-    public void createCustomer(){
-        Customer createNewCustomer = new Customer();
-        String customerName = (textCustomerName.getText());
-        String mail = (textCustomerMail.getText());
-        int phoneNO = Integer.parseInt(textCustomerPhoneNO.getText());
 
 
-        createNewCustomer.insertTnToCustomer(customerName, mail,phoneNO);
 
+    public void createOrder(){
+        int customerID = Integer.parseInt(orderCustomerID.getText());
+        int deliveryPoint = Integer.parseInt(deliveryPointID.getText());
+
+
+        Order order = new Order();
+        order.createOrder(customerID,deliveryPoint);
 
     }
-
-
 }
