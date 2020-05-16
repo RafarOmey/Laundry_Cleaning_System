@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.Properties;
 
 public class Customer {
+
     private static Connection con;
     private static String port;
     private static String databaseName;
@@ -32,7 +33,7 @@ public class Customer {
         }
     }
 
-    public void createCustomer(String customerName, String mail, int phoneNO) {
+    public void insertTnToCustomer(String customerName, String mail, int phoneNO) {
         try {
             con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName, userName, password);  // to hide the password in file.
             Statement stmt = con.createStatement();
