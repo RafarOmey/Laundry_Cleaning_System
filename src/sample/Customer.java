@@ -39,7 +39,7 @@ public class Customer {
             Statement stmt = con.createStatement();
 
 
-            stmt.executeUpdate("insert into tblCustomer (fldName ,fldMail, fldPhoneNo) values('"+ customerName+ "','" + mail +"' , " + phoneNO+")");
+            stmt.executeUpdate("insert into tblCustomer (fldName ,fldMail, fldPhoneNo) values('" + customerName + "','" + mail + "' , " + phoneNO + ")");
 
 
             con.close();
