@@ -14,20 +14,25 @@
                 <Button fx:id="buttonCreateCustomer" layoutX="102.0" layoutY="257.0" mnemonicParsing="false" onAction="#createCustomer" text="Create" />
             </children>
         </AnchorPane>
-        <AnchorPane layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
+        <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0">
          <children>
               <TextField fx:id="deliveryPointID" layoutX="14.0" layoutY="75.0" promptText="Delivery Point" />
               <TextField fx:id="orderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
               <Button layoutX="28.0" layoutY="127.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
+            <TextField fx:id="addClothesOrderNumber" layoutX="396.0" layoutY="22.0" promptText="Order Number" />
+            <Button fx:id="addShirt" layoutX="381.0" layoutY="106.0" mnemonicParsing="false" text="Shirt" />
+            <Button fx:id="addJacket" layoutX="376.0" layoutY="75.0" mnemonicParsing="false" text="Jacket" />
+            <Button fx:id="addJeans" layoutX="368.0" layoutY="143.0" mnemonicParsing="false" text="Jeans" />
+            <Button layoutX="424.0" layoutY="250.0" mnemonicParsing="false" onAction="#addClothes" text="Add clothes to order" />
          </children></AnchorPane>
-        <AnchorPane layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false" />
-        <AnchorPane layoutY="79.0" prefHeight="402.0" prefWidth="612.0" visible="false" />
+        <AnchorPane fx:id="paneConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false" />
+        <AnchorPane fx:id="paneLabel" layoutY="79.0" prefHeight="402.0" prefWidth="612.0" visible="false" />
         <AnchorPane prefHeight="79.0" prefWidth="612.0">
             <children>
-                <Button fx:id="createCustomer" mnemonicParsing="false" prefHeight="78.0" prefWidth="159.0" text="Create Customer" />
-                <Button layoutX="309.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="159.0" text="Confirm Order" />
-                <Button layoutX="468.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="143.0" text="Generate Wash Labels" />
-                <Button layoutX="159.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="150.0" text="Create Order" />
+                <Button fx:id="createCustomerTab" mnemonicParsing="false" onAction="#showCustomerTab" prefHeight="78.0" prefWidth="159.0" text="Create Customer" />
+                <Button fx:id="confirmOrderTab" layoutX="309.0" mnemonicParsing="false" onAction="#showConfirmOrderTab" prefHeight="78.0" prefWidth="159.0" text="Confirm Order" />
+                <Button fx:id="labelTab" layoutX="468.0" mnemonicParsing="false" onAction="#showLabelTab" prefHeight="78.0" prefWidth="143.0" text="Label" />
+                <Button fx:id="createOrderTab" layoutX="159.0" mnemonicParsing="false" onAction="#showOrderTab" prefHeight="78.0" prefWidth="150.0" text="Create Order" />
             </children>
         </AnchorPane>
     </children>

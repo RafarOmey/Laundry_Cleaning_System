@@ -2,14 +2,22 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 
 public class Controller {
     @FXML
-    TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail;
+    TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail,addClothesOrderNumber;
     @FXML
-    Button buttonCreateCustomer;
+    Button buttonCreateCustomer,createCustomerTab, createOrderTab, confirmOrderTab, labelTab,addJacket,addShirt,addJeans;
+    @FXML
+    AnchorPane paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel;
+
+
+
+
 
 
     public void createCustomer() {
@@ -33,4 +41,36 @@ public class Controller {
         order.createOrder(customerID, deliveryPoint);
 
     }
+
+
+
+    // Switching tabs
+
+    public void showCustomerTab(){
+        paneCreateCustomer.setVisible(true);
+        paneCreateOrder.setVisible(false);
+        paneConfirmOrder.setVisible(false);
+        paneLabel.setVisible(false);
+    }
+    public void showOrderTab(){
+        paneCreateCustomer.setVisible(false);
+        paneCreateOrder.setVisible(true);
+        paneConfirmOrder.setVisible(false);
+        paneLabel.setVisible(false);
+    }
+    public void showConfirmOrderTab(){
+        paneCreateCustomer.setVisible(false);
+        paneCreateOrder.setVisible(false);
+        paneConfirmOrder.setVisible(true);
+        paneLabel.setVisible(false);
+    }
+    public void showLabelTab(){
+        paneCreateCustomer.setVisible(false);
+        paneCreateOrder.setVisible(false);
+        paneConfirmOrder.setVisible(false);
+        paneLabel.setVisible(true);
+    }
+
+
+
 }

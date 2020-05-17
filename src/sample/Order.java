@@ -2,6 +2,8 @@ package sample;
 
 
 
+
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +17,8 @@ public class Order {
     private static String databaseName;
     private static String userName;
     private static String password;
+
+
 
     static {
         Properties props = new Properties();
@@ -73,4 +77,11 @@ public class Order {
 
     }
 
-}
+
+
+
+
+    }
+
+
+
