@@ -36,13 +36,6 @@ public class Order {
     }
 
 
-
-
-
-
-
-
-
     public void createOrder(int customerID, int deliveryPoint){
 
         try {
