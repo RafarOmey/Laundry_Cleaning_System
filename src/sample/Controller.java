@@ -9,9 +9,9 @@ import javafx.scene.layout.AnchorPane;
 
 public class Controller {
     @FXML
-    TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail,addClothesOrderNumber;
+    TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail,addClothesOrderNumber,labelOrderNumber;
     @FXML
-    Button buttonCreateCustomer,createCustomerTab, createOrderTab, confirmOrderTab, labelTab,addJacket,addShirt,addJeans;
+    Button buttonCreateCustomer,createCustomerTab, createOrderTab, confirmOrderTab, labelTab,addJacket,addShirt,addJeans,genLabel;
     @FXML
     AnchorPane paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel;
 
@@ -19,6 +19,15 @@ public class Controller {
 
 
 
+
+
+
+
+    public void generateLabel(){
+        Order order = new Order();
+        int orderNumber = Integer.parseInt(labelOrderNumber.getText());
+        order.generateLabel(orderNumber);
+    }
 
     public void createCustomer() {
         Customer createNewCustomer = new Customer();
