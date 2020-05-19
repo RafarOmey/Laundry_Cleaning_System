@@ -20,7 +20,7 @@ public class Order {
 
 
 
-    public void generateLabel(int orderNumber){
+    /*public void generateLabel(int orderNumber){
         try {
 
             con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName, userName, password);  // to hide the password in file.
@@ -70,8 +70,8 @@ public class Order {
 
 
     }
-
-    public void createOrder(int customerID, int deliveryPoint){
+*/
+   /* public void createOrder(int customerID, int deliveryPoint){
 
         try {
 
@@ -107,7 +107,7 @@ public class Order {
     public void hold(){
 
     }
-
+*/
 
     }
 

@@ -3,9 +3,8 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
@@ -72,7 +71,7 @@ public class Controller {
 
 
 
-    public void generateLabel(){
+/*    public void generateLabel(){
         Order order = new Order();
         int orderNumber = Integer.parseInt(labelOrderNumber.getText());
         order.generateLabel(orderNumber);
@@ -90,7 +89,8 @@ public class Controller {
 
     }
 
-
+*/
+/*
     public void createOrder() {
         int customerID = Integer.parseInt(orderCustomerID.getText());
         int deliveryPoint = Integer.parseInt(deliveryPointID.getText());
@@ -100,8 +100,8 @@ public class Controller {
         order.createOrder(customerID, deliveryPoint);
 
     }
+*/
 
-    }
 
 
     // Switching tabs
