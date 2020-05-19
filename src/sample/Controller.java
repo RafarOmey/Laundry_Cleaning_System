@@ -1,5 +1,6 @@
 package sample;
 
+import Foundation.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,38 +20,14 @@ import java.util.Properties;
 public class Controller {
 
 
-    private static Connection con;
-    private static String port;
-    private static String databaseName;
-    private static String userName;
-    private static String password;
 
 
-    static {
-        Properties props = new Properties();
-        String fileName = "db.properties";
-        InputStream input;
-        try {
-            input = new FileInputStream(fileName);
-            props.load(input);
-            port = props.getProperty("port", "1433");
-            databaseName = props.getProperty("databaseName");
-            userName = props.getProperty("userName", "sa");
-            password = props.getProperty("password");
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            System.out.println("Database Ready");
-
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println(e.getMessage());
-        }
-
-    }
 
 
     @FXML
-    TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail,addClothesOrderNumber,labelOrderNumber;
+    TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail, addClothesOrderNumber, labelOrderNumber;
     @FXML
-    Button buttonCreateCustomer,createCustomerTab, createOrderTab, confirmOrderTab, labelTab, genLabel;
+    Button buttonCreateCustomer, createCustomerTab, createOrderTab, confirmOrderTab, labelTab, genLabel;
     @FXML
     AnchorPane paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel;
 
@@ -69,14 +46,12 @@ public class Controller {
     ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
 
 
-
-
-    public void generateLabel(){
+    public void generateLabel() {
         Order order = new Order();
         int orderNumber = Integer.parseInt(labelOrderNumber.getText());
         order.generateLabel(orderNumber);
     }
-/*
+
     public void createCustomer() {
 
         Customer createNewCustomer = new Customer();
@@ -85,14 +60,11 @@ public class Controller {
         int phoneNO = Integer.parseInt(textCustomerPhoneNO.getText());
 
 
-        createNewCustomer.insertTnToCustomer(customerName, mail, phoneNO);
+        createNewCustomer.createCustomer(customerName, mail, phoneNO);
 
     }
 
 
- */
-
-/*
     public void createOrder() {
         int customerID = Integer.parseInt(orderCustomerID.getText());
         int deliveryPoint = Integer.parseInt(deliveryPointID.getText());
@@ -102,42 +74,51 @@ public class Controller {
         order.createOrder(customerID, deliveryPoint);
 
     }
-*/
-
 
 
     // Switching tabs
 
-    public void showCustomerTab(){
+    public void showCustomerTab() {
         paneCreateCustomer.setVisible(true);
         paneCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);
     }
-    public void showOrderTab(){
+
+    public void showOrderTab() {
         paneCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(true);
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);
         tableViewProducts.getItems().clear();
 
-        try {
-            con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName, userName, password);  // to hide the password in file.
-            Statement stmt = con.createStatement();
+
+        Database.selectSQL("SELECT * from tblClothes");
+
+        int clothID;
+        String clothName;
+        String entry = "";
+
+        do {
 
 
-            ResultSet rs = stmt.executeQuery("SELECT * from tblClothes");
-            while (rs.next()) {
-
-                clothingList.add(new Cloth(rs.getInt(1), rs.getString(2)));
-
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
+                clothID = Integer.parseInt(entry);
+            } else {
+                break;
             }
-            con.close();
+
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
+                clothName = entry;
+            } else {
+                break;
+            }
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            clothingList.add(new Cloth(clothID, clothName));
+        } while (true);
 
 
         ColClothID.setCellValueFactory(new PropertyValueFactory<>("ClothID"));
@@ -146,21 +127,21 @@ public class Controller {
         tableViewProducts.setItems(clothingList);
 
 
-
     }
-    public void showConfirmOrderTab(){
+
+    public void showConfirmOrderTab() {
         paneCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(true);
         paneLabel.setVisible(false);
     }
-    public void showLabelTab(){
+
+    public void showLabelTab() {
         paneCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(true);
     }
-
 
 
 }

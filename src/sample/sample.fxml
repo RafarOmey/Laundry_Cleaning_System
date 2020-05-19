@@ -14,14 +14,14 @@
                 <TextField fx:id="textCustomerName" layoutX="102.0" layoutY="69.0" promptText="Customer Name" />
                 <TextField fx:id="textCustomerMail" layoutX="102.0" layoutY="124.0" promptText="Customer Mail" />
                 <TextField fx:id="textCustomerPhoneNO" layoutX="102.0" layoutY="189.0" promptText="Customer Phone Number" />
-                <Button fx:id="buttonCreateCustomer" layoutX="102.0" layoutY="257.0" mnemonicParsing="false" text="Create" />
+                <Button fx:id="buttonCreateCustomer" layoutX="102.0" layoutY="257.0" mnemonicParsing="false" onAction="#createCustomer" text="Create" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
+        <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0">
             <children>
-                <TextField fx:id="deliveryPointID" layoutX="14.0" layoutY="75.0" promptText="Delivery Point" />
+                <TextField fx:id="deliveryPointID" layoutX="15.0" layoutY="55.0" promptText="Delivery Point" />
                 <TextField fx:id="orderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
-                <Button layoutX="396.0" layoutY="363.0" mnemonicParsing="false" text="Create order" />
+                <Button layoutX="39.0" layoutY="86.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
                 <TextField fx:id="addClothesOrderNumber" layoutX="396.0" layoutY="22.0" promptText="Order Number" />
                 <Button layoutX="26.0" layoutY="363.0" mnemonicParsing="false" text="Add clothes to order" />
                 <ListView fx:id="listViewBasket" layoutX="222.0" layoutY="55.0" prefHeight="300.0" prefWidth="366.0" />
@@ -34,7 +34,7 @@
             </children>
         </AnchorPane>
         <AnchorPane fx:id="paneConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false" />
-        <AnchorPane fx:id="paneLabel" layoutY="79.0" prefHeight="402.0" prefWidth="612.0">
+        <AnchorPane fx:id="paneLabel" layoutY="79.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
                 <TextField fx:id="labelOrderNumber" layoutX="163.0" layoutY="146.0" promptText="Enter orderNumber" />
                 <Button fx:id="genLabel" layoutX="197.0" layoutY="201.0" mnemonicParsing="false" onAction="#generateLabel" text="Generate Label" />
