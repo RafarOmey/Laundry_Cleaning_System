@@ -1,13 +1,53 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.*;
+import java.util.Observable;
+import java.util.Properties;
 
 
 public class Controller {
+
+
+    private static Connection con;
+    private static String port;
+    private static String databaseName;
+    private static String userName;
+    private static String password;
+
+
+    static {
+        Properties props = new Properties();
+        String fileName = "db.properties";
+        InputStream input;
+        try {
+            input = new FileInputStream(fileName);
+            props.load(input);
+            port = props.getProperty("port", "1433");
+            databaseName = props.getProperty("databaseName");
+            userName = props.getProperty("userName", "sa");
+            password = props.getProperty("password");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            System.out.println("Database Ready");
+
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+
     @FXML
     TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail,addClothesOrderNumber,labelOrderNumber;
     @FXML
@@ -15,10 +55,19 @@ public class Controller {
     @FXML
     AnchorPane paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel;
 
+    @FXML
+    ListView listViewBasket;
+
+    @FXML
+    TableView<Cloth> tableViewProducts;
+
+    @FXML
+    TableColumn<Cloth, String> ColClothType;
+    @FXML
+    TableColumn<Cloth, Integer> ColClothID;
 
 
-
-
+    ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
 
 
 
@@ -30,6 +79,7 @@ public class Controller {
     }
 
     public void createCustomer() {
+
         Customer createNewCustomer = new Customer();
         String customerName = (textCustomerName.getText());
         String mail = (textCustomerMail.getText());
@@ -51,6 +101,7 @@ public class Controller {
 
     }
 
+    }
 
 
     // Switching tabs
@@ -66,6 +117,34 @@ public class Controller {
         paneCreateOrder.setVisible(true);
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);
+        tableViewProducts.getItems().clear();
+
+        try {
+            con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName, userName, password);  // to hide the password in file.
+            Statement stmt = con.createStatement();
+
+
+            ResultSet rs = stmt.executeQuery("SELECT * from fldClothes");
+            while (rs.next()) {
+
+                clothingList.add(new Cloth(rs.getInt(1), rs.getString(2)));
+
+            }
+            con.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        ColClothID.setCellValueFactory(new PropertyValueFactory<>("ClothID"));
+        ColClothType.setCellValueFactory(new PropertyValueFactory<>("ClothType"));
+
+        tableViewProducts.setItems(clothingList);
+
+
+
     }
     public void showConfirmOrderTab(){
         paneCreateCustomer.setVisible(false);
