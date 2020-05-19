@@ -71,12 +71,12 @@ public class Controller {
 
 
 
-/*    public void generateLabel(){
+    public void generateLabel(){
         Order order = new Order();
         int orderNumber = Integer.parseInt(labelOrderNumber.getText());
         order.generateLabel(orderNumber);
     }
-
+/*
     public void createCustomer() {
 
         Customer createNewCustomer = new Customer();
@@ -89,7 +89,9 @@ public class Controller {
 
     }
 
-*/
+
+ */
+
 /*
     public void createOrder() {
         int customerID = Integer.parseInt(orderCustomerID.getText());
