@@ -50,7 +50,7 @@ public class Controller {
     @FXML
     TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail,addClothesOrderNumber,labelOrderNumber;
     @FXML
-    Button buttonCreateCustomer,createCustomerTab, createOrderTab, confirmOrderTab, labelTab,addJacket,addShirt,addJeans,genLabel;
+    Button buttonCreateCustomer,createCustomerTab, createOrderTab, confirmOrderTab, labelTab, genLabel;
     @FXML
     AnchorPane paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel;
 
@@ -124,7 +124,7 @@ public class Controller {
             Statement stmt = con.createStatement();
 
 
-            ResultSet rs = stmt.executeQuery("SELECT * from fldClothes");
+            ResultSet rs = stmt.executeQuery("SELECT * from tblClothes");
             while (rs.next()) {
 
                 clothingList.add(new Cloth(rs.getInt(1), rs.getString(2)));

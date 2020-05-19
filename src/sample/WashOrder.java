@@ -15,6 +15,7 @@ import java.util.Properties;
 
 public class WashOrder {
 
+
     private static Connection con;
     private static String port;
     private static String databaseName;
