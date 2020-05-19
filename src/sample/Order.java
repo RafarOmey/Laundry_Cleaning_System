@@ -19,8 +19,8 @@ public class Order {
 
 
 
-
-    /*public void generateLabel(int orderNumber){
+/*
+    public void hold(){
         try {
 
             con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName, userName, password);  // to hide the password in file.
@@ -68,9 +68,70 @@ public class Order {
             e.printStackTrace();
         }
 
+    }
+
+
+ */
+    public void generateLabel(int orderNumber){
+
+
+
+
+        int count1 = 1;
+        int count2;
+        Database.selectSQL("select count(*) from tblWash_Order where fldOrderNumber="+orderNumber+"");
+        count2= Integer.parseInt(Database.getData());
+
+
+
+        String clothName;
+        int clothID;
+        int orderNumber2;
+        String entry;
+
+        Database.selectSQL(" SELECT tblClothes.fldTypeOfCloth, tblWash_Order.fldClothID, tblWash_Order.fldOrderNumber FROM tblClothes" +
+                " INNER JOIN tblWash_Order ON tblClothes.fldClothID = tblWash_Order.fldClothID where fldOrderNumber ="+orderNumber+" ");
+        do {
+
+
+
+
+            entry=Database.getData();
+
+             if(!entry.equals("-ND-")){
+                 clothName = entry;
+             }
+             else{
+                 break;
+             }
+             entry=Database.getData();
+            if(!entry.equals("-ND-")){
+                clothID = Integer.parseInt(entry);
+            }
+            else{
+                break;
+            }
+            entry=Database.getData();
+            if(!entry.equals("-ND-")){
+                orderNumber2 = Integer.parseInt(entry);
+            }
+            else{
+                break;
+            }
+
+
+
+
+
+
+            System.out.println(count1+" of "+count2+" clothID= "+clothID+" OrderNumber= "+orderNumber2 + " ClothName= "+clothName);
+            count1++;
+
+
+        } while (true);
 
     }
-*/
+
    /* public void createOrder(int customerID, int deliveryPoint){
 
         try {
@@ -104,9 +165,7 @@ public class Order {
 
 
 
-    public void hold(){
 
-    }
 */
 
     }

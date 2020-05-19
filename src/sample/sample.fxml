@@ -7,55 +7,46 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0"
-            prefWidth="612.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
         <AnchorPane fx:id="paneCreateCustomer" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
-                <TextField fx:id="textCustomerName" layoutX="102.0" layoutY="69.0" promptText="Customer Name"/>
-                <TextField fx:id="textCustomerMail" layoutX="102.0" layoutY="124.0" promptText="Customer Mail"/>
-                <TextField fx:id="textCustomerPhoneNO" layoutX="102.0" layoutY="189.0"
-                           promptText="Customer Phone Number"/>
-                <Button fx:id="buttonCreateCustomer" layoutX="102.0" layoutY="257.0" mnemonicParsing="false"
-                        text="Create"/>
+                <TextField fx:id="textCustomerName" layoutX="102.0" layoutY="69.0" promptText="Customer Name" />
+                <TextField fx:id="textCustomerMail" layoutX="102.0" layoutY="124.0" promptText="Customer Mail" />
+                <TextField fx:id="textCustomerPhoneNO" layoutX="102.0" layoutY="189.0" promptText="Customer Phone Number" />
+                <Button fx:id="buttonCreateCustomer" layoutX="102.0" layoutY="257.0" mnemonicParsing="false" text="Create" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
-                <TextField fx:id="deliveryPointID" layoutX="14.0" layoutY="75.0" promptText="Delivery Point"/>
-                <TextField fx:id="orderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID"/>
-                <Button layoutX="396.0" layoutY="363.0" mnemonicParsing="false" text="Create order"/>
-                <TextField fx:id="addClothesOrderNumber" layoutX="396.0" layoutY="22.0" promptText="Order Number"/>
-                <Button layoutX="26.0" layoutY="363.0" mnemonicParsing="false" text="Add clothes to order"/>
-                <ListView fx:id="listViewBasket" layoutX="222.0" layoutY="55.0" prefHeight="300.0" prefWidth="366.0"/>
-                <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" prefHeight="236.0"
-                           prefWidth="192.0">
+                <TextField fx:id="deliveryPointID" layoutX="14.0" layoutY="75.0" promptText="Delivery Point" />
+                <TextField fx:id="orderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
+                <Button layoutX="396.0" layoutY="363.0" mnemonicParsing="false" text="Create order" />
+                <TextField fx:id="addClothesOrderNumber" layoutX="396.0" layoutY="22.0" promptText="Order Number" />
+                <Button layoutX="26.0" layoutY="363.0" mnemonicParsing="false" text="Add clothes to order" />
+                <ListView fx:id="listViewBasket" layoutX="222.0" layoutY="55.0" prefHeight="300.0" prefWidth="366.0" />
+                <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" prefHeight="236.0" prefWidth="192.0">
                     <columns>
-                        <TableColumn fx:id="ColClothType" prefWidth="100.0" text="Cloth Type"/>
-                        <TableColumn fx:id="ColClothID" prefWidth="90.0" text="Cloth ID"/>
+                        <TableColumn fx:id="ColClothType" prefWidth="100.0" text="Cloth Type" />
+                        <TableColumn fx:id="ColClothID" prefWidth="90.0" text="Cloth ID" />
                     </columns>
                 </TableView>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="paneConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false"/>
+        <AnchorPane fx:id="paneConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false" />
         <AnchorPane fx:id="paneLabel" layoutY="79.0" prefHeight="402.0" prefWidth="612.0">
             <children>
-                <TextField fx:id="labelOrderNumber" layoutX="163.0" layoutY="146.0" promptText="Enter orderNumber"/>
-                <Button fx:id="genLabel" layoutX="197.0" layoutY="201.0" mnemonicParsing="false" text="Generate Label"/>
+                <TextField fx:id="labelOrderNumber" layoutX="163.0" layoutY="146.0" promptText="Enter orderNumber" />
+                <Button fx:id="genLabel" layoutX="197.0" layoutY="201.0" mnemonicParsing="false" onAction="#generateLabel" text="Generate Label" />
             </children>
         </AnchorPane>
 
         <AnchorPane prefHeight="79.0" prefWidth="612.0">
             <children>
-                <Button fx:id="createCustomerTab" mnemonicParsing="false" onAction="#showCustomerTab" prefHeight="78.0"
-                        prefWidth="159.0" text="Create Customer"/>
-                <Button fx:id="confirmOrderTab" layoutX="309.0" mnemonicParsing="false" onAction="#showConfirmOrderTab"
-                        prefHeight="78.0" prefWidth="159.0" text="Confirm Order"/>
-                <Button fx:id="labelTab" layoutX="468.0" mnemonicParsing="false" onAction="#showLabelTab"
-                        prefHeight="78.0" prefWidth="143.0" text="Label"/>
-                <Button fx:id="createOrderTab" layoutX="159.0" mnemonicParsing="false" onAction="#showOrderTab"
-                        prefHeight="78.0" prefWidth="150.0" text="Create Order"/>
+                <Button fx:id="createCustomerTab" mnemonicParsing="false" onAction="#showCustomerTab" prefHeight="78.0" prefWidth="159.0" text="Create Customer" />
+                <Button fx:id="confirmOrderTab" layoutX="309.0" mnemonicParsing="false" onAction="#showConfirmOrderTab" prefHeight="78.0" prefWidth="159.0" text="Confirm Order" />
+                <Button fx:id="labelTab" layoutX="468.0" mnemonicParsing="false" onAction="#showLabelTab" prefHeight="78.0" prefWidth="143.0" text="Label" />
+                <Button fx:id="createOrderTab" layoutX="159.0" mnemonicParsing="false" onAction="#showOrderTab" prefHeight="78.0" prefWidth="150.0" text="Create Order" />
             </children>
         </AnchorPane>
     </children>
