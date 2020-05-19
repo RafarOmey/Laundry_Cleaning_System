@@ -4,6 +4,9 @@ package sample;
 
 
 
+import Foundation.Database;
+
+import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,32 +15,6 @@ import java.util.Properties;
 
 public class Order {
 
-    private static Connection con;
-    private static String port;
-    private static String databaseName;
-    private static String userName;
-    private static String password;
-
-
-
-    static {
-        Properties props = new Properties();
-        String fileName = "db.properties";
-        InputStream input;
-        try {
-            input = new FileInputStream(fileName);
-            props.load(input);
-            port = props.getProperty("port", "1433");
-            databaseName = props.getProperty("databaseName");
-            userName = props.getProperty("userName", "sa");
-            password = props.getProperty("password");
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            System.out.println("Database Ready");
-
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println(e.getMessage());
-        }
-    }
 
 
 
@@ -66,7 +43,7 @@ public class Order {
             while(rs.next()){
 
                 while(rs2.next()) {
-                     count2 = rs2.getInt(1);
+                    count2 = rs2.getInt(1);
                 }
                 int clothID= (rs.getInt(1));
                 int orderNumber2 = rs.getInt(2);
@@ -90,6 +67,7 @@ public class Order {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
     }
 
@@ -125,6 +103,9 @@ public class Order {
 
 
 
+    public void hold(){
+
+    }
 
 
     }
