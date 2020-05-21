@@ -1,9 +1,6 @@
 package sample;
 
 
-
-
-
 import Foundation.Database;
 
 import javax.xml.crypto.Data;
@@ -16,18 +13,18 @@ import java.util.Properties;
 public class Order {
 
 
+    public Order() {
 
 
-    public void generateLabel(int orderNumber){
+    }
 
-
+    public void generateLabel(int orderNumber) {
 
 
         int count1 = 1;
         int count2;
-        Database.selectSQL("select count(*) from tblWash_Order where fldOrderNumber="+orderNumber+"");
-        count2= Integer.parseInt(Database.getData());
-
+        Database.selectSQL("select count(*) from tblWashOrder where fldOrderNumber=" + orderNumber + "");
+        count2 = Integer.parseInt(Database.getData());
 
 
         String clothName;
@@ -35,42 +32,33 @@ public class Order {
         int orderNumber2;
         String entry;
 
-        Database.selectSQL(" SELECT tblClothes.fldTypeOfCloth, tblWash_Order.fldClothID, tblWash_Order.fldOrderNumber FROM tblClothes" +
-                " INNER JOIN tblWash_Order ON tblClothes.fldClothID = tblWash_Order.fldClothID where fldOrderNumber ="+orderNumber+" ");
+        Database.selectSQL(" SELECT tblClothes.fldTypeOfCloth, tblWashOrder.fldClothID, tblWashOrder.fldOrderNumber FROM tblClothes" +
+                " INNER JOIN tblWashOrder ON tblClothes.fldClothID = tblWashOrder.fldClothID where fldOrderNumber =" + orderNumber + " ");
         do {
 
 
+            entry = Database.getData();
 
-
-            entry=Database.getData();
-
-             if(!entry.equals("-ND-")){
-                 clothName = entry;
-             }
-             else{
-                 break;
-             }
-             entry=Database.getData();
-            if(!entry.equals("-ND-")){
+            if (!entry.equals("-ND-")) {
+                clothName = entry;
+            } else {
+                break;
+            }
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
                 clothID = Integer.parseInt(entry);
-            }
-            else{
+            } else {
                 break;
             }
-            entry=Database.getData();
-            if(!entry.equals("-ND-")){
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
                 orderNumber2 = Integer.parseInt(entry);
-            }
-            else{
+            } else {
                 break;
             }
 
 
-
-
-
-
-            System.out.println(count1+" of "+count2+" clothID= "+clothID+" OrderNumber= "+orderNumber2 + " ClothName= "+clothName);
+            System.out.println(count1 + " of " + count2 + " clothID= " + clothID + " OrderNumber= " + orderNumber2 + " ClothName= " + clothName);
             count1++;
 
 
@@ -78,33 +66,21 @@ public class Order {
 
     }
 
-   public void createOrder(int customerID, int deliveryPoint){
+    public void createOrder(int customerID, int deliveryPoint) {
 
 
-
-
-
-
-
-          Database.executeStatement("INSERT INTO tblOrder (fldCustomerID, fldDeliveryPointID,fldProgressID) values ("+ customerID+","+ deliveryPoint+",1)");
-
-
-
-
-
-
-
-
+        Database.executeStatement("INSERT INTO tblOrder (fldCustomerID, fldDeliveryPointID,fldProgressID) values (" + customerID + "," + deliveryPoint + ",1)");
 
 
     }
 
 
+}
 
 
 
 
-    }
+
 
 
 

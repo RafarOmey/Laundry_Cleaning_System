@@ -9,27 +9,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.*;
-import java.util.Observable;
-import java.util.Properties;
-
 
 public class Controller {
-
-
-
-
 
 
     @FXML
     TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail, addClothesOrderNumber, labelOrderNumber;
     @FXML
-    Button buttonCreateCustomer, createCustomerTab, createOrderTab, confirmOrderTab, labelTab, genLabel;
+    Button buttonCreateCustomer, createCustomerTab, createOrderTab, confirmOrderTab, labelTab, genLabel, paneSMSCustomerTab;
     @FXML
-    AnchorPane paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel;
+    AnchorPane paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer;
 
     @FXML
     ListView listViewBasket;
@@ -73,6 +62,7 @@ public class Controller {
         Order order = new Order();
         order.createOrder(customerID, deliveryPoint);
 
+
     }
 
 
@@ -83,6 +73,7 @@ public class Controller {
         paneCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);
+        paneSMSCustomer.setVisible(false);
     }
 
     public void showOrderTab() {
@@ -90,14 +81,15 @@ public class Controller {
         paneCreateOrder.setVisible(true);
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);
+        paneSMSCustomer.setVisible(false);
         tableViewProducts.getItems().clear();
 
 
         Database.selectSQL("SELECT * from tblClothes");
 
         int clothID;
-        String clothName;
-        String entry = "";
+        String clothType;
+        String entry;
 
         do {
 
@@ -111,18 +103,18 @@ public class Controller {
 
             entry = Database.getData();
             if (!entry.equals("-ND-")) {
-                clothName = entry;
+                clothType = entry;
             } else {
                 break;
             }
 
 
-            clothingList.add(new Cloth(clothID, clothName));
+            clothingList.add(new Cloth(clothID, clothType));
         } while (true);
 
 
-        ColClothID.setCellValueFactory(new PropertyValueFactory<>("ClothID"));
-        ColClothType.setCellValueFactory(new PropertyValueFactory<>("ClothType"));
+        ColClothID.setCellValueFactory(new PropertyValueFactory<>("clothID"));
+        ColClothType.setCellValueFactory(new PropertyValueFactory<>("clothType"));
 
         tableViewProducts.setItems(clothingList);
 
@@ -133,6 +125,7 @@ public class Controller {
         paneCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(true);
+        paneSMSCustomer.setVisible(false);
         paneLabel.setVisible(false);
     }
 
@@ -141,6 +134,16 @@ public class Controller {
         paneCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(true);
+        paneSMSCustomer.setVisible(false);
+    }
+
+    public void showSMSCustomerTab() {
+
+        paneCreateCustomer.setVisible(false);
+        paneCreateOrder.setVisible(false);
+        paneConfirmOrder.setVisible(false);
+        paneLabel.setVisible(false);
+        paneSMSCustomer.setVisible(true);
     }
 
 
