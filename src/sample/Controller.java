@@ -16,7 +16,7 @@ public class Controller {
     @FXML
     TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, textCustomerMail, addClothesOrderNumber, labelOrderNumber;
     @FXML
-    Button buttonCreateCustomer, createCustomerTab, createOrderTab, confirmOrderTab, labelTab, genLabel, paneSMSCustomerTab;
+    Button buttonCreateCustomer, createCustomerTab, createOrderTab, confirmOrderTab, labelTab, genLabel;
     @FXML
     AnchorPane paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer;
 

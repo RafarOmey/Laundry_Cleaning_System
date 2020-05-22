@@ -13,10 +13,9 @@ public class Cloth {
         this.clothType = clothType;
     }
 
-    String clothType;
+    private String clothType;
 
-    public Cloth() {
-    }
+
 
 
     public Cloth(int clothID) {
