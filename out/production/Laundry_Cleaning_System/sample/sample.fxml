@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -35,20 +34,25 @@
                 <Button fx:id="buttonCreateCustomer" layoutX="102.0" layoutY="257.0" mnemonicParsing="false" onAction="#createCustomer" text="Create" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
+        <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0">
             <children>
                 <TextField fx:id="deliveryPointID" layoutX="15.0" layoutY="55.0" promptText="Delivery Point" />
                 <TextField fx:id="orderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
                 <Button layoutX="39.0" layoutY="86.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
                 <TextField fx:id="addClothesOrderNumber" layoutX="396.0" layoutY="22.0" promptText="Order Number" />
-                <Button layoutX="26.0" layoutY="363.0" mnemonicParsing="false" text="Add clothes to order" />
-                <ListView fx:id="listViewBasket" layoutX="222.0" layoutY="55.0" prefHeight="300.0" prefWidth="366.0" />
-                <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" prefHeight="236.0" prefWidth="192.0">
+                <Button layoutX="26.0" layoutY="363.0" mnemonicParsing="false" onAction="#finalbasket" text="Add clothes to order" />
+                <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" onMouseClicked="#addToBasket" prefHeight="236.0" prefWidth="192.0">
                     <columns>
                         <TableColumn fx:id="ColClothType" prefWidth="100.0" text="Cloth Type" />
                         <TableColumn fx:id="ColClothID" prefWidth="90.0" text="Cloth ID" />
                     </columns>
                 </TableView>
+            <TableView fx:id="tableViewBasket" layoutX="361.0" layoutY="68.0" prefHeight="280.0" prefWidth="192.0">
+              <columns>
+                <TableColumn fx:id="ColClothTypeBasket" prefWidth="100.0" text="Cloth Name" />
+                <TableColumn fx:id="ColClothIDBasket" prefWidth="92.0" text="Cloth Number" />
+              </columns>
+            </TableView>
             </children>
         </AnchorPane>
       <AnchorPane fx:id="loginConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">

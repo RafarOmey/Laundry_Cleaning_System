@@ -41,4 +41,11 @@ public class Cloth {
     int clothID;
 
 
+    @Override
+    public String toString() {
+        return "Cloth{" +
+                "clothType='" + clothType + '\'' +
+                ", clothID=" + clothID +
+                '}';
+    }
 }

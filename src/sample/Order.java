@@ -27,7 +27,9 @@ public class Order {
         this.orderNumber = orderNumber;
     }
 
+
     // Generate label method
+
     public void generateLabel(int orderNumber) {
 
 
@@ -42,10 +44,8 @@ public class Order {
         int orderNumber2;
         String entry;
 
-        // Select statement to innerjoin tblClothes and tbl Washorder
         Database.selectSQL(" SELECT tblClothes.fldTypeOfCloth, tblWashOrder.fldClothID, tblWashOrder.fldOrderNumber FROM tblClothes" +
                 " INNER JOIN tblWashOrder ON tblClothes.fldClothID = tblWashOrder.fldClothID where fldOrderNumber =" + orderNumber + " ");
-        //Loop to show how a label would look like
         do {
 
 

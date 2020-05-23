@@ -9,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.ArrayList;
+import java.util.Observable;
+
 
 public class Controller {
 
@@ -26,12 +29,12 @@ public class Controller {
     ListView listViewBasket;
 
     @FXML
-    TableView<Cloth> tableViewProducts;
+    TableView<Cloth> tableViewProducts, tableViewBasket;
 
     @FXML
-    TableColumn<Cloth, String> ColClothType;
+    TableColumn<Cloth, String> ColClothType, ColClothTypeBasket;
     @FXML
-    TableColumn<Cloth, Integer> ColClothID;
+    TableColumn<Cloth, Integer> ColClothID, ColClothIDBasket;
 
 
     ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
@@ -179,6 +182,31 @@ public class Controller {
         ColClothType.setCellValueFactory(new PropertyValueFactory<>("clothType"));
 
         tableViewProducts.setItems(clothingList);
+
+
+    }
+
+
+//Adding Items to our listview Basket
+
+    ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
+    public void addToBasket() {
+
+
+        Cloth selection = tableViewProducts.getSelectionModel().getSelectedItem();
+
+
+
+        itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType()));
+        System.out.println(itemsToBasket);
+
+
+        ColClothIDBasket.setCellValueFactory(new PropertyValueFactory<>("clothID"));
+        ColClothTypeBasket.setCellValueFactory(new PropertyValueFactory<>("clothType"));
+
+
+
+        tableViewBasket.setItems(itemsToBasket);
 
 
     }
