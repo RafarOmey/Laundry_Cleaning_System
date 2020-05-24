@@ -25,8 +25,6 @@ public class Controller {
     @FXML
     AnchorPane loginSMS, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer,loginConfirmOrder,loginGenerateLabel,loginCreateCustomer;
 
-    @FXML
-    ListView listViewBasket;
 
     @FXML
     TableView<Cloth> tableViewProducts, tableViewBasket;
@@ -38,7 +36,7 @@ public class Controller {
 
 
     ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
-
+    ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
 
     public void generateLabel() {
         Order order = new Order();
@@ -67,6 +65,8 @@ public class Controller {
 
         Order order = new Order();
         order.createOrder(customerID, deliveryPoint);
+
+        addClothesOrderNumber.setText(String.valueOf(order.getMaxOrderNumber()));
 
 
     }
@@ -148,7 +148,7 @@ public class Controller {
         paneSMSCustomer.setVisible(false);
         loginSMS.setVisible(false);
         tableViewProducts.getItems().clear();
-
+// TODO: 24-05-2020 change into class
 
         Database.selectSQL("SELECT * from tblClothes");
 
@@ -189,16 +189,16 @@ public class Controller {
 
 //Adding Items to our listview Basket
 
-    ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
-    public void addToBasket() {
 
+    public void addToBasket() {
+// TODO: 24-05-2020 change into class
 
         Cloth selection = tableViewProducts.getSelectionModel().getSelectedItem();
 
 
 
         itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType()));
-        System.out.println(itemsToBasket);
+   
 
 
         ColClothIDBasket.setCellValueFactory(new PropertyValueFactory<>("clothID"));
@@ -207,6 +207,21 @@ public class Controller {
 
 
         tableViewBasket.setItems(itemsToBasket);
+
+
+    }
+
+
+
+    public void createWasherOrder() {
+// TODO: 24-05-2020 change into class
+        for (Cloth clothID: itemsToBasket)
+        {
+            Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values("+addClothesOrderNumber.getText()+ ","+ clothID.getClothID()+")");
+
+
+
+        }
 
 
     }

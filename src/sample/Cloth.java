@@ -26,17 +26,13 @@ public class Cloth {
         return clothType;
     }
 
-    public void setClothType(String clothType) {
-        this.clothType = clothType;
-    }
+
 
     public int getClothID() {
         return clothID;
     }
 
-    public void setClothID(int clothID) {
-        this.clothID = clothID;
-    }
+
 
     int clothID;
 

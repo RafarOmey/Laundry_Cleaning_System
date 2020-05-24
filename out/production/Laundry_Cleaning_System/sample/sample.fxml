@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -39,8 +40,8 @@
                 <TextField fx:id="deliveryPointID" layoutX="15.0" layoutY="55.0" promptText="Delivery Point" />
                 <TextField fx:id="orderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
                 <Button layoutX="39.0" layoutY="86.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
-                <TextField fx:id="addClothesOrderNumber" layoutX="396.0" layoutY="22.0" promptText="Order Number" />
-                <Button layoutX="26.0" layoutY="363.0" mnemonicParsing="false" onAction="#finalbasket" text="Add clothes to order" />
+                <TextField fx:id="addClothesOrderNumber" layoutX="494.0" layoutY="22.0" prefHeight="25.0" prefWidth="28.0" />
+                <Button layoutX="396.0" layoutY="363.0" mnemonicParsing="false" onAction="#createWasherOrder" text="Add clothes to order" />
                 <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" onMouseClicked="#addToBasket" prefHeight="236.0" prefWidth="192.0">
                     <columns>
                         <TableColumn fx:id="ColClothType" prefWidth="100.0" text="Cloth Type" />
@@ -53,6 +54,7 @@
                 <TableColumn fx:id="ColClothIDBasket" prefWidth="92.0" text="Cloth Number" />
               </columns>
             </TableView>
+            <Label layoutX="405.0" layoutY="26.0" prefHeight="17.0" prefWidth="83.0" text="OrderNumber" />
             </children>
         </AnchorPane>
       <AnchorPane fx:id="loginConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">

@@ -4,12 +4,14 @@ package sample;
 import Foundation.Database;
 
 
-
 public class Order {
 
 
     int orderNumber;
     int employeeID;
+
+
+    int maxOrderNumber;
 
     public int getEmployeeID() {
         return employeeID;
@@ -19,9 +21,6 @@ public class Order {
         this.employeeID = employeeID;
     }
 
-    public int getOrderNumber() {
-        return orderNumber;
-    }
 
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
@@ -77,28 +76,48 @@ public class Order {
         } while (true);
 
         // Updates the order progress in the database when a label is generated
-        Database.executeStatement("update tblOrderStatus set fldOrderProgressID = 2 where fldOrderNumber ="+orderNumber);
+        Database.executeStatement("update tblOrderStatus set fldOrderProgressID = 2 where fldOrderNumber =" + orderNumber);
 
     }
+
+
+    public int getOrderNumber() {
+
+
+        return orderNumber;
+
+    }
+
+    public int getMaxOrderNumber() {
+        Database.selectSQL("select max (fldOrderNumber) from tblOrder");
+
+        maxOrderNumber = Integer.parseInt(Database.getData());
+
+        return maxOrderNumber;
+    }
+
 
     public void createOrder(int customerID, int deliveryPoint) {
 
 
-        Database.executeStatement("INSERT INTO tblOrder (fldCustomerID, fldDeliveryPointID,fldProgressID) values (" + customerID + "," + deliveryPoint + ",1)");
+        Database.executeStatement("INSERT INTO tblOrder (fldCustomerID, fldDeliveryPointID) values (" + customerID + "," + deliveryPoint + ")");
 
+
+        // TODO: 24-05-2020  remember to change employee ID
+        Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + 1 + "," + getMaxOrderNumber() + ",1)");
 
 
     }
 
-    public void confirmOrder(int orderNumber,int employeeID){
-        Database.executeStatement("INSERT INTO tblOrderStatus (fldEmployeeID,fldOrderNumber,fldOrderProgressID) values ("+ employeeID + ","+ orderNumber+",3)");
+    public void confirmOrder(int orderNumber, int employeeID) {
+        Database.executeStatement("INSERT INTO tblOrderStatus (fldEmployeeID,fldOrderNumber,fldOrderProgressID) values (" + employeeID + "," + orderNumber + ",3)");
     }
 
-    public void SMSCustomer(int orderNumber,int employeeID){
+    public void SMSCustomer(int orderNumber, int employeeID) {
         Database.selectSQL("SELECT tblCustomer.fldName,tblCustomer.fldPhoneNO,tblOrder.fldOrderNumber, tblDeliveryPoint.fldDeliveryPointName\n" +
                 "FROM ((tblOrder\n" +
                 "INNER JOIN tblCustomer ON tblOrder.fldCustomerID = tblCustomer.fldCustomerID)\n" +
-                "INNER JOIN tblDeliveryPoint ON tblOrder.fldDeliveryPointID = tblDeliveryPoint.fldDeliveryPointID) where tblOrder.fldOrderNumber="+ orderNumber+";");
+                "INNER JOIN tblDeliveryPoint ON tblOrder.fldDeliveryPointID = tblDeliveryPoint.fldDeliveryPointID) where tblOrder.fldOrderNumber=" + orderNumber + ";");
 
         String customerName;
         int phoneNO;
@@ -106,7 +125,7 @@ public class Order {
         String deliveryPName;
         String entry;
 
-        do{
+        do {
             entry = Database.getData();
 
             if (!entry.equals("-ND-")) {
@@ -135,10 +154,10 @@ public class Order {
             } else {
                 break;
             }
-            System.out.println("*Sending message to "+phoneNO+"*"+"\n Hello "+ customerName+"! \n Your clothes are ready " +
-                    "to be picked up at: "+ deliveryPName+"\n Ordernumber: "+orderNumber2+"\n Best regards Eco Solutions ");
-        }while(true);
-        Database.executeStatement("Update tblOrderStatus set fldOrderProgressID=4,fldEmployeeID=" + employeeID + " where fldOrderNumber="+orderNumber);
+            System.out.println("*Sending message to " + phoneNO + "*" + "\n Hello " + customerName + "! \n Your clothes are ready " +
+                    "to be picked up at: " + deliveryPName + "\n Ordernumber: " + orderNumber2 + "\n Best regards Eco Solutions ");
+        } while (true);
+        Database.executeStatement("Update tblOrderStatus set fldOrderProgressID=4,fldEmployeeID=" + employeeID + " where fldOrderNumber=" + orderNumber);
 
     }
 
