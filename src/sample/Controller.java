@@ -198,7 +198,7 @@ public class Controller {
 
 
         itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType()));
-   
+
 
 
         ColClothIDBasket.setCellValueFactory(new PropertyValueFactory<>("clothID"));
@@ -223,7 +223,8 @@ public class Controller {
 
         }
 
-
+tableViewBasket.getItems().clear();
+        addClothesOrderNumber.clear();
     }
 
     public void showConfirmOrderTab() {
