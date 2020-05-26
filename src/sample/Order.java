@@ -16,6 +16,7 @@ public class Order {
         return employeeID;
     }
 
+
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
     }
@@ -27,6 +28,7 @@ public class Order {
 
 
     // Generate label method
+
 
     public void generateLabel(int orderNumber) {
 
@@ -96,15 +98,20 @@ public class Order {
         return maxOrderNumber;
     }
 
-
-    public void createOrder(int customerID, int deliveryPoint) {
+    /**
+     * this method do this and it has to have this
+     * @param customerID this gets this
+     * @param deliveryPoint this does this
+     * @param employeeID this is this
+     */
+    public void createOrder(int customerID, int deliveryPoint, int employeeID) {
 
 
         Database.executeStatement("INSERT INTO tblOrder (fldCustomerID, fldDeliveryPointID) values (" + customerID + "," + deliveryPoint + ")");
 
 
         // TODO: 24-05-2020  remember to change employee ID
-        Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + 1 + "," + getMaxOrderNumber() + ",1)");
+        Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + employeeID + "," + getMaxOrderNumber() + ",1)");
 
 
 
@@ -119,6 +126,7 @@ public class Order {
                 "FROM ((tblOrder\n" +
                 "INNER JOIN tblCustomer ON tblOrder.fldCustomerID = tblCustomer.fldCustomerID)\n" +
                 "INNER JOIN tblDeliveryPoint ON tblOrder.fldDeliveryPointID = tblDeliveryPoint.fldDeliveryPointID) where tblOrder.fldOrderNumber=" + orderNumber + ";");
+
 
         String customerName;
         int phoneNO;
@@ -160,6 +168,7 @@ public class Order {
         } while (true);
         Database.executeStatement("Update tblOrderStatus set fldOrderProgressID=4,fldEmployeeID=" + employeeID + " where fldOrderNumber=" + orderNumber);
 
+        Database.executeStatement("delete from tblOrderStatus where fldOrderNumber ="+ orderNumber);
     }
 
     public void changeLog(int progressID, int orderNumber, int employeeID){

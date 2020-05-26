@@ -6,7 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Cloth {
-
+    /**
+     * Defines clothes
+     * @param clothID
+     * @param clothType
+     */
     public Cloth(int clothID, String clothType) {
 
         this.clothID = clothID;
@@ -57,6 +61,10 @@ public class Cloth {
 
     ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
 
+    /**
+     * This method will loop through tbl Clothes, and add them to ObservableList
+     * @return Returns all Clothings from Database
+     */
     public ObservableList<Cloth> populateProductTable(){
         Database.selectSQL("SELECT * from tblClothes");
 
