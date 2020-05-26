@@ -65,6 +65,7 @@ public class Controller {
         order.createOrder(customerID, deliveryPoint);
 
         addClothesOrderNumber.setText(String.valueOf(order.getMaxOrderNumber()));
+        order.changeLog(1,order.getMaxOrderNumber(), Integer.parseInt(createOrderUN.getText()));
 
 
     }
