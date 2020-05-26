@@ -37,9 +37,12 @@ public class Controller {
 
     public void generateLabel() {
         Order order = new Order();
-        order.setOrderNumber(Integer.parseInt(labelOrderNumber.getText()));
 
-        order.generateLabel(order.getOrderNumber());
+        order.setOrderNumber(Integer.parseInt(labelOrderNumber.getText()));
+        int orderNumber= order.getOrderNumber();
+
+        order.generateLabel(orderNumber);
+        order.changeLog(2,orderNumber, Integer.parseInt(labelUN.getText()));
     }
 
     public void createCustomer() {

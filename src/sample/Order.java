@@ -10,7 +10,6 @@ public class Order {
     int orderNumber;
     int employeeID;
 
-
     int maxOrderNumber;
 
     public int getEmployeeID() {
@@ -78,6 +77,7 @@ public class Order {
         // Updates the order progress in the database when a label is generated
         Database.executeStatement("update tblOrderStatus set fldOrderProgressID = 2 where fldOrderNumber =" + orderNumber);
 
+
     }
 
 
@@ -105,6 +105,7 @@ public class Order {
 
         // TODO: 24-05-2020  remember to change employee ID
         Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + 1 + "," + getMaxOrderNumber() + ",1)");
+
 
 
     }
@@ -159,6 +160,12 @@ public class Order {
         } while (true);
         Database.executeStatement("Update tblOrderStatus set fldOrderProgressID=4,fldEmployeeID=" + employeeID + " where fldOrderNumber=" + orderNumber);
 
+    }
+
+    public void changeLog(int progressID, int orderNumber, int employeeID){
+        Database.executeStatement("USE ECO_Laundry_DB\n" +
+                "\n" +
+                "EXEC ChangeLog @ProgressID = "+progressID+", @OrderNumber="+orderNumber+",@EmployeeID="+employeeID);
     }
 
 
