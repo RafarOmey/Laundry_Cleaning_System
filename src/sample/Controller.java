@@ -1,6 +1,6 @@
 package sample;
 
-import Foundation.Database;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,8 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.ArrayList;
-import java.util.Observable;
+
 
 
 public class Controller {
@@ -34,8 +33,6 @@ public class Controller {
     @FXML
     TableColumn<Cloth, Integer> ColClothID, ColClothIDBasket;
 
-
-    ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
     ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
 
     public void generateLabel() {
@@ -140,6 +137,9 @@ public class Controller {
 
     }
 
+
+
+
     public void showOrderTab() {
         paneCreateCustomer.setVisible(false);
         loginCreateCustomer.setVisible(false);
@@ -151,34 +151,12 @@ public class Controller {
         paneSMSCustomer.setVisible(false);
         loginSMS.setVisible(false);
         tableViewProducts.getItems().clear();
-// TODO: 24-05-2020 change into class
-
-        Database.selectSQL("SELECT * from tblClothes");
-
-        int clothID;
-        String clothType;
-        String entry;
-
-        do {
 
 
-            entry = Database.getData();
-            if (!entry.equals("-ND-")) {
-                clothID = Integer.parseInt(entry);
-            } else {
-                break;
-            }
-
-            entry = Database.getData();
-            if (!entry.equals("-ND-")) {
-                clothType = entry;
-            } else {
-                break;
-            }
 
 
-            clothingList.add(new Cloth(clothID, clothType));
-        } while (true);
+
+        ObservableList <Cloth> clothingList = new Cloth().populateProductTable();
 
 
         ColClothID.setCellValueFactory(new PropertyValueFactory<>("clothID"));
@@ -190,18 +168,16 @@ public class Controller {
     }
 
 
-//Adding Items to our listview Basket
+
 
 
     public void addToBasket() {
-// TODO: 24-05-2020 change into class
+
 
         Cloth selection = tableViewProducts.getSelectionModel().getSelectedItem();
 
 
-
         itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType()));
-
 
 
         ColClothIDBasket.setCellValueFactory(new PropertyValueFactory<>("clothID"));
@@ -211,20 +187,17 @@ public class Controller {
 
         tableViewBasket.setItems(itemsToBasket);
 
-
     }
 
 
 
     public void createWasherOrder() {
-// TODO: 24-05-2020 change into class
-        for (Cloth clothID: itemsToBasket)
-        {
-            Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values("+addClothesOrderNumber.getText()+ ","+ clothID.getClothID()+")");
 
 
+        WashOrder washOrder = new WashOrder();
+        washOrder.createWashOrder(itemsToBasket, addClothesOrderNumber);
 
-        }
+
 
         tableViewBasket.getItems().clear();
         addClothesOrderNumber.clear();
