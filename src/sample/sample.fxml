@@ -22,6 +22,7 @@
          <children>
             <TextField fx:id="orderNumberSMS" layoutX="210.0" layoutY="129.0" promptText="Order number" />
             <Button layoutX="251.0" layoutY="186.0" mnemonicParsing="false" onAction="#customerSMS" text="Send SMS" />
+            <Label layoutX="210.0" layoutY="238.0" prefHeight="53.0" prefWidth="158.0" text="Label" />
          </children></AnchorPane>
       <AnchorPane fx:id="loginCreateCustomer" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
@@ -21,6 +22,7 @@
          <children>
             <TextField fx:id="orderNumberSMS" layoutX="210.0" layoutY="129.0" promptText="Order number" />
             <Button layoutX="251.0" layoutY="186.0" mnemonicParsing="false" onAction="#customerSMS" text="Send SMS" />
+            <Label layoutX="210.0" layoutY="238.0" prefHeight="53.0" prefWidth="158.0" text="Label" />
          </children></AnchorPane>
       <AnchorPane fx:id="loginCreateCustomer" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>
@@ -31,16 +33,21 @@
       </AnchorPane>
         <AnchorPane fx:id="paneCreateCustomer" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
-                <TextField fx:id="textCustomerName" layoutX="102.0" layoutY="69.0" promptText="Customer Name" />
-                <TextField fx:id="textCustomerPhoneNO" layoutX="102.0" layoutY="189.0" promptText="Customer Phone Number" />
-                <Button fx:id="buttonCreateCustomer" layoutX="102.0" layoutY="257.0" mnemonicParsing="false" onAction="#createCustomer" text="Create" />
+                <TextField fx:id="textCustomerName" layoutX="205.0" layoutY="106.0" promptText="Customer Name" />
+                <TextField fx:id="textCustomerPhoneNO" layoutX="205.0" layoutY="176.0" promptText="Customer Phone Number" />
+                <Button fx:id="buttonCreateCustomer" layoutX="245.0" layoutY="245.0" mnemonicParsing="false" onAction="#createCustomer" text="Create" />
+            <Label fx:id="labelCustomerSuccess" layoutX="182.0" layoutY="278.0" prefHeight="59.0" prefWidth="336.0" textFill="#171717">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
       <AnchorPane fx:id="loginCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>
             <TextField fx:id="createOrderUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
             <PasswordField fx:id="createOrderPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
-            <Button layoutX="330.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginCreateOrder" text="Button" />
+            <Button layoutX="330.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginCreateOrder" text="Login" />
          </children>
       </AnchorPane>
         <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
@@ -48,8 +55,8 @@
                 <TextField fx:id="deliveryPointID" layoutX="15.0" layoutY="55.0" promptText="Delivery Point" />
                 <TextField fx:id="orderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
                 <Button layoutX="39.0" layoutY="86.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
-                <TextField fx:id="addClothesOrderNumber" layoutX="494.0" layoutY="22.0" prefHeight="25.0" prefWidth="28.0" />
-                <Button layoutX="396.0" layoutY="363.0" mnemonicParsing="false" onAction="#createWasherOrder" text="Add clothes to order" />
+                <TextField fx:id="addClothesOrderNumber" layoutX="494.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" />
+                <Button layoutX="396.0" layoutY="363.0" mnemonicParsing="false" onAction="#createWashOrder" text="Add clothes to order" />
                 <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" onMouseClicked="#addToBasket" prefHeight="236.0" prefWidth="192.0">
                     <columns>
                         <TableColumn fx:id="ColClothType" prefWidth="100.0" text="Cloth Type" />
@@ -62,7 +69,10 @@
                 <TableColumn fx:id="ColClothIDBasket" prefWidth="92.0" text="Cloth Number" />
               </columns>
             </TableView>
-            <Label layoutX="405.0" layoutY="26.0" prefHeight="17.0" prefWidth="83.0" text="OrderNumber" />
+            <Label fx:id="labelOrderCreated" layoutX="388.0" prefHeight="53.0" prefWidth="223.0">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
             </children>
         </AnchorPane>
       <AnchorPane fx:id="loginConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
@@ -76,11 +86,21 @@
          <children>
             <TextField fx:id="confirmON" layoutX="182.0" layoutY="121.0" promptText="Order Number" />
             <Button layoutX="243.0" layoutY="201.0" mnemonicParsing="false" onAction="#confirmOrder" text="Confirm Order" />
+            <Label fx:id="labelOrderConfirmed" layoutX="174.0" layoutY="246.0" prefHeight="53.0" prefWidth="122.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
         <AnchorPane fx:id="paneLabel" layoutY="79.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
                 <TextField fx:id="labelOrderNumber" layoutX="163.0" layoutY="146.0" promptText="Enter orderNumber" />
                 <Button fx:id="genLabel" layoutX="197.0" layoutY="201.0" mnemonicParsing="false" onAction="#generateLabel" text="Generate Label" />
+            <Label fx:id="labelSuccess" layoutX="163.0" layoutY="238.0" prefHeight="66.0" prefWidth="149.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
       <AnchorPane fx:id="loginGenerateLabel" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">

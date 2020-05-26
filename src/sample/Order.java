@@ -110,7 +110,7 @@ public class Order {
         Database.executeStatement("INSERT INTO tblOrder (fldCustomerID, fldDeliveryPointID) values (" + customerID + "," + deliveryPoint + ")");
 
 
-        // TODO: 24-05-2020  remember to change employee ID
+
         Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + employeeID + "," + getMaxOrderNumber() + ",1)");
 
 
