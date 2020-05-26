@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
-
+import java.lang.reflect.InvocationTargetException;
 
 
 public class Controller {
@@ -18,11 +18,11 @@ public class Controller {
     @FXML
     TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, addClothesOrderNumber, labelOrderNumber;
     @FXML
-    TextField confirmOrderUN,confirmOrderPW, confirmON,labelUN,labelPW, createCustomerUN, createCustomerPW,orderNumberSMS,customerOrderDoneUN,customerOrderDonePW;
+    TextField createOrderUN, createOrderPW, confirmOrderUN, confirmOrderPW, confirmON, labelUN, labelPW, createCustomerUN, createCustomerPW, orderNumberSMS, customerOrderDoneUN, customerOrderDonePW;
     @FXML
     Button buttonCreateCustomer, createCustomerTab, createOrderTab, confirmOrderTab, labelTab, genLabel;
     @FXML
-    AnchorPane loginSMS, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer,loginConfirmOrder,loginGenerateLabel,loginCreateCustomer;
+    AnchorPane loginCreateOrder, loginSMS, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer, loginConfirmOrder, loginGenerateLabel, loginCreateCustomer;
 
 
     @FXML
@@ -39,10 +39,10 @@ public class Controller {
         Order order = new Order();
 
         order.setOrderNumber(Integer.parseInt(labelOrderNumber.getText()));
-        int orderNumber= order.getOrderNumber();
+        int orderNumber = order.getOrderNumber();
 
         order.generateLabel(orderNumber);
-        order.changeLog(2,orderNumber, Integer.parseInt(labelUN.getText()));
+        order.changeLog(2, orderNumber, Integer.parseInt(labelUN.getText()));
     }
 
     public void createCustomer() {
@@ -50,8 +50,6 @@ public class Controller {
         Customer createNewCustomer = new Customer();
         createNewCustomer.setCustomerName(textCustomerName.getText());
         createNewCustomer.setPhoneNO(Integer.parseInt(textCustomerPhoneNO.getText()));
-
-
 
 
         createNewCustomer.createCustomer(createNewCustomer.getCustomerName(), createNewCustomer.getPhoneNO());
@@ -71,105 +69,27 @@ public class Controller {
 
     }
 
-    public void confirmOrder(){
+    public void confirmOrder() {
         Order order = new Order();
         order.setOrderNumber(Integer.parseInt(confirmON.getText()));
         order.setEmployeeID(Integer.parseInt(confirmOrderUN.getText()));
-        order.confirmOrder(order.getOrderNumber(),order.getEmployeeID());
+        int employeeID = order.getEmployeeID();
+        int orderNumber = order.getOrderNumber();
+        order.confirmOrder(orderNumber, employeeID);
+        order.changeLog(3, orderNumber, employeeID);
     }
 
-    public void customerSMS(){
+    public void customerSMS() {
 
         Order order = new Order();
         order.setOrderNumber(Integer.parseInt(orderNumberSMS.getText()));
         order.setEmployeeID(Integer.parseInt(customerOrderDoneUN.getText()));
-        order.SMSCustomer(order.getOrderNumber(),order.getEmployeeID());
+        int employeeID = order.getEmployeeID();
+        int orderNumber = order.getOrderNumber();
+        order.SMSCustomer(orderNumber, employeeID);
+        order.changeLog(4, orderNumber, employeeID);
 
     }
-
-    public void loginConfirmOrder(){
-        Login login = new Login();
-        login.setEmployeeID(Integer.parseInt(confirmOrderUN.getText()));
-        login.setPassword(confirmOrderPW.getText());
-        login.userLoginDeliveryP(paneConfirmOrder,loginConfirmOrder, login.getEmployeeID(),login.getPassword());
-    }
-
-    public void loginGenerateLabel(){
-        Login login = new Login();
-        login.setEmployeeID(Integer.parseInt(labelUN.getText()));
-        login.setPassword(labelPW.getText());
-        login.userLoginCleaningP(paneLabel,loginGenerateLabel,login.getEmployeeID(),login.getPassword());
-
-    }
-
-    public void loginCreateCustomer(){
-
-        Login login = new Login();
-        login.setEmployeeID(Integer.parseInt(createCustomerUN.getText()));
-        login.setPassword(createCustomerPW.getText());
-        login.userLoginDeliveryP(paneCreateCustomer,loginCreateCustomer, login.getEmployeeID(),login.getPassword());
-    }
-    public void loginCustomerSMS(){
-        Login login = new Login();
-        login.setEmployeeID(Integer.parseInt(customerOrderDoneUN.getText()));
-        login.setPassword(customerOrderDonePW.getText());
-        login.userLoginDeliveryP(paneSMSCustomer,loginSMS, login.getEmployeeID(),login.getPassword());
-    }
-
-
-    // Switching tabs
-
-    public void showCustomerTab() {
-        textCustomerName.clear();
-        textCustomerPhoneNO.clear();
-        createCustomerUN.clear();
-        createCustomerPW.clear();
-
-        paneCreateCustomer.setVisible(false);
-        loginCreateCustomer.setVisible(true);
-        paneCreateOrder.setVisible(false);
-        paneConfirmOrder.setVisible(false);
-        loginConfirmOrder.setVisible(false);
-        paneLabel.setVisible(false);
-        loginGenerateLabel.setVisible(false);
-        paneSMSCustomer.setVisible(false);
-        loginSMS.setVisible(false);
-
-    }
-
-
-
-
-    public void showOrderTab() {
-        paneCreateCustomer.setVisible(false);
-        loginCreateCustomer.setVisible(false);
-        paneCreateOrder.setVisible(true);
-        paneConfirmOrder.setVisible(false);
-        loginConfirmOrder.setVisible(false);
-        paneLabel.setVisible(false);
-        loginGenerateLabel.setVisible(false);
-        paneSMSCustomer.setVisible(false);
-        loginSMS.setVisible(false);
-        tableViewProducts.getItems().clear();
-
-
-
-
-
-        ObservableList <Cloth> clothingList = new Cloth().populateProductTable();
-
-
-        ColClothID.setCellValueFactory(new PropertyValueFactory<>("clothID"));
-        ColClothType.setCellValueFactory(new PropertyValueFactory<>("clothType"));
-
-        tableViewProducts.setItems(clothingList);
-
-
-    }
-
-
-
-
 
     public void addToBasket() {
 
@@ -184,11 +104,9 @@ public class Controller {
         ColClothTypeBasket.setCellValueFactory(new PropertyValueFactory<>("clothType"));
 
 
-
         tableViewBasket.setItems(itemsToBasket);
 
     }
-
 
 
     public void createWasherOrder() {
@@ -198,10 +116,124 @@ public class Controller {
         washOrder.createWashOrder(itemsToBasket, addClothesOrderNumber);
 
 
-
         tableViewBasket.getItems().clear();
         addClothesOrderNumber.clear();
     }
+
+    public void loginConfirmOrder() {
+
+        try {
+            Login login = new Login();
+            login.setEmployeeID(Integer.parseInt(confirmOrderUN.getText()));
+            login.setPassword(confirmOrderPW.getText());
+            login.userLoginDeliveryP(paneConfirmOrder, loginConfirmOrder, login.getEmployeeID(), login.getPassword());
+        }catch(Exception e){
+            System.out.println("Input EmployeeID");
+        }
+    }
+
+    public void loginGenerateLabel() {
+        try {
+            Login login = new Login();
+            login.setEmployeeID(Integer.parseInt(labelUN.getText()));
+            login.setPassword(labelPW.getText());
+            login.userLoginCleaningP(paneLabel, loginGenerateLabel, login.getEmployeeID(), login.getPassword());
+        }catch(Exception e){
+            System.out.println("Input EmployeeID");
+        }
+
+
+    }
+
+    public void loginCreateCustomer() {
+
+        try {
+            Login login = new Login();
+            login.setEmployeeID(Integer.parseInt(createCustomerUN.getText()));
+            login.setPassword(createCustomerPW.getText());
+            login.userLoginDeliveryP(paneCreateCustomer, loginCreateCustomer, login.getEmployeeID(), login.getPassword());
+        }catch(Exception e){
+            System.out.println("Input EmployeeID");
+        }
+
+    }
+
+    public void loginCustomerSMS() {
+        try {
+            Login login = new Login();
+            login.setEmployeeID(Integer.parseInt(customerOrderDoneUN.getText()));
+            login.setPassword(customerOrderDonePW.getText());
+            login.userLoginDeliveryP(paneSMSCustomer, loginSMS, login.getEmployeeID(), login.getPassword());
+        }catch(Exception e){
+            System.out.println("Input EmployeeID");
+        }
+
+    }
+
+    public void loginCreateOrder() {
+        try {
+            Login login = new Login();
+            login.setEmployeeID(Integer.parseInt(createOrderUN.getText()));
+            login.setPassword(createOrderPW.getText());
+            login.userLoginDeliveryP(paneCreateOrder, loginCreateOrder, login.getEmployeeID(), login.getPassword());
+
+        }catch(Exception e){
+            System.out.println("Input EmployeeID");
+        }
+
+        // Populating Cloth tableview
+        tableViewProducts.getItems().clear();
+
+        ObservableList<Cloth> clothingList = new Cloth().populateProductTable();
+
+        ColClothID.setCellValueFactory(new PropertyValueFactory<>("clothID"));
+        ColClothType.setCellValueFactory(new PropertyValueFactory<>("clothType"));
+
+        tableViewProducts.setItems(clothingList);
+    }
+
+
+    // Switching tabs
+
+    public void showCustomerTab() {
+        textCustomerName.clear();
+        textCustomerPhoneNO.clear();
+        createCustomerUN.clear();
+        createCustomerPW.clear();
+
+        paneCreateCustomer.setVisible(false);
+        loginCreateCustomer.setVisible(true);
+        paneCreateOrder.setVisible(false);
+        loginCreateOrder.setVisible(false);
+        paneConfirmOrder.setVisible(false);
+        loginConfirmOrder.setVisible(false);
+        paneLabel.setVisible(false);
+        loginGenerateLabel.setVisible(false);
+        paneSMSCustomer.setVisible(false);
+        loginSMS.setVisible(false);
+
+    }
+
+
+    public void showOrderTab() {
+        deliveryPointID.clear();
+        orderCustomerID.clear();
+        createOrderUN.clear();
+        createOrderPW.clear();
+        paneCreateCustomer.setVisible(false);
+        loginCreateCustomer.setVisible(false);
+        paneCreateOrder.setVisible(false);
+        loginCreateOrder.setVisible(true);
+        paneConfirmOrder.setVisible(false);
+        loginConfirmOrder.setVisible(false);
+        paneLabel.setVisible(false);
+        loginGenerateLabel.setVisible(false);
+        paneSMSCustomer.setVisible(false);
+        loginSMS.setVisible(false);
+
+
+    }
+
 
     public void showConfirmOrderTab() {
         confirmON.clear();
@@ -211,6 +243,7 @@ public class Controller {
         paneCreateCustomer.setVisible(false);
         loginCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(false);
+        loginCreateOrder.setVisible(false);
         loginConfirmOrder.setVisible(true);
         paneSMSCustomer.setVisible(false);
         loginSMS.setVisible(false);
@@ -225,6 +258,7 @@ public class Controller {
         paneCreateCustomer.setVisible(false);
         loginCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(false);
+        loginCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(false);
         loginConfirmOrder.setVisible(false);
         loginGenerateLabel.setVisible(true);
@@ -240,6 +274,7 @@ public class Controller {
         paneCreateCustomer.setVisible(false);
         loginCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(false);
+        loginCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(false);
         loginConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);

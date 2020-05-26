@@ -11,11 +11,6 @@ public class Login {
     private String password;
 
 
-
-
-
-
-
     public int getEmployeeID() {
         return employeeID;
     }
@@ -32,9 +27,12 @@ public class Login {
         this.password = password;
     }
 
-    public void userLoginDeliveryP(AnchorPane loggedInAP, AnchorPane loginPane, int username, String password){
 
-        Database.selectSQL("select * from tblUserLogin where fldEmployeeID= "+ getEmployeeID());
+    // Login method for DeliveryPerson
+    public void userLoginDeliveryP(AnchorPane loggedInAP, AnchorPane loginPane, int username, String password) {
+
+
+        Database.selectSQL("select * from tblUserLogin where fldEmployeeID= " + getEmployeeID());
 
         String entry;
         int jobID = 0;
@@ -57,18 +55,16 @@ public class Login {
             }
             entry = Database.getData();
             if (!entry.equals("-ND-")) {
-                jobID=Integer.parseInt(entry);
+                jobID = Integer.parseInt(entry);
             } else {
                 break;
             }
 
 
-
-
         } while (true);
 
 
-        if(username==getEmployeeID() && password.equals(getPassword()) && jobID==1){
+        if (username == getEmployeeID() && password.equals(getPassword()) && jobID == 1) {
 
             loginPane.setVisible(false);
             loggedInAP.setVisible(true);
@@ -78,9 +74,10 @@ public class Login {
     }
 
 
-    public void userLoginCleaningP(AnchorPane loggedInAP, AnchorPane loginPane, int username, String password){
+    //Login method for CleaningPerson
+    public void userLoginCleaningP(AnchorPane loggedInAP, AnchorPane loginPane, int username, String password) {
 
-        Database.selectSQL("select * from tblUserLogin where fldEmployeeID= "+ getEmployeeID());
+        Database.selectSQL("select * from tblUserLogin where fldEmployeeID= " + getEmployeeID());
 
         String entry;
         int jobID = 0;
@@ -103,18 +100,16 @@ public class Login {
             }
             entry = Database.getData();
             if (!entry.equals("-ND-")) {
-                jobID=Integer.parseInt(entry);
+                jobID = Integer.parseInt(entry);
             } else {
                 break;
             }
 
 
-
-
         } while (true);
 
 
-        if(username==getEmployeeID() && password.equals(getPassword()) && jobID==2){
+        if (username == getEmployeeID() && password.equals(getPassword()) && jobID == 2) {
 
             loginPane.setVisible(false);
             loggedInAP.setVisible(true);
