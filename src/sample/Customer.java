@@ -29,6 +29,8 @@ public class Customer {
 
         Database.executeStatement("insert into tblCustomer (fldName , fldPhoneNo) values('" + customerName +  "' , " + phoneNO + ")");
 
+
+
     }
 
 
