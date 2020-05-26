@@ -1,6 +1,10 @@
 package sample;
 
 
+import Foundation.Database;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Cloth {
 
     public Cloth(int clothID, String clothType) {
@@ -22,6 +26,11 @@ public class Cloth {
         this.clothID = clothID;
     }
 
+    public Cloth() {
+
+    }
+
+
     public String getClothType() {
         return clothType;
     }
@@ -34,7 +43,8 @@ public class Cloth {
 
 
 
-    int clothID;
+    private int clothID;
+
 
 
     @Override
@@ -43,5 +53,38 @@ public class Cloth {
                 "clothType='" + clothType + '\'' +
                 ", clothID=" + clothID +
                 '}';
+    }
+
+    ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
+
+    public ObservableList<Cloth> populateProductTable(){
+        Database.selectSQL("SELECT * from tblClothes");
+
+        int clothID;
+        String clothType;
+        String entry;
+
+        do {
+
+
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
+                clothID = Integer.parseInt(entry);
+            } else {
+                break;
+            }
+
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
+                clothType = entry;
+            } else {
+                break;
+            }
+
+
+            clothingList.add(new Cloth(clothID, clothType));
+        } while (true);
+
+return clothingList;
     }
 }
