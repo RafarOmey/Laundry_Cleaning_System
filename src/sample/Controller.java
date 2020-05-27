@@ -30,7 +30,7 @@ public class Controller {
     @FXML
     TableColumn<Cloth, String> colClothType, colClothTypeBasket;
     @FXML
-    TableColumn<Cloth, Integer> colClothID, colClothIDBasket;
+    TableColumn<Cloth, Integer> colClothID, colClothIDBasket ,colClothPrice,colClothPriceBasket;
 
     ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
 
@@ -80,6 +80,7 @@ public class Controller {
         WashOrder washOrder = new WashOrder();
         washOrder.createWashOrder(itemsToBasket, tfAddClothesOrderNumber);
 
+      washOrder.insertTotalPrice(itemsToBasket, tfAddClothesOrderNumber);
 
         tableViewBasket.getItems().clear();
         tfAddClothesOrderNumber.clear();
@@ -118,11 +119,15 @@ public class Controller {
         Cloth selection = tableViewProducts.getSelectionModel().getSelectedItem();
 
 
-        itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType()));
+        itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType(), selection.getClothPrice()));
+
+
+
 
 
         colClothIDBasket.setCellValueFactory(new PropertyValueFactory<>("clothID"));
         colClothTypeBasket.setCellValueFactory(new PropertyValueFactory<>("clothType"));
+        colClothPriceBasket.setCellValueFactory(new PropertyValueFactory<>("ClothPrice"));
 
 
         tableViewBasket.setItems(itemsToBasket);
@@ -227,6 +232,7 @@ public class Controller {
 
         colClothID.setCellValueFactory(new PropertyValueFactory<>("clothID"));
         colClothType.setCellValueFactory(new PropertyValueFactory<>("clothType"));
+        colClothPrice.setCellValueFactory(new PropertyValueFactory<>("clothPrice"));
 
         tableViewProducts.setItems(clothingList);
 

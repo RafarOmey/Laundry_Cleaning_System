@@ -33,19 +33,21 @@
             <children>
                 <TextField fx:id="tfDeliveryPointID" layoutX="15.0" layoutY="55.0" promptText="Delivery Point" />
                 <TextField fx:id="tfOrderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
-                <Button layoutX="39.0" layoutY="86.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
+                <Button layoutX="265.0" layoutY="312.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
                 <TextField fx:id="tfAddClothesOrderNumber" layoutX="494.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" />
 
-                <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" onMouseClicked="#addToBasket" prefHeight="236.0" prefWidth="192.0">
+                <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" onMouseClicked="#addToBasket" prefHeight="236.0" prefWidth="241.0">
                     <columns>
-                        <TableColumn fx:id="colClothType" prefWidth="100.0" text="Cloth Type" />
-                        <TableColumn fx:id="colClothID" prefWidth="90.0" text="Cloth ID" />
+                        <TableColumn fx:id="colClothType" prefWidth="93.0" text="Cloth Type" />
+                        <TableColumn fx:id="colClothID" prefWidth="75.0" text="Cloth ID" />
+                  <TableColumn fx:id="colClothPrice" prefWidth="75.0" text="Price" />
                     </columns>
                 </TableView>
-            <TableView fx:id="tableViewBasket" layoutX="361.0" layoutY="68.0" prefHeight="280.0" prefWidth="192.0">
+            <TableView fx:id="tableViewBasket" layoutX="361.0" layoutY="68.0" prefHeight="280.0" prefWidth="241.0">
               <columns>
-                <TableColumn fx:id="colClothTypeBasket" prefWidth="100.0" text="Cloth Name" />
-                <TableColumn fx:id="colClothIDBasket" prefWidth="92.0" text="Cloth Number" />
+                <TableColumn fx:id="colClothTypeBasket" prefWidth="92.0" text="Cloth Name" />
+                <TableColumn fx:id="colClothIDBasket" prefWidth="86.0" text="Cloth Number" />
+                  <TableColumn fx:id="colClothPriceBasket" prefWidth="75.0" text="Price" />
               </columns>
             </TableView>
             <Label fx:id="labelOrderCreated" layoutX="388.0" prefHeight="53.0" prefWidth="223.0">

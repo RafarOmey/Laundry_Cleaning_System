@@ -2,6 +2,8 @@ package sample;
 
 
 import Foundation.Database;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
 
 
 public class Order {
@@ -100,9 +102,10 @@ public class Order {
 
     /**
      * this method do this and it has to have this
-     * @param customerID this gets this
+     *
+     * @param customerID    this gets this
      * @param deliveryPoint this does this
-     * @param employeeID this is this
+     * @param employeeID    this is this
      */
     public void createOrder(int customerID, int deliveryPoint, int employeeID) {
 
@@ -110,9 +113,7 @@ public class Order {
         Database.executeStatement("INSERT INTO tblOrder (fldCustomerID, fldDeliveryPointID) values (" + customerID + "," + deliveryPoint + ")");
 
 
-
         Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + employeeID + "," + getMaxOrderNumber() + ",1)");
-
 
 
     }
@@ -168,18 +169,17 @@ public class Order {
         } while (true);
         Database.executeStatement("Update tblOrderStatus set fldOrderProgressID=4,fldEmployeeID=" + employeeID + " where fldOrderNumber=" + orderNumber);
 
-        Database.executeStatement("delete from tblOrderStatus where fldOrderNumber ="+ orderNumber);
+        Database.executeStatement("delete from tblOrderStatus where fldOrderNumber =" + orderNumber);
     }
 
-    public void changeLog(int progressID, int orderNumber, int employeeID){
+    public void changeLog(int progressID, int orderNumber, int employeeID) {
         Database.executeStatement("USE ECO_Laundry_DB\n" +
                 "\n" +
-                "EXEC ChangeLog @ProgressID = "+progressID+", @OrderNumber="+orderNumber+",@EmployeeID="+employeeID);
+                "EXEC ChangeLog @ProgressID = " + progressID + ", @OrderNumber=" + orderNumber + ",@EmployeeID=" + employeeID);
     }
 
 
 }
-
 
 
 
