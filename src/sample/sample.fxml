@@ -11,30 +11,30 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
-      <AnchorPane fx:id="loginSMS" layoutY="79.0" prefHeight="480.0" prefWidth="612.0" visible="false">
+      <AnchorPane fx:id="paneLoginSMS" layoutY="79.0" prefHeight="480.0" prefWidth="612.0" visible="false">
          <children>
-            <TextField fx:id="customerOrderDoneUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
-            <PasswordField fx:id="customerOrderDonePW" layoutX="210.0" layoutY="180.0" promptText="Password" />
+            <TextField fx:id="tfCustomerOrderDoneUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
+            <PasswordField fx:id="tfCustomerOrderDonePW" layoutX="210.0" layoutY="180.0" promptText="Password" />
             <Button layoutX="330.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginCustomerSMS" text="Login" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="paneSMSCustomer" layoutY="79.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>
-            <TextField fx:id="orderNumberSMS" layoutX="210.0" layoutY="129.0" promptText="Order number" />
+            <TextField fx:id="tfOrderNumberSMS" layoutX="210.0" layoutY="129.0" promptText="Order number" />
             <Button layoutX="251.0" layoutY="186.0" mnemonicParsing="false" onAction="#customerSMS" text="Send SMS" />
             <Label layoutX="210.0" layoutY="238.0" prefHeight="53.0" prefWidth="158.0" text="Label" />
          </children></AnchorPane>
-      <AnchorPane fx:id="loginCreateCustomer" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
+      <AnchorPane fx:id="paneLoginCreateCustomer" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>
-            <TextField fx:id="createCustomerUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
-            <PasswordField fx:id="createCustomerPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
+            <TextField fx:id="tfCreateCustomerUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
+            <PasswordField fx:id="tfCreateCustomerPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
             <Button layoutX="330.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginCreateCustomer" text="Login" />
          </children>
       </AnchorPane>
         <AnchorPane fx:id="paneCreateCustomer" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
-                <TextField fx:id="textCustomerName" layoutX="205.0" layoutY="106.0" promptText="Customer Name" />
-                <TextField fx:id="textCustomerPhoneNO" layoutX="205.0" layoutY="176.0" promptText="Customer Phone Number" />
+                <TextField fx:id="tfCustomerName" layoutX="205.0" layoutY="106.0" promptText="Customer Name" />
+                <TextField fx:id="tfCustomerPhoneNO" layoutX="205.0" layoutY="176.0" promptText="Customer Phone Number" />
                 <Button fx:id="buttonCreateCustomer" layoutX="245.0" layoutY="245.0" mnemonicParsing="false" onAction="#createCustomer" text="Create" />
             <Label fx:id="labelCustomerSuccess" layoutX="182.0" layoutY="278.0" prefHeight="59.0" prefWidth="336.0" textFill="#171717">
                <font>
@@ -43,30 +43,30 @@
             </Label>
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="loginCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
+      <AnchorPane fx:id="paneLoginCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>
-            <TextField fx:id="createOrderUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
-            <PasswordField fx:id="createOrderPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
+            <TextField fx:id="tfCreateOrderUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
+            <PasswordField fx:id="tfCreateOrderPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
             <Button layoutX="330.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginCreateOrder" text="Login" />
          </children>
       </AnchorPane>
         <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
-                <TextField fx:id="textDeliveryPointID" layoutX="15.0" layoutY="55.0" promptText="Delivery Point" />
-                <TextField fx:id="orderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
+                <TextField fx:id="tfDeliveryPointID" layoutX="15.0" layoutY="55.0" promptText="Delivery Point" />
+                <TextField fx:id="tfOrderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
                 <Button layoutX="39.0" layoutY="86.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
-                <TextField fx:id="addClothesOrderNumber" layoutX="494.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" />
+                <TextField fx:id="tfAddClothesOrderNumber" layoutX="494.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" />
 
                 <TableView fx:id="tableViewProducts" layoutX="14.0" layoutY="117.0" onMouseClicked="#addToBasket" prefHeight="236.0" prefWidth="192.0">
                     <columns>
-                        <TableColumn fx:id="ColClothType" prefWidth="100.0" text="Cloth Type" />
-                        <TableColumn fx:id="ColClothID" prefWidth="90.0" text="Cloth ID" />
+                        <TableColumn fx:id="colClothType" prefWidth="100.0" text="Cloth Type" />
+                        <TableColumn fx:id="colClothID" prefWidth="90.0" text="Cloth ID" />
                     </columns>
                 </TableView>
             <TableView fx:id="tableViewBasket" layoutX="361.0" layoutY="68.0" prefHeight="280.0" prefWidth="192.0">
               <columns>
-                <TableColumn fx:id="ColClothTypeBasket" prefWidth="100.0" text="Cloth Name" />
-                <TableColumn fx:id="ColClothIDBasket" prefWidth="92.0" text="Cloth Number" />
+                <TableColumn fx:id="colClothTypeBasket" prefWidth="100.0" text="Cloth Name" />
+                <TableColumn fx:id="colClothIDBasket" prefWidth="92.0" text="Cloth Number" />
               </columns>
             </TableView>
             <Label fx:id="labelOrderCreated" layoutX="388.0" prefHeight="53.0" prefWidth="223.0">
@@ -75,16 +75,16 @@
                </font></Label>
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="loginConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
+      <AnchorPane fx:id="paneLoginConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>
-            <TextField fx:id="confirmOrderUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
-            <PasswordField fx:id="confirmOrderPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
+            <TextField fx:id="tfConfirmOrderUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
+            <PasswordField fx:id="tfConfirmOrderPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
             <Button layoutX="330.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginConfirmOrder" text="Login" />
          </children>
       </AnchorPane>
         <AnchorPane fx:id="paneConfirmOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>
-            <TextField fx:id="confirmON" layoutX="182.0" layoutY="121.0" promptText="Order Number" />
+            <TextField fx:id="tfConfirmON" layoutX="182.0" layoutY="121.0" promptText="Order Number" />
             <Button layoutX="243.0" layoutY="201.0" mnemonicParsing="false" onAction="#confirmOrder" text="Confirm Order" />
             <Label fx:id="labelOrderConfirmed" layoutX="174.0" layoutY="246.0" prefHeight="53.0" prefWidth="122.0">
                <font>
@@ -94,8 +94,8 @@
          </children></AnchorPane>
         <AnchorPane fx:id="paneLabel" layoutY="79.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
-                <TextField fx:id="labelOrderNumber" layoutX="163.0" layoutY="146.0" promptText="Enter orderNumber" />
-                <Button fx:id="genLabel" layoutX="197.0" layoutY="201.0" mnemonicParsing="false" onAction="#generateLabel" text="Generate Label" />
+                <TextField fx:id="tfLabelOrderNumber" layoutX="163.0" layoutY="146.0" promptText="Enter orderNumber" />
+                <Button fx:id="buttonGenLabel" layoutX="197.0" layoutY="201.0" mnemonicParsing="false" onAction="#generateLabel" text="Generate Label" />
             <Label fx:id="labelSuccess" layoutX="163.0" layoutY="238.0" prefHeight="66.0" prefWidth="149.0">
                <font>
                   <Font size="18.0" />
@@ -103,21 +103,21 @@
             </Label>
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="loginGenerateLabel" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
+      <AnchorPane fx:id="paneLoginGenerateLabel" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
          <children>
-            <TextField fx:id="labelUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
-            <PasswordField fx:id="labelPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
+            <TextField fx:id="tfLabelUN" layoutX="210.0" layoutY="130.0" promptText="EmployeeID" />
+            <PasswordField fx:id="tfLabelPW" layoutX="210.0" layoutY="180.0" promptText="Password" />
             <Button layoutX="330.0" layoutY="220.0" mnemonicParsing="false" onAction="#loginGenerateLabel" text="Login" />
          </children>
       </AnchorPane>
 
         <AnchorPane prefHeight="79.0" prefWidth="612.0">
             <children>
-                <Button fx:id="createCustomerTab" mnemonicParsing="false" onAction="#showCustomerTab" prefHeight="79.0" prefWidth="122.0" text="Create Customer" />
+                <Button fx:id="buttonCreateCustomerTab" mnemonicParsing="false" onAction="#showCustomerTab" prefHeight="79.0" prefWidth="122.0" text="Create Customer" />
                 <Button fx:id="SMSCustomerTab" layoutX="366.0" mnemonicParsing="false" onAction="#showSMSCustomerTab" prefHeight="78.0" prefWidth="122.0" text="SMS Customer" />
-                <Button fx:id="labelTab" layoutX="488.0" mnemonicParsing="false" onAction="#showLabelTab" prefHeight="78.0" prefWidth="124.0" text="Label" />
-                <Button fx:id="createOrderTab" layoutX="122.0" mnemonicParsing="false" onAction="#showOrderTab" prefHeight="78.0" prefWidth="122.0" text="Create Order" />
-            <Button fx:id="confirmOrderTab" layoutX="244.0" mnemonicParsing="false" onAction="#showConfirmOrderTab" prefHeight="78.0" prefWidth="122.0" text="Confirm Order" />
+                <Button fx:id="buttonLabelTab" layoutX="488.0" mnemonicParsing="false" onAction="#showLabelTab" prefHeight="78.0" prefWidth="124.0" text="Label" />
+                <Button fx:id="buttonCreateOrderTab" layoutX="122.0" mnemonicParsing="false" onAction="#showOrderTab" prefHeight="78.0" prefWidth="122.0" text="Create Order" />
+            <Button fx:id="buttonConfirmOrderTab" layoutX="244.0" mnemonicParsing="false" onAction="#showConfirmOrderTab" prefHeight="78.0" prefWidth="122.0" text="Confirm Order" />
             </children>
         </AnchorPane>
     </children>
