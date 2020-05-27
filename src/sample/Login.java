@@ -1,17 +1,33 @@
 package sample;
 
 import Foundation.Database;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
+import javax.naming.ldap.Control;
+import javax.xml.crypto.Data;
 
 public class Login {
 
 
     private int employeeID;
     private String password;
+    private int jobID;
+    private String employeeName;
 
+    public String getEmployeeName() {
+        Database.selectSQL("select fldName from tblEmployee where fldEmployeeID="+getEmployeeID());
+        employeeName = Database.getData();
+        return employeeName;
+    }
+
+    public int getJobID() {
+        Database.selectSQL("select fldJobID from tblUserLogin where fldEmployeeID="+getEmployeeID());
+        jobID= Integer.parseInt(Database.getData());
+        return jobID;
+    }
 
     public int getEmployeeID() {
+
         return employeeID;
     }
 
@@ -20,101 +36,13 @@ public class Login {
     }
 
     public String getPassword() {
+        Database.selectSQL("select fldPassword from tblUserLogin where fldEmployeeID="+getEmployeeID());
+        password= Database.getData();
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 
-    // Login method for DeliveryPerson
-    public void userLoginDeliveryP(AnchorPane loggedInAP, AnchorPane loginPane, int username, String password) {
 
 
-        Database.selectSQL("select * from tblUserLogin where fldEmployeeID= " + getEmployeeID());
-
-        String entry;
-        int jobID = 0;
-
-        do {
-
-
-            entry = Database.getData();
-
-            if (!entry.equals("-ND-")) {
-                setEmployeeID(Integer.parseInt(entry));
-            } else {
-                break;
-            }
-            entry = Database.getData();
-            if (!entry.equals("-ND-")) {
-                setPassword(entry);
-            } else {
-                break;
-            }
-            entry = Database.getData();
-            if (!entry.equals("-ND-")) {
-                jobID = Integer.parseInt(entry);
-            } else {
-                break;
-            }
-
-
-        } while (true);
-
-
-        if (username == getEmployeeID() && password.equals(getPassword()) && jobID == 1) {
-
-            loginPane.setVisible(false);
-            loggedInAP.setVisible(true);
-
-        }
-
-    }
-
-
-    //Login method for CleaningPerson
-    public void userLoginCleaningP(AnchorPane loggedInAP, AnchorPane loginPane, int username, String password) {
-
-        Database.selectSQL("select * from tblUserLogin where fldEmployeeID= " + getEmployeeID());
-
-        String entry;
-        int jobID = 0;
-
-        do {
-
-
-            entry = Database.getData();
-
-            if (!entry.equals("-ND-")) {
-                setEmployeeID(Integer.parseInt(entry));
-            } else {
-                break;
-            }
-            entry = Database.getData();
-            if (!entry.equals("-ND-")) {
-                setPassword(entry);
-            } else {
-                break;
-            }
-            entry = Database.getData();
-            if (!entry.equals("-ND-")) {
-                jobID = Integer.parseInt(entry);
-            } else {
-                break;
-            }
-
-
-        } while (true);
-
-
-        if (username == getEmployeeID() && password.equals(getPassword()) && jobID == 2) {
-
-            loginPane.setVisible(false);
-            loggedInAP.setVisible(true);
-
-        }
-
-    }
 }
