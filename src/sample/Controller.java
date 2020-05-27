@@ -11,9 +11,9 @@ import javafx.scene.layout.AnchorPane;
 
 public class Controller {
 
-
+    // TODO: 27-05-2020 change first letter to small 
     @FXML
-    TextField textCustomerName, orderCustomerID, deliveryPointID, textCustomerPhoneNO, addClothesOrderNumber, labelOrderNumber;
+    TextField textCustomerName, orderCustomerID, textDeliveryPointID, textCustomerPhoneNO, addClothesOrderNumber, labelOrderNumber;
     @FXML
     TextField createOrderUN, createOrderPW, confirmOrderUN, confirmOrderPW, confirmON, labelUN, labelPW, createCustomerUN, createCustomerPW, orderNumberSMS, customerOrderDoneUN, customerOrderDonePW;
     @FXML
@@ -62,7 +62,7 @@ public class Controller {
 
     public void createOrder() {
         int customerID = Integer.parseInt(orderCustomerID.getText());
-        int deliveryPoint = Integer.parseInt(deliveryPointID.getText());
+        int deliveryPoint = Integer.parseInt(textDeliveryPointID.getText());
 
 
         Order order = new Order();
@@ -73,8 +73,20 @@ public class Controller {
 
         labelOrderCreated.setText("OrderNumber         Created");
         orderCustomerID.clear();
-        deliveryPointID.clear();
+        textDeliveryPointID.clear();
+
+
+        WashOrder washOrder = new WashOrder();
+        washOrder.createWashOrder(itemsToBasket, addClothesOrderNumber);
+
+
+        tableViewBasket.getItems().clear();
+        addClothesOrderNumber.clear();
+        labelOrderCreated.setText("");
+
+
     }
+
 
     public void confirmOrder() {
         Order order = new Order();
@@ -94,9 +106,8 @@ public class Controller {
         order.setEmployeeID(Integer.parseInt(customerOrderDoneUN.getText()));
         int employeeID = order.getEmployeeID();
         int orderNumber = order.getOrderNumber();
-        order.SMSCustomer(orderNumber, employeeID);
+        order.messageCustomer(orderNumber, employeeID);
         order.changeLog(4, orderNumber, employeeID);
-
 
     }
 
@@ -118,17 +129,7 @@ public class Controller {
     }
 
 
-    public void createWashOrder() {
 
-
-        WashOrder washOrder = new WashOrder();
-        washOrder.createWashOrder(itemsToBasket, addClothesOrderNumber);
-
-
-        tableViewBasket.getItems().clear();
-        addClothesOrderNumber.clear();
-        labelOrderCreated.setText("");
-    }
 
     public void loginConfirmOrder() {
 
@@ -228,7 +229,7 @@ public class Controller {
 
 
     public void showOrderTab() {
-        deliveryPointID.clear();
+        textDeliveryPointID.clear();
         orderCustomerID.clear();
         createOrderUN.clear();
         createOrderPW.clear();

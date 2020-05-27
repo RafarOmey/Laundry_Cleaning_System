@@ -11,8 +11,6 @@ public class WashOrder {
 
 
 
-
-
     public void createWashOrder(ObservableList<Cloth> itemsToBasket, TextField addClothesOrderNumber) {
 
         for (Cloth clothID: itemsToBasket)
@@ -25,9 +23,14 @@ public class WashOrder {
 
 
 
+
+
     }
 
-}
+
+
+    }
+
 
 
 

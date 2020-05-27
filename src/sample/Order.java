@@ -121,7 +121,7 @@ public class Order {
         Database.executeStatement("INSERT INTO tblOrderStatus (fldEmployeeID,fldOrderNumber,fldOrderProgressID) values (" + employeeID + "," + orderNumber + ",3)");
     }
 
-    public void SMSCustomer(int orderNumber, int employeeID) {
+    public void messageCustomer(int orderNumber, int employeeID) {
         Database.selectSQL("SELECT tblCustomer.fldName,tblCustomer.fldPhoneNO,tblOrder.fldOrderNumber, tblDeliveryPoint.fldDeliveryPointName\n" +
                 "FROM ((tblOrder\n" +
                 "INNER JOIN tblCustomer ON tblOrder.fldCustomerID = tblCustomer.fldCustomerID)\n" +

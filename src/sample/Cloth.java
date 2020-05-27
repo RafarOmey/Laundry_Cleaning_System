@@ -5,9 +5,13 @@ import Foundation.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * @version
+ * @author
+ */
 public class Cloth {
     /**
-     * Defines clothes
+     * 
      * @param clothID
      * @param clothType
      */
@@ -66,11 +70,13 @@ public class Cloth {
      * @return Returns all Clothings from Database
      */
     public ObservableList<Cloth> populateProductTable(){
-        Database.selectSQL("SELECT * from tblClothes");
+        Database.selectSQL("SELECT        fldClothID, fldTypeOfCloth\n" +
+                "FROM            tblClothes");
 
         int clothID;
         String clothType;
         String entry;
+
 
         do {
 
@@ -88,6 +94,7 @@ public class Cloth {
             } else {
                 break;
             }
+
 
 
             clothingList.add(new Cloth(clothID, clothType));
