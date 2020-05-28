@@ -22,7 +22,7 @@ public class Controller {
     @FXML
     AnchorPane paneLoginScreen, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer;
     @FXML
-    Label labelLoggedInAs,labelCustomerSuccess, labelOrderCreated, labelSuccess, labelOrderConfirmed;
+    Label labelMessage,labelLoggedInAs,labelCustomerSuccess, labelOrderCreated, labelSuccess, labelOrderConfirmed;
     @FXML
     TableView<Cloth> tableViewProducts, tableViewBasket;
 
@@ -109,6 +109,8 @@ public class Controller {
         int orderNumber = order.getOrderNumber();
         order.messageCustomer(orderNumber, employeeID);
         order.changeLog(4, orderNumber, employeeID);
+        labelMessage.setVisible(true);
+        labelMessage.setText("Message sent!");
 
     }
 
@@ -192,6 +194,8 @@ public class Controller {
         paneLabel.setVisible(false);
         buttonLogOut.setVisible(false);
 
+        labelMessage.setText("");
+        labelMessage.setVisible(false);
         labelLoggedInAs.setText("");
         labelLoggedInAs.setVisible(false);
     }
@@ -263,6 +267,8 @@ public class Controller {
 
     public void showSMSCustomerTab() {
         tfOrderNumberSMS.clear();
+        labelMessage.setText("");
+        labelMessage.setVisible(false);
 
         paneCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(false);
