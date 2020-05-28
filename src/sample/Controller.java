@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 
 public class Controller {
 
-    
     @FXML
     TextField tfUN, tfCustomerName, tfCreateOrderPhoneNO, tfDeliveryPointID, tfCustomerPhoneNO, tfAddClothesOrderNumber, tfLabelOrderNumber;
     @FXML
