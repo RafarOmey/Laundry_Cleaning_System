@@ -103,14 +103,14 @@ public class Order {
     /**
      * this method do this and it has to have this
      *
-     * @param customerID    this gets this
+     *
      * @param deliveryPoint this does this
      * @param employeeID    this is this
      */
-    public void createOrder(int customerID, int deliveryPoint, int employeeID) {
+    public void createOrder(int phoneNO, int deliveryPoint, int employeeID) {
 
 
-        Database.executeStatement("INSERT INTO tblOrder (fldCustomerID, fldDeliveryPointID) values (" + customerID + "," + deliveryPoint + ")");
+        Database.executeStatement("INSERT INTO tblOrder (fldPhoneNO, fldDeliveryPointID) values (" + phoneNO + "," + deliveryPoint + ")");
 
 
         Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + employeeID + "," + getMaxOrderNumber() + ",1)");
@@ -125,7 +125,7 @@ public class Order {
     public void messageCustomer(int orderNumber, int employeeID) {
         Database.selectSQL("SELECT tblCustomer.fldName,tblCustomer.fldPhoneNO,tblOrder.fldOrderNumber, tblDeliveryPoint.fldDeliveryPointName\n" +
                 "FROM ((tblOrder\n" +
-                "INNER JOIN tblCustomer ON tblOrder.fldCustomerID = tblCustomer.fldCustomerID)\n" +
+                "INNER JOIN tblCustomer ON tblOrder.fldPhoneNO = tblCustomer.fldPhoneNO)\n" +
                 "INNER JOIN tblDeliveryPoint ON tblOrder.fldDeliveryPointID = tblDeliveryPoint.fldDeliveryPointID) where tblOrder.fldOrderNumber=" + orderNumber + ";");
 
 

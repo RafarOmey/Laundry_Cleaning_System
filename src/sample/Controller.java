@@ -13,7 +13,7 @@ public class Controller {
 
     
     @FXML
-    TextField tfUN, tfCustomerName, tfOrderCustomerID, tfDeliveryPointID, tfCustomerPhoneNO, tfAddClothesOrderNumber, tfLabelOrderNumber;
+    TextField tfUN, tfCustomerName, tfCreateOrderPhoneNO, tfDeliveryPointID, tfCustomerPhoneNO, tfAddClothesOrderNumber, tfLabelOrderNumber;
     @FXML
     TextField tfConfirmON, tfOrderNumberSMS;
     @FXML
@@ -62,18 +62,18 @@ public class Controller {
     }
 
     public void createOrder() {
-        int customerID = Integer.parseInt(tfOrderCustomerID.getText());
+        int phoneNO = Integer.parseInt(tfCreateOrderPhoneNO.getText());
         int deliveryPoint = Integer.parseInt(tfDeliveryPointID.getText());
 
 
         Order order = new Order();
-        order.createOrder(customerID, deliveryPoint, Integer.parseInt(tfUN.getText()));
+        order.createOrder(phoneNO, deliveryPoint, Integer.parseInt(tfUN.getText()));
 
         tfAddClothesOrderNumber.setText(String.valueOf(order.getMaxOrderNumber()));
         order.changeLog(1, order.getMaxOrderNumber(), Integer.parseInt(tfUN.getText()));
 
-        labelOrderCreated.setText("OrderNumber         Created");
-        tfOrderCustomerID.clear();
+        labelOrderCreated.setText("OrderNumber Created" + order.getMaxOrderNumber());
+        tfCreateOrderPhoneNO.clear();
         tfDeliveryPointID.clear();
 
 
@@ -84,7 +84,7 @@ public class Controller {
 
         tableViewBasket.getItems().clear();
         tfAddClothesOrderNumber.clear();
-        labelOrderCreated.setText("");
+
 
 
     }
@@ -217,8 +217,8 @@ public class Controller {
 
     public void showOrderTab() {
         tfDeliveryPointID.clear();
-        tfOrderCustomerID.clear();
-
+        tfCreateOrderPhoneNO.clear();
+        labelOrderCreated.setText("");
         paneCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(true);
         paneConfirmOrder.setVisible(false);

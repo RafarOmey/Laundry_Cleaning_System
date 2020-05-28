@@ -32,7 +32,7 @@
         <AnchorPane fx:id="paneCreateOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
             <children>
                 <TextField fx:id="tfDeliveryPointID" layoutX="15.0" layoutY="55.0" promptText="Delivery Point" />
-                <TextField fx:id="tfOrderCustomerID" layoutX="14.0" layoutY="22.0" promptText="CustomerID" />
+                <TextField fx:id="tfCreateOrderPhoneNO" layoutX="14.0" layoutY="22.0" promptText="Customer Phone NO" />
                 <Button layoutX="265.0" layoutY="312.0" mnemonicParsing="false" onAction="#createOrder" text="Create order" />
                 <TextField fx:id="tfAddClothesOrderNumber" layoutX="494.0" layoutY="14.0" prefHeight="25.0" prefWidth="28.0" />
 
