@@ -2,8 +2,7 @@ package sample;
 
 
 import Foundation.Database;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TextField;
+
 
 
 public class Order {
@@ -32,7 +31,7 @@ public class Order {
     // Generate label method
 
 
-    public void generateLabel(int orderNumber) {
+    public void generateLabel(int orderNumber, int employeeID) {
 
 
         int count1 = 1;
@@ -79,7 +78,7 @@ public class Order {
         } while (true);
 
         // Updates the order progress in the database when a label is generated
-        Database.executeStatement("update tblOrderStatus set fldOrderProgressID = 2 where fldOrderNumber =" + orderNumber);
+        Database.executeStatement("update tblOrderStatus set fldOrderProgressID = 2, fldEmployeeID = "+ employeeID+ "where fldOrderNumber =" + orderNumber);
 
 
     }
@@ -119,7 +118,9 @@ public class Order {
     }
 
     public void confirmOrder(int orderNumber, int employeeID) {
-        Database.executeStatement("INSERT INTO tblOrderStatus (fldEmployeeID,fldOrderNumber,fldOrderProgressID) values (" + employeeID + "," + orderNumber + ",3)");
+        Database.executeStatement("update  tblOrderStatus set fldEmployeeID =" + employeeID + " , fldOrderProgressID = 3 where fldOrderNumber="+ orderNumber);
+
+
     }
 
     public void messageCustomer(int orderNumber, int employeeID) {

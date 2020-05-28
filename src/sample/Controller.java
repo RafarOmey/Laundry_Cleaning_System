@@ -40,7 +40,7 @@ public class Controller {
         order.setOrderNumber(Integer.parseInt(tfLabelOrderNumber.getText()));
         int orderNumber = order.getOrderNumber();
 
-        order.generateLabel(orderNumber);
+        order.generateLabel(orderNumber, Integer.parseInt(tfUN.getText()));
         order.changeLog(2, orderNumber, Integer.parseInt(tfUN.getText()));
 
         labelSuccess.setText("Label Generated");
