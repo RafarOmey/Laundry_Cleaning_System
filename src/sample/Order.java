@@ -121,6 +121,7 @@ public class Order {
         Database.executeStatement("update  tblOrderStatus set fldEmployeeID =" + employeeID + " , fldOrderProgressID = 3 where fldOrderNumber="+ orderNumber);
 
 
+        Database.executeStatement("delete from tblWashOrder where fldOrderNumber = 61");
     }
 
     public void messageCustomer(int orderNumber, int employeeID) {
