@@ -2,6 +2,7 @@ package sample;
 
 
 import Foundation.Database;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 
 
@@ -113,9 +114,9 @@ public class Order {
      * this method do this and it has to have this
      *
      * @param deliveryPoint this does this
-     * @param employeeID    this is this
+     *
      */
-    public void createOrder(int phoneNO, int deliveryPoint, int employeeID, Label label) {
+    public void createOrder(int phoneNO, int deliveryPoint, Label label) {
 
 
         int phoneNumberCheck = 0;
@@ -140,7 +141,7 @@ public class Order {
             Database.executeStatement("USE ECO_Laundry_DB EXEC CreateOrder @deliveryPoint = " + deliveryPoint + ", @phoneNO = " + phoneNO);
 
 
-            Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + employeeID + "," + getMaxOrderNumber() + ",1)");
+            Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + getEmployeeID() + "," + getMaxOrderNumber() + ",1)");
 
             label.setText("OrderNumber: " + getMaxOrderNumber() + " Created");
 
@@ -224,7 +225,7 @@ public class Order {
         Database.executeStatement("delete from tblOrderStatus where fldOrderNumber =" + orderNumber);
     }
 
-    public void changeLog(int progressID, int orderNumber, int employeeID,Label label) {
+    public void changeLog(int progressID, int orderNumber,Label label) {
 
         int largestProgressID=0;
         int orderNumberCheckMessage=0;
@@ -315,10 +316,14 @@ public class Order {
         else if (progressID==1&& orderNumberCheckMessage!=test||largestProgressID == 1&&progressID==2||largestProgressID==2&&progressID==3||largestProgressID==3&&progressID==4) {
             Database.executeStatement("USE ECO_Laundry_DB\n" +
                     "\n" +
-                    "EXEC ChangeLog @ProgressID = " + progressID + ", @OrderNumber=" + orderNumber + ",@EmployeeID=" + employeeID);
+                    "EXEC ChangeLog @ProgressID = " + progressID + ", @OrderNumber=" + orderNumber + ",@EmployeeID=" +getEmployeeID());
         }
 
     }
+
+
+
+
 }
 
 

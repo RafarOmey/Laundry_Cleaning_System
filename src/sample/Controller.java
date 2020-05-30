@@ -72,13 +72,14 @@ public class Controller {
 
     public void generateLabel() {
         Order order = new Order();
+        order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
         order.setOrderNumber(Integer.parseInt(tfLabelOrderNumber.getText()));
         int orderNumber = order.getOrderNumber();
 
         order.generateLabel(orderNumber, Integer.parseInt(tfUN.getText()), labelSuccess);
 
-        order.changeLog(2, orderNumber, Integer.parseInt(tfUN.getText()),labelSuccess);
+        order.changeLog(2, orderNumber, labelSuccess);
 
 
     }
@@ -113,8 +114,9 @@ public class Controller {
             int deliveryPoint = Integer.parseInt(tfDeliveryPointID.getText());
 
             Order order = new Order();
-            order.changeLog(1, order.getMaxOrderNumber(), Integer.parseInt(tfUN.getText()), labelCreateOrderDelException);
-            order.createOrder(phoneNO, deliveryPoint, Integer.parseInt(tfUN.getText()), labelCreateOrderDelException);
+            order.setEmployeeID(Integer.parseInt(tfUN.getText()));
+            order.changeLog(1, order.getMaxOrderNumber(), labelCreateOrderDelException);
+            order.createOrder(phoneNO, deliveryPoint, labelCreateOrderDelException);
 
 
             tfCreateOrderPhoneNO.clear();
@@ -143,7 +145,7 @@ public class Controller {
         int orderNumber = order.getOrderNumber();
         order.confirmOrder(orderNumber, employeeID);
         labelOrderConfirmed.setText("Order Confirmed");
-        order.changeLog(3, orderNumber, employeeID,labelOrderConfirmed);
+        order.changeLog(3, orderNumber,labelOrderConfirmed);
     }
 
     public void customerSMS() {
@@ -156,7 +158,8 @@ public class Controller {
         order.messageCustomer(orderNumber, employeeID);
         labelMessage.setVisible(true);
         labelMessage.setText("Message sent!");
-        order.changeLog(4, orderNumber, employeeID,labelMessage);
+
+        order.changeLog(4, orderNumber, labelMessage);
 
     }
 
