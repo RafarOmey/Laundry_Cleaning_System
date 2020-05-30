@@ -289,18 +289,18 @@ public class Order {
             label.setText("Order number doesn't exist");
         }
         if (largestProgressNumber == 1 && orderNumber == orderNumberCheck&&progressID!=2) {
-            label.setText("Order confirmed for washing");
+            label.setText("Order status: Confirmed for washing");
 
         }
          if (largestProgressNumber == 2 && orderNumber == orderNumberCheck&&progressID!=3) {
-            label.setText("Order Being Washed");
+            label.setText("Order status: Being Washed");
 
         } else if (largestProgressNumber == 3 && orderNumber == orderNumberCheck&&progressID!=4) {
-            label.setText("Order confirmed and ready to be delivered back");
+            label.setText("Order status: Confirmed and ready to be delivered back");
 
         }
          else if (largestProgressNumber == 4 ) {
-             label.setText("Order has been delivered back");
+             label.setText("Order status: Has been delivered back");
 
          }
         else if (progressID==1||largestProgressNumber == 1&&progressID==2||largestProgressNumber==2&&progressID==3||largestProgressNumber==3&&progressID==4) {
