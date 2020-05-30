@@ -10,11 +10,11 @@ import javafx.scene.control.TextField;
 public class WashOrder {
 
 
-    public void createWashOrder(ObservableList<Cloth> itemsToBasket, TextField addClothesOrderNumber) {
+    public void createWashOrder(ObservableList<Cloth> itemsToBasket, int maxOrderNumber) {
 
 
         for (Cloth clothID : itemsToBasket) {
-            Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values(" + addClothesOrderNumber.getText() + "," + clothID.getClothID() + ")");
+            Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values(" + maxOrderNumber + "," + clothID.getClothID() + ")");
 
 
         }
@@ -22,7 +22,8 @@ public class WashOrder {
 
     }
 
-    public void insertTotalPrice(ObservableList<Cloth> itemsToBasket, TextField addClothesOrderNumber) {
+    public void insertTotalPrice(ObservableList<Cloth> itemsToBasket, int maxOrderNumber) {
+
 
 
         double totalPrice = 0;
@@ -33,7 +34,7 @@ public class WashOrder {
 
 
         }
-        Database.executeStatement("update tblOrder set fldPrice = "+ totalPrice + "  where fldOrderNumber =" + addClothesOrderNumber.getText());
+        Database.executeStatement("update tblOrder set fldPrice = "+ totalPrice + "  where fldOrderNumber =" + maxOrderNumber);
 
     }
 

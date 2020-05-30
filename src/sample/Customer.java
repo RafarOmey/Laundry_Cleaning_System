@@ -1,6 +1,7 @@
 package sample;
 
 import Foundation.Database;
+import javafx.scene.control.Label;
 
 
 public class Customer {
@@ -24,10 +25,27 @@ public class Customer {
         this.phoneNO = phoneNO;
     }
 
-    public void createCustomer(String customerName,  int phoneNO) {
+    public void createCustomer(String customerName,  int phoneNO, Label label) {
 
 
-        Database.executeStatement("insert into tblCustomer (fldName , fldPhoneNo) values('" + customerName +  "' , " + phoneNO + ")");
+        Database.selectSQL("select fldPhoneNO from tblCustomer where fldPhoneNO= " + phoneNO);
+
+        int phoneNumberCheck = 0;
+
+        String entry = Database.getData();
+        if (!entry.equals("-ND-")) {
+            phoneNumberCheck = Integer.parseInt(entry);
+        }
+
+
+        if (phoneNumberCheck == phoneNO){
+            label.setText("Customer Phone Number Already Exists!");
+
+    }
+      else {
+            Database.executeStatement("USE ECO_Laundry_DB EXEC CreateCustomer @customerName =' " + customerName + "', @CustomerPhoneNO = " + phoneNO);
+            label.setText("Customer " + customerName + " created");
+        }
 
 
 

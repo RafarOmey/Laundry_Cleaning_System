@@ -8,11 +8,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.function.UnaryOperator;
+
 
 public class Controller {
 
     @FXML
-    TextField tfUN, tfCustomerName, tfCreateOrderPhoneNO, tfDeliveryPointID, tfCustomerPhoneNO, tfAddClothesOrderNumber, tfLabelOrderNumber;
+    TextField tfUN, tfCustomerName, tfCreateOrderPhoneNO, tfDeliveryPointID, tfCustomerPhoneNO, tfLabelOrderNumber;
     @FXML
     TextField tfConfirmON, tfOrderNumberSMS;
     @FXML
@@ -22,16 +24,49 @@ public class Controller {
     @FXML
     AnchorPane paneLoginScreen, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer;
     @FXML
-    Label labelMessage,labelLoggedInAs,labelCustomerSuccess, labelOrderCreated, labelSuccess, labelOrderConfirmed;
+    Label labelMessage, labelLoggedInAs, labelCustomerCreated, labelCreateOrderDelException, labelSuccess, labelOrderConfirmed;
     @FXML
     TableView<Cloth> tableViewProducts, tableViewBasket;
 
     @FXML
     TableColumn<Cloth, String> colClothType, colClothTypeBasket;
     @FXML
-    TableColumn<Cloth, Integer> colClothID, colClothIDBasket ,colClothPrice,colClothPriceBasket;
+    TableColumn<Cloth, Integer> colClothID, colClothIDBasket, colClothPrice, colClothPriceBasket;
 
     ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
+
+
+    public void initialize() {
+
+        tfCreateOrderPhoneNO.setTextFormatter(numbersOnly());
+
+        tfUN.setTextFormatter(numbersOnly());
+        tfCustomerPhoneNO.setTextFormatter(numbersOnly());
+        tfDeliveryPointID.setTextFormatter(numbersOnly());
+        tfConfirmON.setTextFormatter(numbersOnly());
+        tfOrderNumberSMS.setTextFormatter(numbersOnly());
+        tfLabelOrderNumber.setTextFormatter(numbersOnly());
+
+    }
+
+
+    public TextFormatter numbersOnly() {
+
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String text = change.getText();
+
+            if (text.matches("[0-9]*")) {
+                return change;
+            }
+
+            return null;
+
+        };
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+
+        return textFormatter;
+    }
+
 
     public void generateLabel() {
         Order order = new Order();
@@ -39,10 +74,11 @@ public class Controller {
         order.setOrderNumber(Integer.parseInt(tfLabelOrderNumber.getText()));
         int orderNumber = order.getOrderNumber();
 
-        order.generateLabel(orderNumber, Integer.parseInt(tfUN.getText()));
+        order.generateLabel(orderNumber, Integer.parseInt(tfUN.getText()), labelSuccess);
+
         order.changeLog(2, orderNumber, Integer.parseInt(tfUN.getText()));
 
-        labelSuccess.setText("Label Generated");
+
     }
 
     public void createCustomer() {
@@ -52,39 +88,45 @@ public class Controller {
         createNewCustomer.setPhoneNO(Integer.parseInt(tfCustomerPhoneNO.getText()));
 
 
-        createNewCustomer.createCustomer(createNewCustomer.getCustomerName(), createNewCustomer.getPhoneNO());
+        createNewCustomer.createCustomer(createNewCustomer.getCustomerName(), createNewCustomer.getPhoneNO(), labelCustomerCreated);
 
 
-        labelCustomerSuccess.setText("Customer Created!");
         tfCustomerPhoneNO.clear();
         tfCustomerName.clear();
     }
 
     public void createOrder() {
-        int phoneNO = Integer.parseInt(tfCreateOrderPhoneNO.getText());
-        int deliveryPoint = Integer.parseInt(tfDeliveryPointID.getText());
+
+        if (tfCreateOrderPhoneNO.getText().equals("") || tfDeliveryPointID.getText().equals("")) {
+            labelCreateOrderDelException.setText("Fill Phone Number and DeliveryPoint");
 
 
-        Order order = new Order();
-        order.createOrder(phoneNO, deliveryPoint, Integer.parseInt(tfUN.getText()));
-
-        tfAddClothesOrderNumber.setText(String.valueOf(order.getMaxOrderNumber()));
-        order.changeLog(1, order.getMaxOrderNumber(), Integer.parseInt(tfUN.getText()));
-
-        labelOrderCreated.setText("OrderNumber Created" + order.getMaxOrderNumber());
-        tfCreateOrderPhoneNO.clear();
-        tfDeliveryPointID.clear();
+        } else {
+            int phoneNO = Integer.parseInt(tfCreateOrderPhoneNO.getText());
 
 
-        WashOrder washOrder = new WashOrder();
-        washOrder.createWashOrder(itemsToBasket, tfAddClothesOrderNumber);
+            int deliveryPoint = Integer.parseInt(tfDeliveryPointID.getText());
 
-      washOrder.insertTotalPrice(itemsToBasket, tfAddClothesOrderNumber);
+            Order order = new Order();
 
-        tableViewBasket.getItems().clear();
-        tfAddClothesOrderNumber.clear();
+            order.createOrder(phoneNO, deliveryPoint, Integer.parseInt(tfUN.getText()), labelCreateOrderDelException);
 
 
+            order.changeLog(1, order.getMaxOrderNumber(), Integer.parseInt(tfUN.getText()));
+
+
+            tfCreateOrderPhoneNO.clear();
+            tfDeliveryPointID.clear();
+
+
+            WashOrder washOrder = new WashOrder();
+            washOrder.createWashOrder(itemsToBasket, order.getMaxOrderNumber());
+
+            washOrder.insertTotalPrice(itemsToBasket, order.getMaxOrderNumber());
+
+            tableViewBasket.getItems().clear();
+
+        }
 
     }
 
@@ -123,9 +165,6 @@ public class Controller {
         itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType(), selection.getClothPrice()));
 
 
-
-
-
         colClothIDBasket.setCellValueFactory(new PropertyValueFactory<>("clothID"));
         colClothTypeBasket.setCellValueFactory(new PropertyValueFactory<>("clothType"));
         colClothPriceBasket.setCellValueFactory(new PropertyValueFactory<>("ClothPrice"));
@@ -133,6 +172,13 @@ public class Controller {
 
         tableViewBasket.setItems(itemsToBasket);
 
+
+    }
+
+    public void removeFromBasket() {
+
+        Cloth removeSelection = tableViewBasket.getSelectionModel().getSelectedItem();
+        tableViewBasket.getItems().remove(removeSelection);
     }
 
 
@@ -147,7 +193,7 @@ public class Controller {
 
             String password = pwPassword.getText();
 
-            String employeeName=login.getEmployeeName();
+            String employeeName = login.getEmployeeName();
 
             int jobID = login.getJobID();
 
@@ -156,9 +202,9 @@ public class Controller {
                 buttonGenerateLabelTab.setVisible(true);
                 buttonLogOut.setVisible(true);
                 labelLoggedInAs.setVisible(true);
-                labelLoggedInAs.setText("Logged in as "+employeeName);
+                labelLoggedInAs.setText("Logged in as " + employeeName);
 
-            } else if (jobID == 1&& password.equals(login.getPassword())) {
+            } else if (jobID == 1 && password.equals(login.getPassword())) {
                 paneLoginScreen.setVisible(false);
                 buttonCreateCustomerTab.setVisible(true);
                 buttonCreateOrderTab.setVisible(true);
@@ -166,7 +212,7 @@ public class Controller {
                 buttonConfirmOrderTab.setVisible(true);
                 buttonLogOut.setVisible(true);
                 labelLoggedInAs.setVisible(true);
-                labelLoggedInAs.setText("Logged in as "+employeeName);
+                labelLoggedInAs.setText("Logged in as " + employeeName);
 
 
             }
@@ -198,6 +244,8 @@ public class Controller {
         labelMessage.setVisible(false);
         labelLoggedInAs.setText("");
         labelLoggedInAs.setVisible(false);
+
+
     }
 
 
@@ -207,7 +255,7 @@ public class Controller {
         tfCustomerName.clear();
         tfCustomerPhoneNO.clear();
 
-        labelCustomerSuccess.setText("");
+        labelCustomerCreated.setText("");
         paneCreateCustomer.setVisible(true);
         paneCreateOrder.setVisible(false);
         paneConfirmOrder.setVisible(false);
@@ -221,7 +269,7 @@ public class Controller {
     public void showOrderTab() {
         tfDeliveryPointID.clear();
         tfCreateOrderPhoneNO.clear();
-        labelOrderCreated.setText("");
+        labelCreateOrderDelException.setText("");
         paneCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(true);
         paneConfirmOrder.setVisible(false);
@@ -238,6 +286,7 @@ public class Controller {
         colClothPrice.setCellValueFactory(new PropertyValueFactory<>("clothPrice"));
 
         tableViewProducts.setItems(clothingList);
+        tableViewBasket.getItems().clear();
 
     }
 

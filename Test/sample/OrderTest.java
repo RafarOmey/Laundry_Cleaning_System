@@ -11,7 +11,7 @@ class OrderTest {
 
         Order test = new Order();
         int maxOrderNumber = test.getMaxOrderNumber();
-        assertEquals(62,maxOrderNumber);
+        assertEquals(60,maxOrderNumber);
 
     }
 
