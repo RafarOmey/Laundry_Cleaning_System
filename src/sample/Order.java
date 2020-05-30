@@ -223,7 +223,7 @@ public class Order {
         Database.executeStatement("delete from tblOrderStatus where fldOrderNumber =" + orderNumber);
     }
 
-    public void changeLog(int progressID, int orderNumber, int employeeID) {
+    public void changeLog(int progressID, int orderNumber, int employeeID,Label label) {
 
         int largestProgressNumber=0;
         int progressNumberCheck1 = 0;
@@ -237,7 +237,7 @@ public class Order {
         Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = "+orderNumber+" and fldOrderProgressID = 1" );
 
         entry = Database.getData();
-        System.out.println(entry);
+
         if (!entry.equals("-ND-")) {
             progressNumberCheck1 = Integer.parseInt(entry);
         }
@@ -245,7 +245,7 @@ public class Order {
         Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = "+orderNumber+" and fldOrderProgressID = 2" );
 
         entry = Database.getData();
-        System.out.println(entry);
+
         if (!entry.equals("-ND-")) {
             progressNumberCheck2 = Integer.parseInt(entry);
         }
@@ -253,7 +253,7 @@ public class Order {
         Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = "+orderNumber+" and fldOrderProgressID = 3" );
 
         entry = Database.getData();
-        System.out.println(entry);
+
         if (!entry.equals("-ND-")) {
             progressNumberCheck3 = Integer.parseInt(entry);
         }
@@ -261,7 +261,7 @@ public class Order {
         Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = "+orderNumber+" and fldOrderProgressID = 4" );
 
         entry = Database.getData();
-        System.out.println(entry);
+
         if (!entry.equals("-ND-")) {
             progressNumberCheck4 = Integer.parseInt(entry);
         }
@@ -286,21 +286,21 @@ public class Order {
         }
 
         if(orderNumberCheck==0){
-            System.out.println("Order number doesn't exist");
+            label.setText("Order number doesn't exist");
         }
         if (largestProgressNumber == 1 && orderNumber == orderNumberCheck&&progressID!=2) {
-            System.out.println("Order confirmed for washing");
+            label.setText("Order confirmed for washing");
 
         }
          if (largestProgressNumber == 2 && orderNumber == orderNumberCheck&&progressID!=3) {
-            System.out.println("Order Being Washed");
+            label.setText("Order Being Washed");
 
         } else if (largestProgressNumber == 3 && orderNumber == orderNumberCheck&&progressID!=4) {
-            System.out.println("Order confirmed and ready to be delivered back");
+            label.setText("Order confirmed and ready to be delivered back");
 
         }
          else if (largestProgressNumber == 4 ) {
-             System.out.println("Order has been delivered back");
+             label.setText("Order has been delivered back");
 
          }
         else if (progressID==1||largestProgressNumber == 1&&progressID==2||largestProgressNumber==2&&progressID==3||largestProgressNumber==3&&progressID==4) {
