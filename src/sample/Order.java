@@ -34,55 +34,11 @@ public class Order {
     public void generateLabel(int orderNumber, int employeeID, Label label) {
 
 
-        int orderProgressID = 0;
-        int orderNumberCheck = 0;
 
 
-        int orderDone = 0;
-
-        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber=" + orderNumber);
-        String entry = Database.getData();
-
-        if (!entry.equals("-ND-")) {
-            orderDone = Integer.parseInt(entry);
+        String entry ="";
 
 
-        }
-
-        Database.selectSQL("select fldOrderProgressID from tblOrderStatus where fldOrderNumber =" + orderNumber);
-        entry = Database.getData();
-        if (!entry.equals("-ND-")) {
-            orderProgressID = Integer.parseInt(entry);
-
-
-        }
-
-        Database.selectSQL("select fldOrderNumber from tblWashOrder where fldOrderNumber= " + orderNumber);
-        entry = Database.getData();
-        if (!entry.equals("-ND-")) {
-            orderNumberCheck = Integer.parseInt(entry);
-
-
-        }
-
-
-        if (orderNumberCheck != orderNumber) {
-
-            label.setText("OrderNumber Doesn't Exists");
-
-
-            if (orderProgressID == 2) {
-
-                label.setText("Order already being washed");
-
-            } else if (orderProgressID == 3) {
-                label.setText("Order already confirmed");
-            } else if (orderDone == 4) {
-                label.setText("Order Already Been delivered Back");
-
-            }
-
-        } else {
 
 
             int count1 = 1;
@@ -135,7 +91,7 @@ public class Order {
             label.setText("Label Generated");
 
         }
-    }
+
 
 
     public int getOrderNumber() {
@@ -269,53 +225,92 @@ public class Order {
 
     public void changeLog(int progressID, int orderNumber, int employeeID) {
 
-        int progressNumberCheck = 0;
+        int largestProgressNumber=0;
+        int progressNumberCheck1 = 0;
+        int progressNumberCheck2 = 0;
+        int progressNumberCheck3 = 0;
+        int progressNumberCheck4 = 0;
         int orderNumberCheck = 0;
-        String entry = Database.getData();
-        do {
+        String entry = "";
 
 
-            Database.selectSQL("select MAX (fldOrderProgressID) from tblOrderHistory where fldOrderNumber =" + orderNumber);
-            if (!entry.equals("-ND-")) {
-                progressNumberCheck = Integer.parseInt(entry);
-            } else {
-                break;
-            }
+        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = "+orderNumber+" and fldOrderProgressID = 1" );
 
-            entry = Database.getData();
+        entry = Database.getData();
+        System.out.println(entry);
+        if (!entry.equals("-ND-")) {
+            progressNumberCheck1 = Integer.parseInt(entry);
+        }
 
-            Database.selectSQL("select fldOrderNumber from tblOrderHistory where fldOrderNumber = " + orderNumber);
+        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = "+orderNumber+" and fldOrderProgressID = 2" );
 
+        entry = Database.getData();
+        System.out.println(entry);
+        if (!entry.equals("-ND-")) {
+            progressNumberCheck2 = Integer.parseInt(entry);
+        }
 
-            if (!entry.equals("-ND-")) {
-                orderNumberCheck = Integer.parseInt(entry);
-            } else {
-                break;
-            }
-        } while (true);
+        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = "+orderNumber+" and fldOrderProgressID = 3" );
 
+        entry = Database.getData();
+        System.out.println(entry);
+        if (!entry.equals("-ND-")) {
+            progressNumberCheck3 = Integer.parseInt(entry);
+        }
 
-        if (progressNumberCheck == progressID && orderNumber == orderNumberCheck) {
-            String reason = "";
+        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = "+orderNumber+" and fldOrderProgressID = 4" );
 
-            Database.selectSQL("SELECT  fldStatusdescription FROM tblOrderProgress where fldOrderProgressID = " + orderNumber);
-            entry = Database.getData();
-            if (!entry.equals("-ND-")) {
-                reason = entry;
-            }
+        entry = Database.getData();
+        System.out.println(entry);
+        if (!entry.equals("-ND-")) {
+            progressNumberCheck4 = Integer.parseInt(entry);
+        }
 
+        Database.selectSQL("select fldOrderNumber from tblOrderStatus where fldOrderNumber = " + orderNumber);
 
-            System.out.println(reason);
+        entry = Database.getData();
+        if (!entry.equals("-ND-")) {
+            orderNumberCheck = Integer.parseInt(entry);
+        }
+        if (progressNumberCheck1>largestProgressNumber){
+            largestProgressNumber=progressNumberCheck1;
+        }
+        if (progressNumberCheck2>largestProgressNumber){
+            largestProgressNumber=progressNumberCheck2;
+        }
+        if (progressNumberCheck3>largestProgressNumber){
+            largestProgressNumber=progressNumberCheck3;
+        }
+        if (progressNumberCheck4>largestProgressNumber){
+            largestProgressNumber=progressNumberCheck4;
+        }
 
-        } else {
+        if(orderNumberCheck==0){
+            System.out.println("Order number doesn't exist");
+        }
+        if (largestProgressNumber == 1 && orderNumber == orderNumberCheck&&progressID!=2) {
+            System.out.println("Order confirmed for washing");
+
+        }
+         if (largestProgressNumber == 2 && orderNumber == orderNumberCheck&&progressID!=3) {
+            System.out.println("Order Being Washed");
+
+        } else if (largestProgressNumber == 3 && orderNumber == orderNumberCheck&&progressID!=4) {
+            System.out.println("Order confirmed and ready to be delivered back");
+
+        }
+         else if (largestProgressNumber == 4 ) {
+             System.out.println("Order has been delivered back");
+
+         }
+        else if (progressID==1||largestProgressNumber == 1&&progressID==2||largestProgressNumber==2&&progressID==3||largestProgressNumber==3&&progressID==4) {
             Database.executeStatement("USE ECO_Laundry_DB\n" +
                     "\n" +
                     "EXEC ChangeLog @ProgressID = " + progressID + ", @OrderNumber=" + orderNumber + ",@EmployeeID=" + employeeID);
         }
+
     }
-
 }
-
 
 
 
