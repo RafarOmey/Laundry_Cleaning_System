@@ -1,6 +1,7 @@
 package sample;
 
 
+import Foundation.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -126,6 +127,7 @@ public class Controller {
 
             tableViewBasket.getItems().clear();
 
+
         }
 
     }
@@ -219,6 +221,11 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("Input EmployeeID");
         }
+
+
+
+
+
 
 
     }

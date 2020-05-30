@@ -82,8 +82,7 @@ public class Order {
 
             }
 
-        }
-        else {
+        } else {
 
 
             int count1 = 1;
@@ -137,8 +136,6 @@ public class Order {
 
         }
     }
-
-
 
 
     public int getOrderNumber() {
@@ -272,12 +269,50 @@ public class Order {
 
     public void changeLog(int progressID, int orderNumber, int employeeID) {
 
+        int progressNumberCheck = 0;
+        int orderNumberCheck = 0;
+        String entry = Database.getData();
+        do {
 
-        Database.executeStatement("USE ECO_Laundry_DB\n" +
-                "\n" +
-                "EXEC ChangeLog @ProgressID = " + progressID + ", @OrderNumber=" + orderNumber + ",@EmployeeID=" + employeeID);
+
+            Database.selectSQL("select MAX (fldOrderProgressID) from tblOrderHistory where fldOrderNumber =" + orderNumber);
+            if (!entry.equals("-ND-")) {
+                progressNumberCheck = Integer.parseInt(entry);
+            } else {
+                break;
+            }
+
+            entry = Database.getData();
+
+            Database.selectSQL("select fldOrderNumber from tblOrderHistory where fldOrderNumber = " + orderNumber);
+
+
+            if (!entry.equals("-ND-")) {
+                orderNumberCheck = Integer.parseInt(entry);
+            } else {
+                break;
+            }
+        } while (true);
+
+
+        if (progressNumberCheck == progressID && orderNumber == orderNumberCheck) {
+            String reason = "";
+
+            Database.selectSQL("SELECT  fldStatusdescription FROM tblOrderProgress where fldOrderProgressID = " + orderNumber);
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
+                reason = entry;
+            }
+
+
+            System.out.println(reason);
+
+        } else {
+            Database.executeStatement("USE ECO_Laundry_DB\n" +
+                    "\n" +
+                    "EXEC ChangeLog @ProgressID = " + progressID + ", @OrderNumber=" + orderNumber + ",@EmployeeID=" + employeeID);
+        }
     }
-
 
 }
 
