@@ -1,7 +1,7 @@
 package sample;
 
 
-import Foundation.Database;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -56,9 +56,10 @@ public class Controller {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String text = change.getText();
 
-            if (text.matches("[0-9]*")) {
+            if (text.matches("[0-9]*" )) {
                 return change;
             }
+
 
             return null;
 
@@ -101,6 +102,9 @@ public class Controller {
         if (tfCreateOrderPhoneNO.getText().equals("") || tfDeliveryPointID.getText().equals("")) {
             labelCreateOrderDelException.setText("Fill Phone Number and DeliveryPoint");
 
+        }
+        else if (itemsToBasket.size() == 0) {
+            labelCreateOrderDelException.setText("Basket is Empty");
 
         } else {
             int phoneNO = Integer.parseInt(tfCreateOrderPhoneNO.getText());
@@ -109,11 +113,8 @@ public class Controller {
             int deliveryPoint = Integer.parseInt(tfDeliveryPointID.getText());
 
             Order order = new Order();
-
+            order.changeLog(1, order.getMaxOrderNumber(), Integer.parseInt(tfUN.getText()), labelCreateOrderDelException);
             order.createOrder(phoneNO, deliveryPoint, Integer.parseInt(tfUN.getText()), labelCreateOrderDelException);
-
-
-            order.changeLog(1, order.getMaxOrderNumber(), Integer.parseInt(tfUN.getText()),labelCreateOrderDelException);
 
 
             tfCreateOrderPhoneNO.clear();
@@ -126,11 +127,12 @@ public class Controller {
             washOrder.insertTotalPrice(itemsToBasket, order.getMaxOrderNumber());
 
             tableViewBasket.getItems().clear();
+        }
 
 
         }
 
-    }
+
 
 
     public void confirmOrder() {

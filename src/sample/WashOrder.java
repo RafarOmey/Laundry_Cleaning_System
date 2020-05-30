@@ -4,7 +4,7 @@ import Foundation.Database;
 
 import javafx.collections.ObservableList;
 
-import javafx.scene.control.TextField;
+
 
 
 public class WashOrder {
@@ -13,14 +13,17 @@ public class WashOrder {
     public void createWashOrder(ObservableList<Cloth> itemsToBasket, int maxOrderNumber) {
 
 
-        for (Cloth clothID : itemsToBasket) {
-            Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values(" + maxOrderNumber + "," + clothID.getClothID() + ")");
+
+            for (Cloth clothID : itemsToBasket) {
+
+                Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values(" + maxOrderNumber + "," + clothID.getClothID() + ")");
+
+            }
 
 
         }
 
 
-    }
 
     public void insertTotalPrice(ObservableList<Cloth> itemsToBasket, int maxOrderNumber) {
 

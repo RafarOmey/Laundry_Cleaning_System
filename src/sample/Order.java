@@ -135,7 +135,7 @@ public class Order {
 
         }
 
-        if (phoneNumberCheck == phoneNO && deliveryPointCheck == deliveryPoint) {
+        if (deliveryPointCheck == deliveryPoint && phoneNumberCheck == phoneNO ) {
 
             Database.executeStatement("USE ECO_Laundry_DB EXEC CreateOrder @deliveryPoint = " + deliveryPoint + ", @phoneNO = " + phoneNO);
 
@@ -162,6 +162,7 @@ public class Order {
 
         } else {
             label.setText("Wrong Delivery Point");
+
 
         }
     }
