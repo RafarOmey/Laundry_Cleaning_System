@@ -47,31 +47,33 @@ public class Controller {
         tfOrderNumberSMS.setTextFormatter(numbersOnly());
         tfLabelOrderNumber.setTextFormatter(numbersOnly());
 
-        addTextLimiter(tfCustomerPhoneNO,8);
-        addTextLimiter(tfCreateOrderPhoneNO,8);
-        addTextLimiter(tfCustomerName,49);
-
+        addTextLimiter(tfCustomerPhoneNO, 8);
+        addTextLimiter(tfCreateOrderPhoneNO, 8);
+        addTextLimiter(tfCustomerName, 49);
 
 
     }
 
     /**
-     * This Method will make sure that we won't be able to enter more than 8 digits in surden TextFields To make sure that we are restricting phone numbers bigger than 8.
-     * @param tf textField to put a limit too.
+     * This method adds limits on the size of textfields
+     *
+     * @param tf        textField to put a limit too.
      * @param maxLength put a limit on the TextFields.
      */
     private static void addTextLimiter(final TextField tf, final int maxLength) {
         tf.textProperty().addListener((ov, oldValue, newValue) -> {
+
             if (tf.getText().length() > maxLength) {
                 String s = tf.getText().substring(0, maxLength);
                 tf.setText(s);
+
             }
         });
     }
 
     /**
-     * This Method will restricts Surden TextFields to only be able to contain letters. So it won't take changes unless its a number between
-     * 0-9.
+     * This method will make the textfields using it only be able to use numbers between 0-9
+     *
      * @return The textFormatter we defined in the if statement.
      */
     private TextFormatter numbersOnly() {
@@ -164,7 +166,6 @@ public class Controller {
         }
     }
 
-
     public void confirmOrder() {
         try {
             Order order = new Order();
@@ -221,6 +222,9 @@ public class Controller {
     }
 
 
+    /**
+     * This method will work like a login screen using the anchor pane paneLoginScreen
+     */
     public void loginScreen() {
 
         try {
@@ -264,6 +268,9 @@ public class Controller {
 
     }
 
+    /**
+     * This method will log the current user out and change back to the login screen
+     */
     public void logOut() {
         tfUN.clear();
         pwPassword.clear();
@@ -292,6 +299,9 @@ public class Controller {
 
     // Switching tabs
 
+    /**
+     * This method will change to the tab Create Customer
+     */
     public void showCustomerTab() {
         tfCustomerName.clear();
         tfCustomerPhoneNO.clear();
@@ -306,7 +316,9 @@ public class Controller {
 
     }
 
-
+    /**
+     * Shows create Order tab
+     */
     public void showOrderTab() {
         tfDeliveryPointID.clear();
         tfCreateOrderPhoneNO.clear();
@@ -331,7 +343,9 @@ public class Controller {
 
     }
 
-
+    /**
+     * Shows Confirm Order tab
+     */
     public void showConfirmOrderTab() {
         tfConfirmON.clear();
 
@@ -343,6 +357,9 @@ public class Controller {
         labelOrderConfirmed.setText("");
     }
 
+    /**
+     * Shows generate label tab
+     */
     public void showLabelTab() {
         tfLabelOrderNumber.clear();
 
@@ -355,6 +372,9 @@ public class Controller {
         labelSuccess.setText("");
     }
 
+    /**
+     * Shows SMS customer tab
+     */
     public void showSMSCustomerTab() {
         tfOrderNumberSMS.clear();
         labelMessage.setText("");
@@ -366,6 +386,5 @@ public class Controller {
         paneLabel.setVisible(false);
         paneSMSCustomer.setVisible(true);
     }
-
 
 }

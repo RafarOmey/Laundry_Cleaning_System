@@ -63,7 +63,7 @@ public class Order {
         return maxOrderNumber;
     }
 
-    // Generate label method
+
 
     /**
      * This will take the OrderNumber entered and loop through the table WashOrder and generate a wash label for all of the clothes.
