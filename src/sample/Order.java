@@ -64,7 +64,6 @@ public class Order {
     }
 
 
-
     /**
      * This will take the OrderNumber entered and loop through the table WashOrder and generate a wash label for all of the clothes.
      *
@@ -79,7 +78,7 @@ public class Order {
         Database.selectSQL("select count(*) from tblWashOrder where fldOrderNumber=" + getOrderNumber() + "");
         count2 = Integer.parseInt(Database.getData());
 
-                        // These 4 variables (clothName, clothID, orderNumber2, progressIDCheck)  are pulled out of the Database so we can make washable Labels
+        // These 4 variables (clothName, clothID, orderNumber2, progressIDCheck)  are pulled out of the Database so we can make washable Labels
         String clothName;
         int clothID;
         int orderNumber2;
@@ -137,7 +136,9 @@ public class Order {
 
     }
 
-    /** We create or Order, and we validate if the customer and delivery points exists before creating.
+    /**
+     * We create or Order, and we validate if the customer and delivery points exists before creating.
+     *
      * @param label Will be used to show system message of an order if it got created or wrong information have been inputted.
      */
     public void createOrder(Label label) {
@@ -257,6 +258,7 @@ public class Order {
     /**
      * This method will execute the changelog Stored Procedure in the Database. But before it does that it will go in and validate the OrderNumber and see if it
      * is valid to be changed.
+     *
      * @param progressID
      * @param label
      */

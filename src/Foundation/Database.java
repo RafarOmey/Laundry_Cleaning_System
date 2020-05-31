@@ -43,6 +43,9 @@ public class Database {
     }
 
 
+    /**
+     * Connects to database with info gotten from db.properties
+     */
     private static void connect() {
         try {
             con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName, userName, password);
@@ -52,6 +55,9 @@ public class Database {
 
     }
 
+    /**
+     * Closes connection
+     */
     private static void disconnect() {
         try {
             con.close();
@@ -61,8 +67,11 @@ public class Database {
     }
 
 
-
-    // method for select statements
+    /**
+     * Method to execute a select statement
+     *
+     * @param statement Select statement
+     */
     public static void selectSQL(String statement) {
 
         try {
@@ -89,7 +98,11 @@ public class Database {
         }
     }
 
-    //Method to get the data from the resultset
+    /**
+     * Gets data from the resultset
+     *
+     * @return next data from resultsets or if there is no data then it returns noMoreData
+     */
     public static String getData() {
 
 
@@ -102,7 +115,11 @@ public class Database {
 
     }
 
-    // Method for resultSet to get the next value
+    /**
+     * Method to get the next value in the result set
+     *
+     * @return next value in resultset
+     */
     public static String getNextValue() {
 
 
@@ -122,7 +139,11 @@ public class Database {
         return value;
     }
 
-    // Method to execute a sql statement. Not to be used for select statements
+    /**
+     * This method is used to execute statements other than select
+     *
+     * @param statement Sql statement to execute
+     */
     public static void executeStatement(String statement) {
         try {
             if (ps != null) {
