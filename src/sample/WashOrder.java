@@ -19,8 +19,6 @@ public class WashOrder {
      */
     public void createWashOrder(ObservableList<Cloth> itemsToBasket, int maxOrderNumber) {
 
-
-
             for (Cloth clothID : itemsToBasket) {
 
                 Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values(" + maxOrderNumber + "," + clothID.getClothID() + ")");

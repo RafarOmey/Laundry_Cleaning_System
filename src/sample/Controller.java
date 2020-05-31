@@ -1,7 +1,8 @@
 package sample;
 
 
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class Controller {
     @FXML
     AnchorPane paneLoginScreen, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer;
     @FXML
-    Label labelMessage, labelLoggedInAs, labelCustomerCreated, labelCreateOrderDelException, labelSuccess, labelOrderConfirmed;
+    Label labelWrongInput, labelMessage, labelLoggedInAs, labelCustomerCreated, labelCreateOrder, labelSuccess, labelOrderConfirmed;
     @FXML
     TableView<Cloth> tableViewProducts, tableViewBasket;
 
@@ -48,15 +49,30 @@ public class Controller {
         tfOrderNumberSMS.setTextFormatter(numbersOnly());
         tfLabelOrderNumber.setTextFormatter(numbersOnly());
 
+        addTextLimiter(tfCustomerPhoneNO,8);
+        addTextLimiter(tfCreateOrderPhoneNO,8);
+      
+
+
     }
 
 
-    public TextFormatter numbersOnly() {
+    private static void addTextLimiter(final TextField tf, final int maxLength) {
+        tf.textProperty().addListener((ov, oldValue, newValue) -> {
+            if (tf.getText().length() > maxLength) {
+                String s = tf.getText().substring(0, maxLength);
+                tf.setText(s);
+            }
+        });
+    }
+
+    private TextFormatter numbersOnly() {
 
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String text = change.getText();
 
-            if (text.matches("[0-9]*" )) {
+
+            if (text.matches("[0-9]*")) {
                 return change;
             }
 
@@ -71,96 +87,104 @@ public class Controller {
 
 
     public void generateLabel() {
-        Order order = new Order();
-        order.setEmployeeID(Integer.parseInt(tfUN.getText()));
+        try {
+            Order order = new Order();
+            order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
-        order.setOrderNumber(Integer.parseInt(tfLabelOrderNumber.getText()));
-        int orderNumber = order.getOrderNumber();
+            order.setOrderNumber(Integer.parseInt(tfLabelOrderNumber.getText()));
 
-        order.generateLabel(orderNumber, Integer.parseInt(tfUN.getText()), labelSuccess);
 
-        order.changeLog(2, orderNumber, labelSuccess);
-
+            order.generateLabel(labelSuccess);
+            order.changeLog(2, labelSuccess);
+        } catch (NumberFormatException e) {
+            labelSuccess.setText("Wrong order number!");
+        }
 
     }
 
     public void createCustomer() {
 
-        Customer createNewCustomer = new Customer();
-        createNewCustomer.setCustomerName(tfCustomerName.getText());
-        createNewCustomer.setPhoneNO(Integer.parseInt(tfCustomerPhoneNO.getText()));
+        try {
+            Customer createNewCustomer = new Customer();
+            createNewCustomer.setCustomerName(tfCustomerName.getText());
+            createNewCustomer.setPhoneNO(Integer.parseInt(tfCustomerPhoneNO.getText()));
 
 
-        createNewCustomer.createCustomer(createNewCustomer.getCustomerName(), createNewCustomer.getPhoneNO(), labelCustomerCreated);
+            createNewCustomer.createCustomer(labelCustomerCreated);
 
 
-        tfCustomerPhoneNO.clear();
-        tfCustomerName.clear();
+            tfCustomerPhoneNO.clear();
+            tfCustomerName.clear();
+        } catch (NumberFormatException e) {
+            labelCustomerCreated.setText("Wrong input!");
+        }
     }
 
     public void createOrder() {
+        try {
+            if (tfCreateOrderPhoneNO.getText().equals("") || tfDeliveryPointID.getText().equals("")) {
+                labelCreateOrder.setText("Fill Phone Number and DeliveryPoint");
 
-        if (tfCreateOrderPhoneNO.getText().equals("") || tfDeliveryPointID.getText().equals("")) {
-            labelCreateOrderDelException.setText("Fill Phone Number and DeliveryPoint");
+            } else if (itemsToBasket.size() == 0) {
+                labelCreateOrder.setText("Basket is Empty");
 
+            } else {
+                Order order = new Order();
+                order.setPhoneNO(Integer.parseInt(tfCreateOrderPhoneNO.getText()));
+                order.setDeliveryPoint(Integer.parseInt(tfDeliveryPointID.getText()));
+
+
+                order.setEmployeeID(Integer.parseInt(tfUN.getText()));
+
+                order.createOrder(labelCreateOrder);
+                order.setOrderNumber(order.getMaxOrderNumber());
+                order.changeLog(1, labelCreateOrder);
+                tfCreateOrderPhoneNO.clear();
+                tfDeliveryPointID.clear();
+
+
+                WashOrder washOrder = new WashOrder();
+                washOrder.createWashOrder(itemsToBasket, order.getMaxOrderNumber());
+
+                washOrder.insertTotalPrice(itemsToBasket, order.getMaxOrderNumber());
+
+                tableViewBasket.getItems().clear();
+            }
+
+        } catch (NumberFormatException e) {
+            labelCreateOrder.setText("Wrong input!");
         }
-        else if (itemsToBasket.size() == 0) {
-            labelCreateOrderDelException.setText("Basket is Empty");
-
-        } else {
-            int phoneNO = Integer.parseInt(tfCreateOrderPhoneNO.getText());
-
-
-            int deliveryPoint = Integer.parseInt(tfDeliveryPointID.getText());
-
-            Order order = new Order();
-            order.setEmployeeID(Integer.parseInt(tfUN.getText()));
-            order.changeLog(1, order.getMaxOrderNumber(), labelCreateOrderDelException);
-            order.createOrder(phoneNO, deliveryPoint, labelCreateOrderDelException);
-
-
-            tfCreateOrderPhoneNO.clear();
-            tfDeliveryPointID.clear();
-
-
-            WashOrder washOrder = new WashOrder();
-            washOrder.createWashOrder(itemsToBasket, order.getMaxOrderNumber());
-
-            washOrder.insertTotalPrice(itemsToBasket, order.getMaxOrderNumber());
-
-            tableViewBasket.getItems().clear();
-        }
-
-
-        }
-
-
+    }
 
 
     public void confirmOrder() {
-        Order order = new Order();
-        order.setOrderNumber(Integer.parseInt(tfConfirmON.getText()));
-        order.setEmployeeID(Integer.parseInt(tfUN.getText()));
-        int employeeID = order.getEmployeeID();
-        int orderNumber = order.getOrderNumber();
-        order.confirmOrder(orderNumber, employeeID);
-        labelOrderConfirmed.setText("Order Confirmed");
-        order.changeLog(3, orderNumber,labelOrderConfirmed);
+        try {
+            Order order = new Order();
+            order.setOrderNumber(Integer.parseInt(tfConfirmON.getText()));
+            order.setEmployeeID(Integer.parseInt(tfUN.getText()));
+
+            order.confirmOrder();
+            labelOrderConfirmed.setText("Order Confirmed");
+            order.changeLog(3, labelOrderConfirmed);
+        } catch (Exception e) {
+            labelOrderConfirmed.setText("Wrong order number!");
+        }
     }
 
     public void customerSMS() {
+        try {
+            Order order = new Order();
+            order.setOrderNumber(Integer.parseInt(tfOrderNumberSMS.getText()));
+            order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
-        Order order = new Order();
-        order.setOrderNumber(Integer.parseInt(tfOrderNumberSMS.getText()));
-        order.setEmployeeID(Integer.parseInt(tfUN.getText()));
-        int employeeID = order.getEmployeeID();
-        int orderNumber = order.getOrderNumber();
-        order.messageCustomer(orderNumber, employeeID);
-        labelMessage.setVisible(true);
-        labelMessage.setText("Message sent!");
+            order.messageCustomer();
+            labelMessage.setVisible(true);
+            labelMessage.setText("Message sent!");
 
-        order.changeLog(4, orderNumber, labelMessage);
-
+            order.changeLog(4, labelMessage);
+        } catch (NumberFormatException e) {
+            labelMessage.setText("Wrong order number!");
+        }
     }
 
     public void addToBasket() {
@@ -212,6 +236,7 @@ public class Controller {
                 labelLoggedInAs.setText("Logged in as " + employeeName);
 
             } else if (jobID == 1 && password.equals(login.getPassword())) {
+                labelWrongInput.setVisible(false);
                 paneLoginScreen.setVisible(false);
                 buttonCreateCustomerTab.setVisible(true);
                 buttonCreateOrderTab.setVisible(true);
@@ -223,10 +248,10 @@ public class Controller {
 
 
             }
-        } catch (Exception e) {
-            System.out.println("Input EmployeeID");
+        } catch (NumberFormatException e) {
+            labelWrongInput.setVisible(true);
+            labelWrongInput.setText("Wrong input!");
         }
-
 
 
     }
@@ -277,7 +302,7 @@ public class Controller {
     public void showOrderTab() {
         tfDeliveryPointID.clear();
         tfCreateOrderPhoneNO.clear();
-        labelCreateOrderDelException.setText("");
+        labelCreateOrder.setText("");
         paneCreateCustomer.setVisible(false);
         paneCreateOrder.setVisible(true);
         paneConfirmOrder.setVisible(false);

@@ -14,35 +14,32 @@ public class Login {
     private int jobID;
     private String employeeName;
 
+    public void setEmployeeID(int username) {
+        this.employeeID = username;
+    }
+
     public String getEmployeeName() {
-        Database.selectSQL("select fldName from tblEmployee where fldEmployeeID="+getEmployeeID());
+        Database.selectSQL("select fldName from tblEmployee where fldEmployeeID=" + getEmployeeID());
         employeeName = Database.getData();
         return employeeName;
     }
 
     public int getJobID() {
-        Database.selectSQL("select fldJobID from tblUserLogin where fldEmployeeID="+getEmployeeID());
-        jobID= Integer.parseInt(Database.getData());
+        Database.selectSQL("select fldJobID from tblUserLogin where fldEmployeeID=" + getEmployeeID());
+        jobID = Integer.parseInt(Database.getData());
         return jobID;
     }
 
-    public int getEmployeeID() {
+    private int getEmployeeID() {
 
         return employeeID;
     }
 
-    public void setEmployeeID(int username) {
-        this.employeeID = username;
-    }
-
     public String getPassword() {
-        Database.selectSQL("select fldPassword from tblUserLogin where fldEmployeeID="+getEmployeeID());
-        password= Database.getData();
+        Database.selectSQL("select fldPassword from tblUserLogin where fldEmployeeID=" + getEmployeeID());
+        password = Database.getData();
         return password;
     }
-
-
-
 
 
 }

@@ -5,30 +5,32 @@ import javafx.scene.control.Label;
 
 
 public class Customer {
-    String customerName;
+    private String customerName;
 
-    int phoneNO;
+    private int phoneNO;
 
-    public String getCustomerName() {
-        return customerName;
+    public void setPhoneNO(int phoneNO) {
+        this.phoneNO = phoneNO;
     }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
-    public int getPhoneNO() {
+    private String getCustomerName() {
+        return customerName;
+    }
+
+
+    private int getPhoneNO() {
         return phoneNO;
     }
 
-    public void setPhoneNO(int phoneNO) {
-        this.phoneNO = phoneNO;
-    }
 
-    public void createCustomer(String customerName,  int phoneNO, Label label) {
+    public void createCustomer(Label label) {
 
 
-        Database.selectSQL("select fldPhoneNO from tblCustomer where fldPhoneNO= " + phoneNO);
+        Database.selectSQL("select fldPhoneNO from tblCustomer where fldPhoneNO= " + getPhoneNO());
 
         int phoneNumberCheck = 0;
 
@@ -38,20 +40,16 @@ public class Customer {
         }
 
 
-        if (phoneNumberCheck == phoneNO){
+        if (phoneNumberCheck == getPhoneNO()) {
             label.setText("Customer Phone Number Already Exists!");
 
-    }
-      else {
-            Database.executeStatement("USE ECO_Laundry_DB EXEC CreateCustomer @customerName =' " + customerName + "', @CustomerPhoneNO = " + phoneNO);
-            label.setText("Customer " + customerName + " created");
+        } else {
+            Database.executeStatement("USE ECO_Laundry_DB EXEC CreateCustomer @customerName =' " + getCustomerName() + "', @CustomerPhoneNO = " + getPhoneNO());
+            label.setText("Customer " + getCustomerName() + " created");
         }
 
 
-
     }
-
-
 
 
 }
