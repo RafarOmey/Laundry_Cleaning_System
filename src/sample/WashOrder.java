@@ -14,8 +14,7 @@ public class WashOrder {
      *
      *This method will take our obverablelist "basket" and loop through all the product there is in there and store them in the Database.
      * @param itemsToBasket Contains Cloth object.
-     * @param maxOrderNumber This will go in from the Database and check the OrderNumber that was just
-     *                       created with the products to store the Wash order to the correct Ordernumber
+     * @param maxOrderNumber will get The Ordernumber we just created from Database.
      */
     public void createWashOrder(ObservableList<Cloth> itemsToBasket, int maxOrderNumber) {
 
@@ -30,9 +29,10 @@ public class WashOrder {
 
 
     /**
-     *
-     * @param itemsToBasket
-     * @param maxOrderNumber
+     * InsertTotalPrice will get our ObservableList "itemsToBasket" and calculate the total amount the customer has to pay, and then go into the Order table in database and update
+     * fldPrice.
+     * @param itemsToBasket ObservableList that contains our Cloth, from there we will get the total amount after we have looped through it.
+     * @param maxOrderNumber will get The Ordernumber we just created.
      */
     public void insertTotalPrice(ObservableList<Cloth> itemsToBasket, int maxOrderNumber) {
 

@@ -52,6 +52,9 @@ public class Order {
         return phoneNO;
     }
 
+    /**
+     * @return Will return the highest OrderNumber this will be used to create wash order, that way we get the latest ordernumber that was just created.
+     */
     public int getMaxOrderNumber() {
         Database.selectSQL("select max (fldOrderNumber) from tblOrder");
 
@@ -62,7 +65,11 @@ public class Order {
 
     // Generate label method
 
-
+    /**
+     * This will take the OrderNumber entered and loop through the table WashOrder and generate a wash label for all of the clothes.
+     *
+     * @param label is Label FX used to set a text to show status of the order, if it is going to be washed or show status.
+     */
     public void generateLabel(Label label) {
 
         String entry = "";
@@ -72,7 +79,7 @@ public class Order {
         Database.selectSQL("select count(*) from tblWashOrder where fldOrderNumber=" + getOrderNumber() + "");
         count2 = Integer.parseInt(Database.getData());
 
-
+                        // These 4 variables (clothName, clothID, orderNumber2, progressIDCheck)  are pulled out of the Database so we can make washable Labels
         String clothName;
         int clothID;
         int orderNumber2;
@@ -90,7 +97,7 @@ public class Order {
 
             Database.selectSQL(" SELECT tblClothes.fldTypeOfCloth, tblWashOrder.fldClothID, tblWashOrder.fldOrderNumber FROM tblClothes" +
                     " INNER JOIN tblWashOrder ON tblClothes.fldClothID = tblWashOrder.fldClothID where fldOrderNumber =" + getOrderNumber() + " ");
-
+            //This Do-While loop will get our 4 entries from the Database and system out print the washable Labels.
             do {
 
                 entry = Database.getData();
@@ -130,10 +137,12 @@ public class Order {
 
     }
 
-
+    /** We create or Order, and we validate if the customer and delivery points exists before creating.
+     * @param label Will be used to show system message of an order if it got created or wrong information have been inputted.
+     */
     public void createOrder(Label label) {
 
-
+        //Variables PhoneNumberCheck and DeliveryPointCheck are used to validate if the customer and delivery point exist.
         int phoneNumberCheck = 0;
         int deliveryPointCheck = 0;
 
@@ -183,13 +192,18 @@ public class Order {
         }
     }
 
-
+    /**
+     * Will Confirm the Order before the last stage of the Process so it can be delivered back to the customer. It goes into the Database and Changes the ProgressID.
+     */
     public void confirmOrder() {
         Database.executeStatement("update  tblOrderStatus set fldEmployeeID =" + getEmployeeID() + " , fldOrderProgressID = 3 where fldOrderNumber=" + getOrderNumber());
 
         Database.executeStatement("delete from tblWashOrder where fldOrderNumber = " + getOrderNumber());
     }
 
+    /**
+     * It Messages the Customer with information of the Order, and it is ready to be picked up at the delivery station it got picked up in.
+     */
     public void messageCustomer() {
         Database.selectSQL("SELECT tblCustomer.fldName,tblCustomer.fldPhoneNO,tblOrder.fldOrderNumber, tblDeliveryPoint.fldDeliveryPointName\n" +
                 "FROM ((tblOrder\n" +
@@ -240,6 +254,12 @@ public class Order {
         Database.executeStatement("delete from tblOrderStatus where fldOrderNumber =" + getOrderNumber());
     }
 
+    /**
+     * This method will execute the changelog Stored Procedure in the Database. But before it does that it will go in and validate the OrderNumber and see if it
+     * is valid to be changed.
+     * @param progressID
+     * @param label
+     */
     public void changeLog(int progressID, Label label) {
 
         int largestProgressID = 0;

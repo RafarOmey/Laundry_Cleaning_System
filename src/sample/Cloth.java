@@ -58,7 +58,6 @@ public Cloth (){
 
     /**
      * This method will loop through tbl Clothes, and add them to ObservableList
-     *
      * @return Returns all Clothings from Database
      */
     public ObservableList<Cloth> populateProductTable() {

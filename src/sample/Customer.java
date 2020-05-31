@@ -26,7 +26,11 @@ public class Customer {
         return phoneNO;
     }
 
-
+    /**
+     * This Method will Create a Customer in the Database and make sure aswell to check if customer doesn't already
+     * exists in the database.
+     * @param label This Label will be used as a confirmation Message if the customer got created or not.
+     */
     public void createCustomer(Label label) {
 
 
