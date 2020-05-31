@@ -49,23 +49,31 @@ public class Controller {
 
         addTextLimiter(tfCustomerPhoneNO,8);
         addTextLimiter(tfCreateOrderPhoneNO,8);
+        addTextLimiter(tfCustomerName,49);
 
 
 
     }
 
-
+    /**
+     * This Method will make sure that we won't be able to enter more than 8 digits in surden TextFields To make sure that we are restricting phone numbers bigger than 8.
+     * @param tf textField to put a limit too.
+     * @param maxLength put a limit on the TextFields.
+     */
     private static void addTextLimiter(final TextField tf, final int maxLength) {
         tf.textProperty().addListener((ov, oldValue, newValue) -> {
-            System.out.println();
             if (tf.getText().length() > maxLength) {
                 String s = tf.getText().substring(0, maxLength);
                 tf.setText(s);
-
             }
         });
     }
 
+    /**
+     * This Method will restricts Surden TextFields to only be able to contain letters. So it won't take changes unless its a number between
+     * 0-9.
+     * @return The textFormatter we defined in the if statement.
+     */
     private TextFormatter numbersOnly() {
 
         UnaryOperator<TextFormatter.Change> filter = change -> {
@@ -137,7 +145,7 @@ public class Controller {
                 order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
                 order.createOrder(labelCreateOrder);
-                
+
                 order.changeLog(1, labelCreateOrder);
                 tfCreateOrderPhoneNO.clear();
                 tfDeliveryPointID.clear();
