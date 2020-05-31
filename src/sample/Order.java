@@ -33,22 +33,22 @@ public class Order {
         this.orderNumber = orderNumber;
     }
 
-    private int getDeliveryPoint() {
+    public int getDeliveryPoint() {
         return deliveryPoint;
     }
 
-    private int getOrderNumber() {
+    public int getOrderNumber() {
 
 
         return orderNumber;
 
     }
 
-    private int getEmployeeID() {
+    public int getEmployeeID() {
         return employeeID;
     }
 
-    private int getPhoneNO() {
+    public int getPhoneNO() {
         return phoneNO;
     }
 
@@ -273,7 +273,7 @@ public class Order {
         int test = getMaxOrderNumber();
 
 
-        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = " + getOrderNumber() + " and fldOrderProgressID = 1");
+        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = " + getMaxOrderNumber() + " and fldOrderProgressID = 1");
 
         entry = Database.getData();
 
@@ -281,7 +281,7 @@ public class Order {
             progressIDCheck1 = Integer.parseInt(entry);
         }
 
-        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = " + getOrderNumber() + " and fldOrderProgressID = 2");
+        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = " + getMaxOrderNumber() + " and fldOrderProgressID = 2");
 
         entry = Database.getData();
 
@@ -289,7 +289,7 @@ public class Order {
             progressIDCheck2 = Integer.parseInt(entry);
         }
 
-        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = " + getOrderNumber() + " and fldOrderProgressID = 3");
+        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = " + getMaxOrderNumber() + " and fldOrderProgressID = 3");
 
         entry = Database.getData();
 
@@ -297,7 +297,7 @@ public class Order {
             progressIDCheck3 = Integer.parseInt(entry);
         }
 
-        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = " + getOrderNumber() + " and fldOrderProgressID = 4");
+        Database.selectSQL("select fldOrderProgressID from tblOrderHistory where fldOrderNumber = " + getMaxOrderNumber() + " and fldOrderProgressID = 4");
 
         entry = Database.getData();
 
@@ -305,13 +305,13 @@ public class Order {
             progressIDCheck4 = Integer.parseInt(entry);
         }
 
-        Database.selectSQL("select fldOrderNumber from tblOrderStatus where fldOrderNumber = " + getOrderNumber());
+        Database.selectSQL("select fldOrderNumber from tblOrderStatus where fldOrderNumber = " + getMaxOrderNumber());
 
         entry = Database.getData();
         if (!entry.equals("-ND-")) {
             orderIDCheck = Integer.parseInt(entry);
         }
-        Database.selectSQL("select fldOrderNumber from tblOrderHistory where fldOrderNumber = " + getOrderNumber());
+        Database.selectSQL("select fldOrderNumber from tblOrderHistory where fldOrderNumber = " + getMaxOrderNumber());
 
         entry = Database.getData();
         if (!entry.equals("-ND-")) {
@@ -349,7 +349,7 @@ public class Order {
         } else if (progressID == 1 && orderNumberCheckMessage != test || largestProgressID == 1 && progressID == 2 || largestProgressID == 2 && progressID == 3 || largestProgressID == 3 && progressID == 4) {
             Database.executeStatement("USE ECO_Laundry_DB\n" +
                     "\n" +
-                    "EXEC ChangeLog @ProgressID = " + progressID + ", @OrderNumber=" + getOrderNumber() + ",@EmployeeID=" + getEmployeeID());
+                    "EXEC ChangeLog @ProgressID = " + progressID + ", @OrderNumber=" + getMaxOrderNumber() + ",@EmployeeID=" + getEmployeeID());
         }
 
     }

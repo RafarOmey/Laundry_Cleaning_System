@@ -17,12 +17,12 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    private String getCustomerName() {
+    public String getCustomerName() {
         return customerName;
     }
 
 
-    private int getPhoneNO() {
+    public int getPhoneNO() {
         return phoneNO;
     }
 

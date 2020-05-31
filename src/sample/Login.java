@@ -38,7 +38,7 @@ public class Login {
         return jobID;
     }
 
-    private int getEmployeeID() {
+    public int getEmployeeID() {
 
         return employeeID;
     }

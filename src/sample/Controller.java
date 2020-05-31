@@ -49,7 +49,7 @@ public class Controller {
 
         addTextLimiter(tfCustomerPhoneNO,8);
         addTextLimiter(tfCreateOrderPhoneNO,8);
-      
+
 
 
     }
@@ -57,9 +57,11 @@ public class Controller {
 
     private static void addTextLimiter(final TextField tf, final int maxLength) {
         tf.textProperty().addListener((ov, oldValue, newValue) -> {
+            System.out.println();
             if (tf.getText().length() > maxLength) {
                 String s = tf.getText().substring(0, maxLength);
                 tf.setText(s);
+
             }
         });
     }
@@ -135,7 +137,7 @@ public class Controller {
                 order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
                 order.createOrder(labelCreateOrder);
-                order.setOrderNumber(order.getMaxOrderNumber());
+                
                 order.changeLog(1, labelCreateOrder);
                 tfCreateOrderPhoneNO.clear();
                 tfDeliveryPointID.clear();
