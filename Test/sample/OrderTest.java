@@ -1,5 +1,6 @@
 package sample;
 
+import Application_Domain.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

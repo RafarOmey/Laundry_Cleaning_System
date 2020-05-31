@@ -1,4 +1,4 @@
-package sample;
+package Application_Domain;
 
 import Foundation.Database;
 
