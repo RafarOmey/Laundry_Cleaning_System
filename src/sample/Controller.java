@@ -47,9 +47,10 @@ public class Controller {
         tfOrderNumberSMS.setTextFormatter(numbersOnly());
         tfLabelOrderNumber.setTextFormatter(numbersOnly());
 
-        addTextLimiter(tfCustomerPhoneNO, 8);
-        addTextLimiter(tfCreateOrderPhoneNO, 8);
-        addTextLimiter(tfCustomerName, 49);
+        addTextLimiter(tfCustomerPhoneNO,8);
+        addTextLimiter(tfCreateOrderPhoneNO,8);
+        addTextLimiter(tfCustomerName,49);
+
 
 
     }
@@ -62,11 +63,9 @@ public class Controller {
      */
     private static void addTextLimiter(final TextField tf, final int maxLength) {
         tf.textProperty().addListener((ov, oldValue, newValue) -> {
-
             if (tf.getText().length() > maxLength) {
                 String s = tf.getText().substring(0, maxLength);
                 tf.setText(s);
-
             }
         });
     }
@@ -166,6 +165,7 @@ public class Controller {
         }
     }
 
+
     public void confirmOrder() {
         try {
             Order order = new Order();
@@ -196,6 +196,10 @@ public class Controller {
         }
     }
 
+    /**
+     * This method will get the selected items from tableViewProduct and add that to ObservableList itemsToBasket
+     * which we will use to populate tableViewBasket with the selected items.
+     */
     public void addToBasket() {
 
 
@@ -215,6 +219,9 @@ public class Controller {
 
     }
 
+    /**
+     * This method will remove items from TableviewBasket.
+     */
     public void removeFromBasket() {
 
         Cloth removeSelection = tableViewBasket.getSelectionModel().getSelectedItem();
@@ -318,6 +325,7 @@ public class Controller {
 
     /**
      * Shows create Order tab
+     * ObservableList clothingList, will be populated into tableViewProduct with Cloth Info.
      */
     public void showOrderTab() {
         tfDeliveryPointID.clear();
@@ -386,5 +394,6 @@ public class Controller {
         paneLabel.setVisible(false);
         paneSMSCustomer.setVisible(true);
     }
+
 
 }
