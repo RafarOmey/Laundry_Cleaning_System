@@ -217,7 +217,7 @@ public class Order {
         if (progressID==2) {
             Database.executeStatement("update  tblOrderStatus set fldEmployeeID =" + getEmployeeID() + " , fldOrderProgressID = 3 where fldOrderNumber=" + getOrderNumber());
 
-            Database.executeStatement("delete from tblWashOrder where fldOrderNumber = " + getOrderNumber());
+           
         }
     }
 
