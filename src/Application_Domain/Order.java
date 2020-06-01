@@ -198,7 +198,6 @@ public class Order {
         } else {
             label.setText("Wrong Delivery Point");
 
-
         }
     }
 
@@ -321,11 +320,11 @@ public class Order {
         if (orderIDCheck == 0 && orderNumberCheckMessage == 0 && getProgressID() != 1) {
             label.setText("Order number doesn't exist");
         }
-        if (largestProgressID == 1 && getOrderNumber() == orderIDCheck && getProgressID() != 2) {
+        if (largestProgressID == 1 && getOrderNumber() == orderIDCheck && getProgressID() != 2 && getProgressID() != 1) {
             label.setText("Order status: Confirmed and waiting to be washed");
 
         }
-        if (largestProgressID == 2 && getOrderNumber() == orderIDCheck && getProgressID() != 3) {
+        if (largestProgressID == 2 && getOrderNumber() == orderIDCheck && getProgressID() != 3 && getProgressID() != 1) {
             label.setText("Order status: Being Washed");
 
         } else if (largestProgressID == 3 && getOrderNumber() == orderIDCheck && getProgressID() != 4&& getProgressID()!=1) {

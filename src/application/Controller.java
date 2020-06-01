@@ -51,6 +51,7 @@ public class Controller {
         addTextLimiter(tfCustomerPhoneNO,8);
         addTextLimiter(tfCreateOrderPhoneNO,8);
         addTextLimiter(tfCustomerName,49);
+        addTextLimiter(tfDeliveryPointID, 3);
 
 
 
@@ -127,7 +128,7 @@ public class Controller {
                 tfCustomerPhoneNO.clear();
                 tfCustomerName.clear();
             } catch (NumberFormatException e) {
-                labelCustomerCreated.setText("Wrong input!");
+                labelCustomerCreated.setText("Invalid Input!");
             }
         }else {
             labelCustomerCreated.setText("Input valid phone number");
