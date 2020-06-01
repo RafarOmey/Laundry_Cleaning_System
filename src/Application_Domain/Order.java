@@ -205,9 +205,20 @@ public class Order {
      * Will Confirm the Order before the last stage of the Process so it can be delivered back to the customer. It goes into the Database and Changes the ProgressID.
      */
     public void confirmOrder() {
-        Database.executeStatement("update  tblOrderStatus set fldEmployeeID =" + getEmployeeID() + " , fldOrderProgressID = 3 where fldOrderNumber=" + getOrderNumber());
+        String entry ="";
+        int progressID=0;
+        Database.selectSQL("Select top 1 fldOrderProgressID from tblOrderStatus where fldOrderNumber= " + getOrderNumber() + "order by fldOrderProgressID desc");
 
-        Database.executeStatement("delete from tblWashOrder where fldOrderNumber = " + getOrderNumber());
+        entry = Database.getData();
+
+        if (!entry.equals("-ND-")) {
+            progressID = Integer.parseInt(entry);
+        }
+        if (progressID==2) {
+            Database.executeStatement("update  tblOrderStatus set fldEmployeeID =" + getEmployeeID() + " , fldOrderProgressID = 3 where fldOrderNumber=" + getOrderNumber());
+
+            Database.executeStatement("delete from tblWashOrder where fldOrderNumber = " + getOrderNumber());
+        }
     }
 
     /**
