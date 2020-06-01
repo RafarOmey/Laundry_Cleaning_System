@@ -100,12 +100,12 @@ public class Controller {
         try {
             Order order = new Order();
             order.setEmployeeID(Integer.parseInt(tfUN.getText()));
-
             order.setOrderNumber(Integer.parseInt(tfLabelOrderNumber.getText()));
+            order.setProgressID(2);
 
 
             order.generateLabel(labelSuccess);
-            order.changeLog(2, labelSuccess);
+            order.changeLog( labelSuccess);
         } catch (NumberFormatException e) {
             labelSuccess.setText("Wrong order number!");
         }
@@ -114,19 +114,23 @@ public class Controller {
 
     public void createCustomer() {
 
-        try {
-            Customer createNewCustomer = new Customer();
-            createNewCustomer.setCustomerName(tfCustomerName.getText());
-            createNewCustomer.setPhoneNO(Integer.parseInt(tfCustomerPhoneNO.getText()));
+        if (tfCustomerPhoneNO.getText().length()==8) {
+            try {
+                Customer createNewCustomer = new Customer();
+                createNewCustomer.setCustomerName(tfCustomerName.getText());
+                createNewCustomer.setPhoneNO(Integer.parseInt(tfCustomerPhoneNO.getText()));
 
 
-            createNewCustomer.createCustomer(labelCustomerCreated);
+                createNewCustomer.createCustomer(labelCustomerCreated);
 
 
-            tfCustomerPhoneNO.clear();
-            tfCustomerName.clear();
-        } catch (NumberFormatException e) {
-            labelCustomerCreated.setText("Wrong input!");
+                tfCustomerPhoneNO.clear();
+                tfCustomerName.clear();
+            } catch (NumberFormatException e) {
+                labelCustomerCreated.setText("Wrong input!");
+            }
+        }else {
+            labelCustomerCreated.setText("Input valid phone number");
         }
     }
 
@@ -138,17 +142,22 @@ public class Controller {
             } else if (itemsToBasket.size() == 0) {
                 labelCreateOrder.setText("Basket is Empty");
 
-            } else {
+            } else if(tfCreateOrderPhoneNO.getText().length()!=8){
+                labelCreateOrder.setText("Input valid phone number");
+            }else {
                 Order order = new Order();
                 order.setPhoneNO(Integer.parseInt(tfCreateOrderPhoneNO.getText()));
                 order.setDeliveryPoint(Integer.parseInt(tfDeliveryPointID.getText()));
+                order.setProgressID(1);
+
 
 
                 order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
                 order.createOrder(labelCreateOrder);
+                order.setOrderNumber(order.getMaxOrderNumber());
+                order.changeLog(labelCreateOrder);
 
-                order.changeLog(1, labelCreateOrder);
                 tfCreateOrderPhoneNO.clear();
                 tfDeliveryPointID.clear();
 
@@ -172,10 +181,11 @@ public class Controller {
             Order order = new Order();
             order.setOrderNumber(Integer.parseInt(tfConfirmON.getText()));
             order.setEmployeeID(Integer.parseInt(tfUN.getText()));
+            order.setProgressID(3);
 
             order.confirmOrder();
             labelOrderConfirmed.setText("Order Confirmed");
-            order.changeLog(3, labelOrderConfirmed);
+            order.changeLog( labelOrderConfirmed);
         } catch (Exception e) {
             labelOrderConfirmed.setText("Wrong order number!");
         }
@@ -186,12 +196,15 @@ public class Controller {
             Order order = new Order();
             order.setOrderNumber(Integer.parseInt(tfOrderNumberSMS.getText()));
             order.setEmployeeID(Integer.parseInt(tfUN.getText()));
+            order.setProgressID(4);
 
-            order.messageCustomer();
+
+            order.messageCustomer(labelMessage);
+            order.changeLog(labelMessage);
             labelMessage.setVisible(true);
-            labelMessage.setText("Message sent!");
 
-            order.changeLog(4, labelMessage);
+
+
         } catch (NumberFormatException e) {
             labelMessage.setText("Wrong order number!");
         }
