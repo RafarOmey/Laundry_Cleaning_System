@@ -328,10 +328,10 @@ public class Order {
         if (largestProgressID == 2 && getOrderNumber() == orderIDCheck && getProgressID() != 3) {
             label.setText("Order status: Being Washed");
 
-        } else if (largestProgressID == 3 && getOrderNumber() == orderIDCheck && getProgressID() != 4) {
+        } else if (largestProgressID == 3 && getOrderNumber() == orderIDCheck && getProgressID() != 4&& getProgressID()!=1) {
             label.setText("Order status: Confirmed and waiting to be delivered back");
 
-        } else if (largestProgressID == 4 && getOrderNumber() == orderNumberCheckMessage) {
+        } else if (largestProgressID == 4 && getOrderNumber() == orderNumberCheckMessage&&getProgressID()!=1) {
             label.setText("Order status: Has been delivered back");
 
         } else if (getProgressID() == 1 && orderNumberCheckMessage != getMaxOrderNumber() || largestProgressID == 1 && getProgressID() == 2 || largestProgressID == 2 && getProgressID() == 3 || largestProgressID == 3 && getProgressID() == 4) {
