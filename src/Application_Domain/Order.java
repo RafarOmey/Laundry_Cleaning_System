@@ -11,7 +11,6 @@ public class Order {
 
     private int orderNumber;
     private int employeeID;
-    private int maxOrderNumber;
     private int phoneNO;
     private int deliveryPoint;
     private int progressID;
@@ -67,7 +66,7 @@ public class Order {
     public int getMaxOrderNumber() {
         Database.selectSQL("select max (fldOrderNumber) from tblOrder");
 
-        maxOrderNumber = Integer.parseInt(Database.getData());
+        int maxOrderNumber = Integer.parseInt(Database.getData());
 
         return maxOrderNumber;
     }
@@ -217,7 +216,7 @@ public class Order {
         if (progressID==2) {
             Database.executeStatement("update  tblOrderStatus set fldEmployeeID =" + getEmployeeID() + " , fldOrderProgressID = 3 where fldOrderNumber=" + getOrderNumber());
 
-           
+
         }
     }
 

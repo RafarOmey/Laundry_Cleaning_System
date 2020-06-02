@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 
@@ -34,7 +35,7 @@ public class Controller {
     @FXML
     TableColumn<Cloth, Integer> colClothID, colClothIDBasket, colClothPrice, colClothPriceBasket;
 
-    ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
+    private ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
 
 
     public void initialize() {
@@ -136,6 +137,11 @@ public class Controller {
     }
 
     public void createOrder() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION); // Confirm contents of order
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Confirm contents of the order");
+        alert.setContentText("Are the clothes in the order confirmed?");
+
         try {
             if (tfCreateOrderPhoneNO.getText().equals("") || tfDeliveryPointID.getText().equals("")) {
                 labelCreateOrder.setText("Fill Phone Number and DeliveryPoint");
@@ -146,30 +152,34 @@ public class Controller {
             } else if(tfCreateOrderPhoneNO.getText().length()!=8){
                 labelCreateOrder.setText("Input valid phone number");
             }else {
-                Order order = new Order();
-                order.setPhoneNO(Integer.parseInt(tfCreateOrderPhoneNO.getText()));
-                order.setDeliveryPoint(Integer.parseInt(tfDeliveryPointID.getText()));
-                order.setProgressID(1);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get()==ButtonType.OK) {
+                    Order order = new Order();
+                    order.setPhoneNO(Integer.parseInt(tfCreateOrderPhoneNO.getText()));
+                    order.setDeliveryPoint(Integer.parseInt(tfDeliveryPointID.getText()));
+                    order.setProgressID(1);
 
 
+                    order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
-                order.setEmployeeID(Integer.parseInt(tfUN.getText()));
+                    order.createOrder(labelCreateOrder);
+                    order.setOrderNumber(order.getMaxOrderNumber());
+                    order.changeLog(labelCreateOrder);
 
-                order.createOrder(labelCreateOrder);
-                order.setOrderNumber(order.getMaxOrderNumber());
-                order.changeLog(labelCreateOrder);
-
-                tfCreateOrderPhoneNO.clear();
-                tfDeliveryPointID.clear();
+                    tfCreateOrderPhoneNO.clear();
+                    tfDeliveryPointID.clear();
 
 
-                WashOrder washOrder = new WashOrder();
-                washOrder.createWashOrder(itemsToBasket, order.getMaxOrderNumber());
+                    WashOrder washOrder = new WashOrder();
+                    washOrder.createWashOrder(itemsToBasket, order.getMaxOrderNumber());
 
-                washOrder.insertTotalPrice(itemsToBasket, order.getMaxOrderNumber());
+                    washOrder.insertTotalPrice(itemsToBasket, order.getMaxOrderNumber());
 
-                tableViewBasket.getItems().clear();
+                    tableViewBasket.getItems().clear();
+                }
             }
+
+
 
         } catch (NumberFormatException e) {
             labelCreateOrder.setText("Wrong input!");
