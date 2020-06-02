@@ -48,6 +48,7 @@ public class Controller {
         tfConfirmON.setTextFormatter(numbersOnly());
         tfOrderNumberSMS.setTextFormatter(numbersOnly());
         tfLabelOrderNumber.setTextFormatter(numbersOnly());
+        tfCustomerName.setTextFormatter(textOnly());
 
         addTextLimiter(tfCustomerPhoneNO,8);
         addTextLimiter(tfCreateOrderPhoneNO,8);
@@ -85,6 +86,25 @@ public class Controller {
 
 
             if (text.matches("[0-9]*")) {
+                return change;
+            }
+
+
+            return null;
+
+        };
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+
+        return textFormatter;
+    }
+
+    private TextFormatter textOnly() {
+
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String text = change.getText();
+
+
+            if (text.matches("[a-zA-ZæøåÆØÅ ]*")) {
                 return change;
             }
 
