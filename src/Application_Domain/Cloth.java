@@ -53,8 +53,14 @@ public Cloth (){
     }
 
 
-    ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
+    private ObservableList<Cloth> clothingList = FXCollections.observableArrayList();
+    public ObservableList<Cloth> getClothingList() {
+        return clothingList;
+    }
 
+    public void setClothingList(ObservableList<Cloth> clothingList) {
+        this.clothingList = clothingList;
+    }
 
     /**
      * This method will loop through tbl Clothes, and add them to ObservableList
@@ -93,11 +99,13 @@ public Cloth (){
                 break;
             }
 
-
             clothingList.add(new Cloth(clothID, clothType, clothPrice));
+
+            setClothingList(clothingList);
         } while (true);
 
-        return clothingList;
+        return getClothingList();
     }
+
 
 }

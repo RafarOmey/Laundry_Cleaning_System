@@ -385,7 +385,10 @@ public class Controller {
         // Populating Cloth tableview
         tableViewProducts.getItems().clear();
 
+
         ObservableList<Cloth> clothingList = new Cloth().populateProductTable();
+
+
 
         colClothID.setCellValueFactory(new PropertyValueFactory<>("clothID"));
         colClothType.setCellValueFactory(new PropertyValueFactory<>("clothType"));
