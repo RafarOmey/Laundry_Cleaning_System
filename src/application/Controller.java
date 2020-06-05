@@ -1,7 +1,7 @@
 package application;
 
 
-import Application_Domain.*;
+import Domain.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

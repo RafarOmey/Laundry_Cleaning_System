@@ -1,9 +1,9 @@
-package Application_Domain;
+package Domain;
 
 
 import Foundation.Database;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+import tech.Querries;
 
 
 public class Order {
@@ -64,11 +64,8 @@ public class Order {
      * @return Will return the highest OrderNumber this will be used to create wash order, that way we get the latest ordernumber that was just created.
      */
     public int getMaxOrderNumber() {
-        Database.selectSQL("select max (fldOrderNumber) from tblOrder");
 
-        int maxOrderNumber = Integer.parseInt(Database.getData());
-
-        return maxOrderNumber;
+        return Querries.getMAxORder();
     }
 
 
