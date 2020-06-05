@@ -16,7 +16,7 @@ public class Insert {
     /**
      * @param clothID clothID to insert into table washOrder
      */
-    public static void insertIntoWashOrder(Cloth clothID) {
+    public static void insertIntoWashOrder(int clothID) {
         Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values(" + Select.getMaxOrder() + "," + clothID + ")");
     }
 

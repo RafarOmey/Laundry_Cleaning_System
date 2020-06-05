@@ -3,8 +3,26 @@ package tech;
 import Foundation.Database;
 
 public class Select {
+public static void selectClothName (int count){
+    Database.selectSQL("Select fldTypeOfCloth from tblClothes where fldClothID= "+count);
+}
+    public static void selectDailyWashOrderAmount (int count){
 
+        Database.selectSQL("SELECT count( tblWashOrder.fldClothID) from tblWashOrder \n" +
+                "\n" +
+                "\n" +
+                "INNER JOIN tblOrderStatus ON tblWashOrder.fldOrderNumber = \n" +
+                "tblOrderStatus.fldOrderNumber where fldOrderProgressID=1 and fldClothID= "+count);
 
+    }
+
+    /**
+     * We look at the amount of different type of Clothes we have.
+     */
+    public static void selectClothCount(){
+    Database.selectSQL("select count(fldTypeOfCloth) from tblClothes");
+
+}
     /**
      * @return will return the highest orderNumber from tblOrder
      */

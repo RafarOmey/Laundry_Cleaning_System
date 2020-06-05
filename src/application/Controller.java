@@ -23,18 +23,18 @@ public class Controller {
     @FXML
     PasswordField pwPassword;
     @FXML
-    Button buttonLogOut, buttonMessageCustomerTab, buttonCreateCustomer, buttonCreateCustomerTab, buttonCreateOrderTab, buttonConfirmOrderTab, buttonGenerateLabelTab, buttonGenLabel;
+    Button buttonDailyWashOrder, buttonLogOut, buttonMessageCustomerTab, buttonCreateCustomer, buttonCreateCustomerTab, buttonCreateOrderTab, buttonConfirmOrderTab, buttonGenerateLabelTab, buttonGenLabel;
     @FXML
-    AnchorPane paneLoginScreen, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer;
+    AnchorPane paneLoginScreen, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer,panePrintDailyWashOrder;
     @FXML
     Label labelWrongInput, labelMessage, labelLoggedInAs, labelCustomerCreated, labelCreateOrder, labelSuccess, labelOrderConfirmed;
     @FXML
-    TableView<Cloth> tableViewProducts, tableViewBasket;
+    TableView<Cloth> tableViewProducts, tableViewBasket, tableViewDailyWashOrder;
 
     @FXML
-    TableColumn<Cloth, String> colClothType, colClothTypeBasket;
+    TableColumn<Cloth, String> colClothType, colClothTypeBasket, colDailyWashOrderName;
     @FXML
-    TableColumn<Cloth, Integer> colClothID, colClothIDBasket, colClothPrice, colClothPriceBasket;
+    TableColumn<Cloth, Integer> colClothID, colClothIDBasket, colClothPrice, colClothPriceBasket, colDailyWashOrderAmount;
 
     private ObservableList<Cloth> itemsToBasket = FXCollections.observableArrayList();
 
@@ -191,9 +191,9 @@ public class Controller {
 
 
                     WashOrder washOrder = new WashOrder();
-                    washOrder.createWashOrder(itemsToBasket, Select.getMaxOrder());
+                    washOrder.createWashOrder(itemsToBasket);
 
-                    washOrder.insertTotalPrice(itemsToBasket, Select.getMaxOrder());
+                    washOrder.insertTotalPrice(itemsToBasket);
 
                     tableViewBasket.getItems().clear();
                 }
@@ -271,6 +271,19 @@ public class Controller {
         tableViewBasket.getItems().remove(removeSelection);
     }
 
+    public void showDailyWashOrder() {
+        colDailyWashOrderName.setCellValueFactory(new PropertyValueFactory<>("ClothType"));
+        colDailyWashOrderAmount.setCellValueFactory(new PropertyValueFactory<>("ClothAmount"));
+        ObservableList<Cloth> dailyWashOrder = FXCollections.observableArrayList();
+        Cloth cloth = new Cloth();
+        cloth.populateDailyWashOrderTable(dailyWashOrder);
+
+
+
+        tableViewDailyWashOrder.setItems(dailyWashOrder);
+
+
+    }
 
     /**
      * This method will work like a login screen using the anchor pane paneLoginScreen
@@ -295,6 +308,7 @@ public class Controller {
                 buttonGenerateLabelTab.setVisible(true);
                 buttonLogOut.setVisible(true);
                 labelLoggedInAs.setVisible(true);
+                buttonDailyWashOrder.setVisible(true);
                 labelLoggedInAs.setText("Logged in as " + employeeName);
 
             } else if (jobID == 1 && password.equals(login.getPassword())) {
@@ -337,7 +351,8 @@ public class Controller {
         paneCreateOrder.setVisible(false);
         paneLabel.setVisible(false);
         buttonLogOut.setVisible(false);
-
+        panePrintDailyWashOrder.setVisible(false);
+        buttonDailyWashOrder.setVisible(false);
         labelMessage.setText("");
         labelMessage.setVisible(false);
         labelLoggedInAs.setText("");
@@ -362,7 +377,7 @@ public class Controller {
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);
         paneSMSCustomer.setVisible(false);
-
+        panePrintDailyWashOrder.setVisible(false);
 
     }
 
@@ -379,6 +394,7 @@ public class Controller {
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);
         paneSMSCustomer.setVisible(false);
+        panePrintDailyWashOrder.setVisible(false);
 
         // Populating Cloth tableview
         tableViewProducts.getItems().clear();
@@ -406,6 +422,7 @@ public class Controller {
         paneCreateOrder.setVisible(false);
         paneSMSCustomer.setVisible(false);
         paneLabel.setVisible(false);
+        panePrintDailyWashOrder.setVisible(false);
         paneConfirmOrder.setVisible(true);
         labelOrderConfirmed.setText("");
     }
@@ -421,6 +438,7 @@ public class Controller {
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(true);
         paneSMSCustomer.setVisible(false);
+        panePrintDailyWashOrder.setVisible(false);
 
         labelSuccess.setText("");
     }
@@ -438,6 +456,20 @@ public class Controller {
         paneConfirmOrder.setVisible(false);
         paneLabel.setVisible(false);
         paneSMSCustomer.setVisible(true);
+        panePrintDailyWashOrder.setVisible(false);
+    }
+
+    public void showPrintDailyWashOrderTab() {
+      tableViewDailyWashOrder.getItems().clear();
+
+        paneConfirmOrder.setVisible(false);
+        paneCreateCustomer.setVisible(false);
+        paneCreateOrder.setVisible(false);
+        paneLabel.setVisible(false);
+        paneSMSCustomer.setVisible(false);
+        paneLoginScreen.setVisible(false);
+        panePrintDailyWashOrder.setVisible(true);
+
     }
 
 

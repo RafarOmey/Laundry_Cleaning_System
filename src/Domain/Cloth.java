@@ -7,10 +7,28 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tech.Select;
 
-/**
- * @author
- */
+
 public class Cloth {
+
+    public Cloth(String clothType,int clothAmount ) {
+        this.clothAmount = clothAmount;
+        this.clothType = clothType;
+    }
+
+    private int clothAmount;
+
+
+    public int getClothAmount() {
+        return clothAmount;
+    }
+
+    public void setClothAmount(int clothAmount) {
+        this.clothAmount = clothAmount;
+    }
+
+    private int clothID;
+    private double clothPrice;
+    private String clothType;
 
     public int getClothID() {
         return clothID;
@@ -33,20 +51,20 @@ public class Cloth {
         return clothType;
     }
 
-    private int clothID;
-    private double clothPrice;
-    private String clothType;
-
 
     @Override
     public String toString() {
-        return "Cloth{" +
+        return "Cloth{ " +
                 "clothID=" + clothID +
                 ", clothPrice=" + clothPrice +
                 ", clothType='" + clothType + '\'' +
                 ", clothingList=" + clothingList +
                 '}';
     }
+
+
+
+
 
     public Cloth(int clothID, String clothType, double clothPrice) {
         this.clothID = clothID;
@@ -112,4 +130,48 @@ public class Cloth {
     }
 
 
+    /**
+     * This will get the daily WashOrder which has the progress ID 1
+     * @param dailyWashOrder Observable list will store our information about the Daily WashOrder.
+     */
+    public void populateDailyWashOrderTable(ObservableList<Cloth> dailyWashOrder) {
+        String clothName;
+        int clothAmount;
+        String entry="";
+        int count=0;
+
+        Select.selectClothCount();
+        int clothes= Integer.parseInt(Database.getData());
+
+        for ( count = 1; count < clothes ; count++) {
+
+            Select.selectDailyWashOrderAmount(count);
+
+
+                entry = Database.getData();
+                if (!entry.equals("-ND-")) {
+                    clothAmount = Integer.parseInt(entry);
+                } else {
+                    break;
+                }
+
+               Select.selectClothName(count);
+
+                entry = Database.getData();
+                if (!entry.equals("-ND-")) {
+                    clothName = entry;
+                } else {
+                    break;
+                }
+
+                dailyWashOrder.add(new Cloth(clothName,clothAmount ));
+
+
+
+
+        }
+
+
+    }
 }
+
