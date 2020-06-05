@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import tech.Select;
 
 import java.util.Optional;
 import java.util.function.UnaryOperator;
@@ -50,11 +51,10 @@ public class Controller {
         tfLabelOrderNumber.setTextFormatter(numbersOnly());
         tfCustomerName.setTextFormatter(textOnly());
 
-        addTextLimiter(tfCustomerPhoneNO,8);
-        addTextLimiter(tfCreateOrderPhoneNO,8);
-        addTextLimiter(tfCustomerName,49);
+        addTextLimiter(tfCustomerPhoneNO, 8);
+        addTextLimiter(tfCreateOrderPhoneNO, 8);
+        addTextLimiter(tfCustomerName, 49);
         addTextLimiter(tfDeliveryPointID, 3);
-
 
 
     }
@@ -127,7 +127,7 @@ public class Controller {
 
 
             order.generateLabel(labelSuccess);
-            order.changeLog( labelSuccess);
+            order.changeLog(labelSuccess);
         } catch (NumberFormatException e) {
             labelSuccess.setText("Wrong order number!");
         }
@@ -136,7 +136,7 @@ public class Controller {
 
     public void createCustomer() {
 
-        if (tfCustomerPhoneNO.getText().length()==8) {
+        if (tfCustomerPhoneNO.getText().length() == 8) {
             try {
                 Customer createNewCustomer = new Customer();
                 createNewCustomer.setCustomerName(tfCustomerName.getText());
@@ -151,7 +151,7 @@ public class Controller {
             } catch (NumberFormatException e) {
                 labelCustomerCreated.setText("Invalid Input!");
             }
-        }else {
+        } else {
             labelCustomerCreated.setText("Input valid phone number");
         }
     }
@@ -169,11 +169,11 @@ public class Controller {
             } else if (itemsToBasket.size() == 0) {
                 labelCreateOrder.setText("Basket is Empty");
 
-            } else if(tfCreateOrderPhoneNO.getText().length()!=8){
+            } else if (tfCreateOrderPhoneNO.getText().length() != 8) {
                 labelCreateOrder.setText("Input valid phone number");
-            }else {
+            } else {
                 Optional<ButtonType> result = alert.showAndWait();
-                if (result.get()==ButtonType.OK) {
+                if (result.get() == ButtonType.OK) {
                     Order order = new Order();
                     order.setPhoneNO(Integer.parseInt(tfCreateOrderPhoneNO.getText()));
                     order.setDeliveryPoint(Integer.parseInt(tfDeliveryPointID.getText()));
@@ -183,7 +183,7 @@ public class Controller {
                     order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
                     order.createOrder(labelCreateOrder);
-                    order.setOrderNumber(order.getMaxOrderNumber());
+                    order.setOrderNumber(Select.getMaxOrder());
                     order.changeLog(labelCreateOrder);
 
                     tfCreateOrderPhoneNO.clear();
@@ -191,14 +191,13 @@ public class Controller {
 
 
                     WashOrder washOrder = new WashOrder();
-                    washOrder.createWashOrder(itemsToBasket, order.getMaxOrderNumber());
+                    washOrder.createWashOrder(itemsToBasket, Select.getMaxOrder());
 
-                    washOrder.insertTotalPrice(itemsToBasket, order.getMaxOrderNumber());
+                    washOrder.insertTotalPrice(itemsToBasket, Select.getMaxOrder());
 
                     tableViewBasket.getItems().clear();
                 }
             }
-
 
 
         } catch (NumberFormatException e) {
@@ -216,7 +215,7 @@ public class Controller {
 
             order.confirmOrder();
             labelOrderConfirmed.setText("Order Confirmed");
-            order.changeLog( labelOrderConfirmed);
+            order.changeLog(labelOrderConfirmed);
         } catch (Exception e) {
             labelOrderConfirmed.setText("Wrong order number!");
         }
@@ -233,7 +232,6 @@ public class Controller {
             order.messageCustomer(labelMessage);
             order.changeLog(labelMessage);
             labelMessage.setVisible(true);
-
 
 
         } catch (NumberFormatException e) {
@@ -387,7 +385,6 @@ public class Controller {
 
 
         ObservableList<Cloth> clothingList = new Cloth().populateProductTable();
-
 
 
         colClothID.setCellValueFactory(new PropertyValueFactory<>("clothID"));

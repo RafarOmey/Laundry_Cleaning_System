@@ -3,7 +3,7 @@ package Domain;
 
 import Foundation.Database;
 import javafx.scene.control.Label;
-import tech.Querries;
+import tech.*;
 
 
 public class Order {
@@ -60,14 +60,6 @@ public class Order {
         return phoneNO;
     }
 
-    /**
-     * @return Will return the highest OrderNumber this will be used to create wash order, that way we get the latest ordernumber that was just created.
-     */
-    public int getMaxOrderNumber() {
-
-        return Querries.getMAxORder();
-    }
-
 
     /**
      * This will take the OrderNumber entered and loop through the table WashOrder and generate a wash label for all of the clothes.
@@ -80,7 +72,7 @@ public class Order {
 
         int count1 = 1;
         int count2;
-        Database.selectSQL("select count(*) from tblWashOrder where fldOrderNumber=" + getOrderNumber() + "");
+        Select.selectCountWashOrder(getOrderNumber());
         count2 = Integer.parseInt(Database.getData());
 
         // These 4 variables (clothName, clothID, orderNumber2, progressIDCheck)  are pulled out of the Database so we can make washable Labels
@@ -90,7 +82,7 @@ public class Order {
         int progressIDCheck = 0;
 
 
-        Database.selectSQL("select top 1 fldOrderProgressID from tblOrderHistory where fldOrderNumber=" + getOrderNumber() + " order by fldOrderProgressID desc");
+        Select.selectMaxProgressIDOrderHistory(getOrderNumber());
         entry = Database.getData();
 
 
@@ -99,8 +91,7 @@ public class Order {
         }
         if (progressIDCheck == 1) {
 
-            Database.selectSQL(" SELECT tblClothes.fldTypeOfCloth, tblWashOrder.fldClothID, tblWashOrder.fldOrderNumber FROM tblClothes" +
-                    " INNER JOIN tblWashOrder ON tblClothes.fldClothID = tblWashOrder.fldClothID where fldOrderNumber =" + getOrderNumber() + " ");
+            Select.selectInnerJoinTableClothesWashOrder(getOrderNumber());
             //This Do-While loop will get our 4 entries from the Database and system out print the washable Labels.
             do {
 
@@ -132,7 +123,8 @@ public class Order {
             } while (true);
 
             // Updates the order progress in the database when a label is generated
-            Database.executeStatement("update tblOrderStatus set fldOrderProgressID = 2, fldEmployeeID = " + getEmployeeID() + "where fldOrderNumber =" + getOrderNumber());
+
+            Update.updateOrderStatus(2, getEmployeeID(), getOrderNumber());
 
             label.setText("Label Generated");
 
@@ -152,14 +144,15 @@ public class Order {
         int phoneNumberCheck = 0;
         int deliveryPointCheck = 0;
 
-        Database.selectSQL("select fldPhoneNO from tblCustomer where fldPhoneNO= " + getPhoneNO());
+        Select.selectPhoneNumberCustomer(getPhoneNO());
 
         String entry = Database.getData();
         if (!entry.equals("-ND-")) {
             phoneNumberCheck = Integer.parseInt(entry);
         }
 
-        Database.selectSQL("SELECT fldDeliveryPointID FROM tblDeliveryPoint where fldDeliveryPointID =" + getDeliveryPoint());
+        Select.selectDeliveryPointID(getDeliveryPoint());
+
         entry = Database.getData();
         if (!entry.equals("-ND-")) {
             deliveryPointCheck = Integer.parseInt(entry);
@@ -168,15 +161,16 @@ public class Order {
 
         if (deliveryPointCheck == getDeliveryPoint() && phoneNumberCheck == getPhoneNO()) {
 
-            Database.executeStatement("USE ECO_Laundry_DB EXEC CreateOrder @deliveryPoint = " + getDeliveryPoint() + ", @phoneNO = " + getPhoneNO());
+            StoredP.storedCreateOrder(getDeliveryPoint(), getPhoneNO());
 
 
-            Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + getEmployeeID() + "," + getMaxOrderNumber() + ",1)");
-
-            label.setText("OrderNumber: " + getMaxOrderNumber() + " Created");
+            Insert.insertToOrderStatus(getEmployeeID());
 
 
-            Database.selectSQL("select fldName from tblCustomer where fldPhoneNO =  " + getPhoneNO());
+            label.setText("OrderNumber: " + Select.getMaxOrder() + " Created");
+
+
+            Select.selectCustomerName(getPhoneNO());
 
             String customerName = "";
             entry = Database.getData();
@@ -185,7 +179,7 @@ public class Order {
 
             }
             System.out.println("*Sending message to " + getPhoneNO() + "*" + "\n Hello " + customerName + "! \n Your Order Has Been Created! " +
-                    "\n OrderNumber: " + getMaxOrderNumber() + "\n Best regards Eco Solutions ");
+                    "\n OrderNumber: " + Select.getMaxOrder() + "\n Best regards Eco Solutions ");
 
         } else if (getPhoneNO() != phoneNumberCheck) {
             label.setText("Customer Not in the System");
@@ -201,17 +195,18 @@ public class Order {
      * Will Confirm the Order before the last stage of the Process so it can be delivered back to the customer. It goes into the Database and Changes the ProgressID.
      */
     public void confirmOrder() {
-        String entry ="";
-        int progressID=0;
-        Database.selectSQL("Select top 1 fldOrderProgressID from tblOrderStatus where fldOrderNumber= " + getOrderNumber() + "order by fldOrderProgressID desc");
+        String entry = "";
+        int progressID = 0;
+
+        Select.selectMaxProgressIDOrderStatus(getOrderNumber());
 
         entry = Database.getData();
 
         if (!entry.equals("-ND-")) {
             progressID = Integer.parseInt(entry);
         }
-        if (progressID==2) {
-            Database.executeStatement("update  tblOrderStatus set fldEmployeeID =" + getEmployeeID() + " , fldOrderProgressID = 3 where fldOrderNumber=" + getOrderNumber());
+        if (progressID == 2) {
+            Update.updateOrderStatus(3, getEmployeeID(), getOrderNumber());
 
 
         }
@@ -229,7 +224,7 @@ public class Order {
         String entry;
         int progressID = 0;
 
-        Database.selectSQL("Select top 1 fldOrderProgressID from tblOrderStatus where fldOrderNumber= " + getOrderNumber() + "order by fldOrderProgressID desc");
+        Select.selectMaxProgressIDOrderStatus(getOrderNumber());
 
         entry = Database.getData();
 
@@ -239,10 +234,7 @@ public class Order {
         if (progressID == 3) {
 
 
-            Database.selectSQL("SELECT tblCustomer.fldName,tblCustomer.fldPhoneNO,tblOrder.fldOrderNumber, tblDeliveryPoint.fldDeliveryPointName\n" +
-                    "FROM ((tblOrder\n" +
-                    "INNER JOIN tblCustomer ON tblOrder.fldPhoneNO = tblCustomer.fldPhoneNO)\n" +
-                    "INNER JOIN tblDeliveryPoint ON tblOrder.fldDeliveryPointID = tblDeliveryPoint.fldDeliveryPointID) where tblOrder.fldOrderNumber=" + getOrderNumber() + ";");
+            Select.selectInnerJoinCustomerOrderDeliveryPoint(getOrderNumber());
 
 
             do {
@@ -279,9 +271,10 @@ public class Order {
 
             } while (true);
 
-            Database.executeStatement("Update tblOrderStatus set fldOrderProgressID=4,fldEmployeeID=" + getEmployeeID() + " where fldOrderNumber=" + getEmployeeID());
+            Update.updateOrderStatus(4, getEmployeeID(), getOrderNumber());
 
-            Database.executeStatement("delete from tblOrderStatus where fldOrderNumber =" + getOrderNumber());
+            Delete.deleteFromOrderStatus(getOrderNumber());
+
             label.setText("Message sent!");
         }
 
@@ -301,7 +294,7 @@ public class Order {
         String entry = "";
 
 
-        Database.selectSQL("select top 1 fldOrderProgressID from tblOrderHistory where fldOrderNumber=" + getOrderNumber() + " order by fldOrderProgressID desc");
+        Select.selectMaxProgressIDOrderHistory(getOrderNumber());
 
         entry = Database.getData();
 
@@ -310,13 +303,13 @@ public class Order {
         }
 
 
-        Database.selectSQL("select fldOrderNumber from tblOrderStatus where fldOrderNumber = " + getOrderNumber());
+        Select.selectOrderFromOrderStatus(getOrderNumber());
 
         entry = Database.getData();
         if (!entry.equals("-ND-")) {
             orderIDCheck = Integer.parseInt(entry);
         }
-        Database.selectSQL("select fldOrderNumber from tblOrderHistory where fldOrderNumber = " + getOrderNumber());
+        Select.selectOrderFromOrderHistory(getOrderNumber());
 
         entry = Database.getData();
         if (!entry.equals("-ND-")) {
@@ -334,16 +327,15 @@ public class Order {
         if (largestProgressID == 2 && getOrderNumber() == orderIDCheck && getProgressID() != 3 && getProgressID() != 1) {
             label.setText("Order status: Being Washed");
 
-        } else if (largestProgressID == 3 && getOrderNumber() == orderIDCheck && getProgressID() != 4&& getProgressID()!=1) {
+        } else if (largestProgressID == 3 && getOrderNumber() == orderIDCheck && getProgressID() != 4 && getProgressID() != 1) {
             label.setText("Order status: Confirmed and waiting to be delivered back");
 
-        } else if (largestProgressID == 4 && getOrderNumber() == orderNumberCheckMessage&&getProgressID()!=1) {
+        } else if (largestProgressID == 4 && getOrderNumber() == orderNumberCheckMessage && getProgressID() != 1) {
             label.setText("Order status: Has been delivered back");
 
-        } else if (getProgressID() == 1 && orderNumberCheckMessage != getMaxOrderNumber() || largestProgressID == 1 && getProgressID() == 2 || largestProgressID == 2 && getProgressID() == 3 || largestProgressID == 3 && getProgressID() == 4) {
-            Database.executeStatement("USE ECO_Laundry_DB\n" +
-                    "\n" +
-                    "EXEC ChangeLog @ProgressID = " + getProgressID() + ", @OrderNumber=" + getOrderNumber() + ",@EmployeeID=" + getEmployeeID());
+        } else if (getProgressID() == 1 && orderNumberCheckMessage != Select.getMaxOrder() || largestProgressID == 1 && getProgressID() == 2 || largestProgressID == 2 && getProgressID() == 3 || largestProgressID == 3 && getProgressID() == 4) {
+
+            StoredP.storedChangeLog(getProgressID(), getOrderNumber(), getEmployeeID());
         }
 
     }

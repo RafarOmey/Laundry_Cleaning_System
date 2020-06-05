@@ -2,6 +2,8 @@ package Domain;
 
 import Foundation.Database;
 import javafx.scene.control.Label;
+import tech.Select;
+import tech.StoredP;
 
 
 public class Customer {
@@ -35,7 +37,7 @@ public class Customer {
     public void createCustomer(Label label) {
 
 
-        Database.selectSQL("select fldPhoneNO from tblCustomer where fldPhoneNO= " + getPhoneNO());
+        Select.selectPhoneNumberCustomer(getPhoneNO());
 
         int phoneNumberCheck = 0;
 
@@ -49,7 +51,7 @@ public class Customer {
             label.setText("Customer Phone Number Already Exists!");
 
         } else {
-            Database.executeStatement("USE ECO_Laundry_DB EXEC CreateCustomer @customerName =' " + getCustomerName() + "', @CustomerPhoneNO = " + getPhoneNO());
+            StoredP.storedCreateCustomer(getCustomerName(), getPhoneNO());
             label.setText("Customer " + getCustomerName() + " created");
         }
 

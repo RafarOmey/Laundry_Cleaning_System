@@ -1,8 +1,8 @@
 package Domain;
 
-import Foundation.Database;
-
 import javafx.collections.ObservableList;
+import tech.Insert;
+import tech.Update;
 
 
 public class WashOrder {
@@ -17,8 +17,7 @@ public class WashOrder {
 
         for (Cloth clothID : itemsToBasket) {
 
-            Database.executeStatement("insert into tblWashOrder (fldOrderNumber, fldClothID) values(" + maxOrderNumber + "," + clothID.getClothID() + ")");
-
+            Insert.insertIntoWashOrder(clothID);
         }
 
 
@@ -43,8 +42,7 @@ public class WashOrder {
 
 
         }
-        Database.executeStatement("update tblOrder set fldPrice = " + totalPrice + "  where fldOrderNumber =" + maxOrderNumber);
-
+        Update.updatePriceTblOrder(totalPrice);
     }
 
 

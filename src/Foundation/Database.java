@@ -15,10 +15,10 @@ public class Database {
     private static String userName;
     private static String password;
     private static PreparedStatement ps;
-    public static int numberOfColumns;
-    public static int currentColumnNumber = 1;
-    public static ResultSet rs;
-    public static String value;
+    private static int numberOfColumns;
+    private static int currentColumnNumber = 1;
+    private static ResultSet rs;
+    private static String value;
     public static final String noMoreData = "-ND-";
     private static boolean moreData = false;
 
