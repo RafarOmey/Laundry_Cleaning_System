@@ -180,6 +180,8 @@ public class Order {
             }
             System.out.println("*Sending message to " + getPhoneNO() + "*" + "\n Hello " + customerName + "! \n Your Order Has Been Created! " +
                     "\n OrderNumber: " + Select.getMaxOrder() + "\n Best regards Eco Solutions ");
+            setOrderNumber(Select.getMaxOrder());
+
 
         } else if (getPhoneNO() != phoneNumberCheck) {
             label.setText("Customer Not in the System");
