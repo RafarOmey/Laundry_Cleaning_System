@@ -144,6 +144,7 @@ public class Order {
         int phoneNumberCheck = 0;
         int deliveryPointCheck = 0;
 
+
         Select.selectPhoneNumberCustomer(getPhoneNO());
 
         String entry = Database.getData();
@@ -158,6 +159,7 @@ public class Order {
             deliveryPointCheck = Integer.parseInt(entry);
 
         }
+
 
         if (deliveryPointCheck == getDeliveryPoint() && phoneNumberCheck == getPhoneNO()) {
 
@@ -178,7 +180,8 @@ public class Order {
                 customerName = (entry);
 
             }
-            System.out.println("*Sending message to " + getPhoneNO() + "*" + "\n Hello " + customerName + "! \n Your Order Has Been Created! " +
+            System.out.println("*Sending message to " + getPhoneNO() + "*" + "\n Hello " + customerName + "! \n" +
+                    " Your Order Has Been Created! " +
                     "\n OrderNumber: " + Select.getMaxOrder() + "\n Best regards Eco Solutions ");
 
         } else if (getPhoneNO() != phoneNumberCheck) {
@@ -288,6 +291,7 @@ public class Order {
      */
     public void changeLog(Label label) {
 
+        setOrderNumber(Select.getMaxOrder());
         int largestProgressID = 0;
         int orderNumberCheckMessage = 0;
         int orderIDCheck = 0;

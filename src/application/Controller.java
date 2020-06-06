@@ -183,7 +183,7 @@ public class Controller {
                     order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
                     order.createOrder(labelCreateOrder);
-                    order.setOrderNumber(Select.getMaxOrder());
+
                     order.changeLog(labelCreateOrder);
 
                     tfCreateOrderPhoneNO.clear();
