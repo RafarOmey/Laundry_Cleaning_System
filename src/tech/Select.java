@@ -3,16 +3,16 @@ package tech;
 import Foundation.Database;
 
 public class Select {
-public static void selectClothName (int count){
-    Database.selectSQL("Select fldTypeOfCloth from tblClothes where fldClothID= "+count);
-}
+    public static void selectClothName (int count){
+        Database.selectSQL("Select fldTypeOfCloth from tblClothes where fldClothID= "+count);
+    }
     public static void selectDailyWashOrderAmount (int count){
 
         Database.selectSQL("SELECT count( tblWashOrder.fldClothID) from tblWashOrder        INNER JOIN tblOrderHistory " +
                 " ON tblWashOrder.fldOrderNumber = \n" +
                 "                tblOrderHistory.fldOrderNumber where fldOrderProgressID=1 and fldClothID= " +count +
-                "\t\t\t\tand  fldDate >=(select (convert(VARCHAR(10),getdate(),101))) AND fldDate <= (select (convert(VARCHAR(10)" +
-                ",getdate()+1,101))) ");
+                "\t\t\t\t and  fldDate >=(select (convert(VARCHAR(10),getdate(),103))) AND fldDate <= (select (convert(VARCHAR(10)" +
+                ",getdate()+1,103))) ");
 
     }
 
@@ -20,9 +20,9 @@ public static void selectClothName (int count){
      * We look at the amount of different type of Clothes we have.
      */
     public static void selectClothCount(){
-    Database.selectSQL("select count(fldTypeOfCloth) from tblClothes");
+        Database.selectSQL("select count(fldTypeOfCloth) from tblClothes");
 
-}
+    }
     /**
      * @return will return the highest orderNumber from tblOrder
      */

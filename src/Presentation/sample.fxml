@@ -87,26 +87,26 @@
                 <Button fx:id="buttonGenerateLabelTab" layoutX="302.0" mnemonicParsing="false" onAction="#showLabelTab" prefHeight="78.0" prefWidth="310.0" text="Generate Label" visible="false" />
                 <Button fx:id="buttonCreateOrderTab" layoutX="155.0" mnemonicParsing="false" onAction="#showOrderTab" prefHeight="78.0" prefWidth="155.0" text="Create Order" visible="false" />
                 <Button fx:id="buttonConfirmOrderTab" layoutX="306.0" mnemonicParsing="false" onAction="#showConfirmOrderTab" prefHeight="78.0" prefWidth="150.0" text="Confirm Order" visible="false" />
-            <Button fx:id="buttonDailyWashOrder" mnemonicParsing="false" onAction="#showPrintDailyWashOrderTab" prefHeight="78.0" prefWidth="310.0" text="Daily WashOrder" visible="false" />
+                <Button fx:id="buttonDailyWashOrder" mnemonicParsing="false" onAction="#showPrintDailyWashOrderTab" prefHeight="78.0" prefWidth="310.0" text="Daily WashOrder" visible="false" />
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="panePrintDailyWashOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
-         <children>
-            <TableView fx:id="tableViewDailyWashOrder" layoutX="85.0" layoutY="14.0" prefHeight="308.0" prefWidth="232.0">
-              <columns>
-                <TableColumn fx:id="colDailyWashOrderName" prefWidth="120.0" text="Cloth Name" />
-                <TableColumn fx:id="colDailyWashOrderAmount" prefWidth="111.0" text="Amount" />
-              </columns>
-            </TableView>
-            <Button layoutX="118.0" layoutY="330.0" mnemonicParsing="false" onAction="#showDailyWashOrder" prefHeight="31.0" prefWidth="166.0" text="Show Daily WashOrder" />
-         </children>
-      </AnchorPane>
+        <AnchorPane fx:id="panePrintDailyWashOrder" layoutY="78.0" prefHeight="402.0" prefWidth="612.0" visible="false">
+            <children>
+                <TableView fx:id="tableViewDailyWashOrder" layoutX="85.0" layoutY="14.0" prefHeight="308.0" prefWidth="250.0">
+                    <columns>
+                        <TableColumn fx:id="colDailyWashOrderName" prefWidth="120.0" text="Cloth Name" />
+                        <TableColumn fx:id="colDailyWashOrderAmount" prefWidth="111.0" text="Amount" />
+                    </columns>
+                </TableView>
+                <Button layoutX="118.0" layoutY="330.0" mnemonicParsing="false" onAction="#showDailyWashOrder" prefHeight="31.0" prefWidth="166.0" text="Show Daily WashOrder" />
+            </children>
+        </AnchorPane>
         <AnchorPane fx:id="paneLoginScreen" prefHeight="480.0" prefWidth="612.0">
             <children>
                 <TextField fx:id="tfUN" layoutX="210.0" layoutY="160.0" promptText="EmployeeID" />
                 <PasswordField fx:id="pwPassword" layoutX="210.0" layoutY="210.0" promptText="Password" />
                 <Button layoutX="330.0" layoutY="250.0" mnemonicParsing="false" onAction="#loginScreen" text="Login" />
-            <Label fx:id="labelWrongInput" layoutX="210.0" layoutY="119.0" prefHeight="31.0" prefWidth="103.0" visible="false" />
+                <Label fx:id="labelWrongInput" layoutX="210.0" layoutY="119.0" prefHeight="31.0" prefWidth="103.0" visible="false" />
             </children>
         </AnchorPane>
         <Button fx:id="buttonLogOut" layoutX="529.0" layoutY="430.0" mnemonicParsing="false" onAction="#logOut" prefHeight="0.0" prefWidth="72.0" text="Log out" visible="false" />

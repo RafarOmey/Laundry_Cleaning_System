@@ -178,6 +178,7 @@ public class Controller {
                     order.setPhoneNO(Integer.parseInt(tfCreateOrderPhoneNO.getText()));
                     order.setDeliveryPoint(Integer.parseInt(tfDeliveryPointID.getText()));
                     order.setProgressID(1);
+                    order.setOrderNumber(order.getMaxOrderNumber());
 
 
                     order.setEmployeeID(Integer.parseInt(tfUN.getText()));

@@ -148,23 +148,24 @@ public class Cloth {
             Select.selectDailyWashOrderAmount(count);
 
 
-                entry = Database.getData();
-                if (!entry.equals("-ND-")) {
-                    clothAmount = Integer.parseInt(entry);
-                } else {
-                    break;
-                }
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
+                clothAmount = Integer.parseInt(entry);
+            } else {
+                break;
+            }
 
-               Select.selectClothName(count);
+            Select.selectClothName(count);
 
-                entry = Database.getData();
-                if (!entry.equals("-ND-")) {
-                    clothName = entry;
-                } else {
-                    break;
-                }
+            entry = Database.getData();
+            if (!entry.equals("-ND-")) {
+                clothName = entry;
+            } else {
+                break;
+            }
 
-                dailyWashOrder.add(new Cloth(clothName,clothAmount ));
+            dailyWashOrder.add(new Cloth(clothName,clothAmount ));
+
 
 
 

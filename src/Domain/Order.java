@@ -14,6 +14,12 @@ public class Order {
     private int phoneNO;
     private int deliveryPoint;
     private int progressID;
+    
+
+    public int getMaxOrderNumber() {
+        return Select.getMaxOrder();
+    }
+
 
 
     public void setProgressID(int progressID) {
@@ -293,7 +299,7 @@ public class Order {
      */
     public void changeLog(Label label) {
 
-        setOrderNumber(Select.getMaxOrder());
+
         int largestProgressID = 0;
         int orderNumberCheckMessage = 0;
         int orderIDCheck = 0;

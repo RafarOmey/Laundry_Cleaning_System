@@ -9,7 +9,9 @@ public class Insert {
      * @param employeeID employeeID who is logged in
      */
     public static void insertToOrderStatus(int employeeID) {
-        Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, fldOrderProgressID) values (" + employeeID + "," + Select.getMaxOrder() + ",1)");
+        Database.executeStatement("insert into tblOrderStatus (fldEmployeeID, fldOrderNumber, " +
+                "fldOrderProgressID) values " +
+                "(" + employeeID + "," + Select.getMaxOrder() + ",1)");
 
     }
 
