@@ -14,12 +14,11 @@ public class Order {
     private int phoneNO;
     private int deliveryPoint;
     private int progressID;
-    
+
 
     public int getMaxOrderNumber() {
         return Select.getMaxOrder();
     }
-
 
 
     public void setProgressID(int progressID) {
@@ -333,7 +332,7 @@ public class Order {
             label.setText("Order number doesn't exist");
         }
         if (largestProgressID == 1 && getOrderNumber() == orderIDCheck && getProgressID() != 2 && getProgressID() != 1) {
-            label.setText("Order status: Confirmed and waiting to be washed");
+            label.setText("Order status: Created and waiting to be washed");
 
         }
         if (largestProgressID == 2 && getOrderNumber() == orderIDCheck && getProgressID() != 3 && getProgressID() != 1) {
@@ -345,7 +344,9 @@ public class Order {
         } else if (largestProgressID == 4 && getOrderNumber() == orderNumberCheckMessage && getProgressID() != 1) {
             label.setText("Order status: Has been delivered back");
 
-        } else if (getProgressID() == 1 && orderNumberCheckMessage != Select.getMaxOrder() || largestProgressID == 1 && getProgressID() == 2 || largestProgressID == 2 && getProgressID() == 3 || largestProgressID == 3 && getProgressID() == 4) {
+        } else if (getProgressID() == 1 && orderNumberCheckMessage != Select.getMaxOrder() ||
+                largestProgressID == 1 && getProgressID() == 2 || largestProgressID == 2 && getProgressID() == 3 ||
+                largestProgressID == 3 && getProgressID() == 4) {
 
             StoredP.storedChangeLog(getProgressID(), getOrderNumber(), getEmployeeID());
         }
