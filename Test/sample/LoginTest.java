@@ -10,7 +10,7 @@ class LoginTest {
     @Test
     public void testJobID(){
         Login login = new Login();
-        login.setEmployeeID(1);
+        login.setEmployeeID(3);
         int jobID=login.getJobID();
         assertEquals(1,jobID);
     }

@@ -326,7 +326,7 @@ public class Controller {
             }
         } catch (NumberFormatException e) {
             labelWrongInput.setVisible(true);
-            labelWrongInput.setText("Wrong input!");
+            labelWrongInput.setText("wrong input!");
         }
 
 

@@ -13,7 +13,7 @@ class OrderTest {
 
         Order test = new Order();
         int maxOrderNumber = Select.getMaxOrder();
-        assertEquals(60,maxOrderNumber);
+        assertEquals(3266,maxOrderNumber);
 
     }
 

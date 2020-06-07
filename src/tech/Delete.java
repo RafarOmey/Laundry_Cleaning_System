@@ -11,7 +11,7 @@ public class Delete {
      */
     public static void deleteFromOrderStatus(int orderNumber) {
         Database.executeStatement("delete from tblOrderStatus where fldOrderNumber =" + orderNumber);
-
+    
     }
 
 

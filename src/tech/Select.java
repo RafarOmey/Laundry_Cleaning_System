@@ -8,11 +8,11 @@ public static void selectClothName (int count){
 }
     public static void selectDailyWashOrderAmount (int count){
 
-        Database.selectSQL("SELECT count( tblWashOrder.fldClothID) from tblWashOrder \n" +
-                "\n" +
-                "\n" +
-                "INNER JOIN tblOrderStatus ON tblWashOrder.fldOrderNumber = \n" +
-                "tblOrderStatus.fldOrderNumber where fldOrderProgressID=1 and fldClothID= "+count);
+        Database.selectSQL("SELECT count( tblWashOrder.fldClothID) from tblWashOrder        INNER JOIN tblOrderHistory " +
+                " ON tblWashOrder.fldOrderNumber = \n" +
+                "                tblOrderHistory.fldOrderNumber where fldOrderProgressID=1 and fldClothID= " +count +
+                "\t\t\t\tand  fldDate >=(select (convert(VARCHAR(10),getdate(),101))) AND fldDate <= (select (convert(VARCHAR(10)" +
+                ",getdate()+1,101))) ");
 
     }
 
