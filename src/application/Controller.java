@@ -25,7 +25,7 @@ public class Controller {
     @FXML
     Button buttonDailyWashOrder, buttonLogOut, buttonMessageCustomerTab, buttonCreateCustomer, buttonCreateCustomerTab, buttonCreateOrderTab, buttonConfirmOrderTab, buttonGenerateLabelTab, buttonGenLabel;
     @FXML
-    AnchorPane paneLoginScreen, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer,panePrintDailyWashOrder;
+    AnchorPane paneLoginScreen, paneCreateCustomer, paneCreateOrder, paneConfirmOrder, paneLabel, paneSMSCustomer, panePrintDailyWashOrder;
     @FXML
     Label labelWrongInput, labelMessage, labelLoggedInAs, labelCustomerCreated, labelCreateOrder, labelSuccess, labelOrderConfirmed;
     @FXML
@@ -245,20 +245,23 @@ public class Controller {
      */
     public void addToBasket() {
 
-
-        Cloth selection = tableViewProducts.getSelectionModel().getSelectedItem();
-
-
-        itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType(), selection.getClothPrice()));
+        try {
+            Cloth selection = tableViewProducts.getSelectionModel().getSelectedItem();
 
 
-        colClothIDBasket.setCellValueFactory(new PropertyValueFactory<>("clothID"));
-        colClothTypeBasket.setCellValueFactory(new PropertyValueFactory<>("clothType"));
-        colClothPriceBasket.setCellValueFactory(new PropertyValueFactory<>("ClothPrice"));
+            itemsToBasket.addAll(new Cloth(selection.getClothID(), selection.getClothType(), selection.getClothPrice()));
 
 
-        tableViewBasket.setItems(itemsToBasket);
+            colClothIDBasket.setCellValueFactory(new PropertyValueFactory<>("clothID"));
+            colClothTypeBasket.setCellValueFactory(new PropertyValueFactory<>("clothType"));
+            colClothPriceBasket.setCellValueFactory(new PropertyValueFactory<>("ClothPrice"));
 
+
+            tableViewBasket.setItems(itemsToBasket);
+        } catch (NullPointerException e) {
+
+
+        }
 
     }
 
@@ -277,7 +280,6 @@ public class Controller {
         ObservableList<Cloth> dailyWashOrder = FXCollections.observableArrayList();
         Cloth cloth = new Cloth();
         cloth.populateDailyWashOrderTable(dailyWashOrder);
-
 
 
         tableViewDailyWashOrder.setItems(dailyWashOrder);
@@ -460,7 +462,7 @@ public class Controller {
     }
 
     public void showPrintDailyWashOrderTab() {
-      tableViewDailyWashOrder.getItems().clear();
+        tableViewDailyWashOrder.getItems().clear();
 
         paneConfirmOrder.setVisible(false);
         paneCreateCustomer.setVisible(false);
