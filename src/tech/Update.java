@@ -7,7 +7,7 @@ public class Update {
      * @param totalPrice price to add to table order
      */
     public static void updatePriceTblOrder(double totalPrice) {
-        Database.executeStatement("update tblOrder set fldTotalPricePayed = " + totalPrice + "  where fldOrderNumber =" + Select.getMaxOrder());
+        Database.executeStatement("update tblOrder set fldTotalPricePaid = " + totalPrice + "  where fldOrderNumber =" + Select.getMaxOrder());
 
     }
 

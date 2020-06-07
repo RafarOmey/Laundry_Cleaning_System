@@ -216,9 +216,9 @@ public class Order {
         if (!entry.equals("-ND-")) {
             progressID = Integer.parseInt(entry);
         }
+
         if (progressID == 2) {
             Update.updateOrderStatus(3, getEmployeeID(), getOrderNumber());
-
 
         }
     }
