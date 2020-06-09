@@ -146,12 +146,12 @@ public class Cloth {
     public void populateDailyWashOrderTable(ObservableList<Cloth> dailyWashOrder) {
 
         String entry = "";
-        int count = 0;
+
 
         Select.selectClothCount();
         int clothes = Integer.parseInt(Database.getData());
 
-        for (count = 1; count < clothes; count++) {
+        for (int count = 1; count < clothes; count++) {
 
             Select.selectDailyWashOrderAmount(count);
 
