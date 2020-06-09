@@ -9,33 +9,14 @@ import tech.Select;
 
 
 public class Cloth {
-
-    public Cloth(String clothType,int clothAmount ) {
-        this.clothAmount = clothAmount;
-        this.clothType = clothType;
-    }
-
-    private int clothAmount;
-
-
-    public int getClothAmount() {
-        return clothAmount;
-    }
-
-    public void setClothAmount(int clothAmount) {
-        this.clothAmount = clothAmount;
-    }
-
     private int clothID;
     private double clothPrice;
     private String clothType;
+    private int clothAmount;
 
-    public int getClothID() {
-        return clothID;
-    }
-
-    public double getClothPrice() {
-        return clothPrice;
+    public Cloth(String clothType, int clothAmount) {
+        this.clothAmount = clothAmount;
+        this.clothType = clothType;
     }
 
     public Cloth() {
@@ -46,6 +27,37 @@ public class Cloth {
         this.clothID = clothID;
         this.clothPrice = clothPrice;
     }
+
+    public void setClothID(int clothID) {
+        this.clothID = clothID;
+    }
+
+    public void setClothPrice(double clothPrice) {
+        this.clothPrice = clothPrice;
+    }
+
+    public void setClothType(String clothType) {
+        this.clothType = clothType;
+    }
+
+
+    public int getClothAmount() {
+        return clothAmount;
+    }
+
+    public void setClothAmount(int clothAmount) {
+        this.clothAmount = clothAmount;
+    }
+
+
+    public int getClothID() {
+        return clothID;
+    }
+
+    public double getClothPrice() {
+        return clothPrice;
+    }
+
 
     public String getClothType() {
         return clothType;
@@ -61,9 +73,6 @@ public class Cloth {
                 ", clothingList=" + clothingList +
                 '}';
     }
-
-
-
 
 
     public Cloth(int clothID, String clothType, double clothPrice) {
@@ -91,10 +100,9 @@ public class Cloth {
     public ObservableList<Cloth> populateProductTable() {
         Select.selectTableClothes();
 
-        int clothID;
-        String clothType;
+
         String entry;
-        double clothPrice;
+
 
 
         do {
@@ -102,26 +110,26 @@ public class Cloth {
 
             entry = Database.getData();
             if (!entry.equals("-ND-")) {
-                clothID = Integer.parseInt(entry);
+                setClothID(Integer.parseInt(entry));
             } else {
                 break;
             }
 
             entry = Database.getData();
             if (!entry.equals("-ND-")) {
-                clothType = entry;
+                setClothType(entry);
             } else {
                 break;
             }
 
             entry = Database.getData();
             if (!entry.equals("-ND-")) {
-                clothPrice = Double.parseDouble(entry);
+                setClothPrice(Double.parseDouble(entry));
             } else {
                 break;
             }
 
-            clothingList.add(new Cloth(clothID, clothType, clothPrice));
+            clothingList.add(new Cloth(getClothID(), getClothType(), getClothPrice()));
 
             setClothingList(clothingList);
         } while (true);
@@ -132,25 +140,25 @@ public class Cloth {
 
     /**
      * This will get the daily WashOrder which has the progress ID 1
+     *
      * @param dailyWashOrder Observable list will store our information about the Daily WashOrder.
      */
     public void populateDailyWashOrderTable(ObservableList<Cloth> dailyWashOrder) {
-        String clothName;
-        int clothAmount;
-        String entry="";
-        int count=0;
+
+        String entry = "";
+        int count = 0;
 
         Select.selectClothCount();
-        int clothes= Integer.parseInt(Database.getData());
+        int clothes = Integer.parseInt(Database.getData());
 
-        for ( count = 1; count < clothes ; count++) {
+        for (count = 1; count < clothes; count++) {
 
             Select.selectDailyWashOrderAmount(count);
 
 
             entry = Database.getData();
             if (!entry.equals("-ND-")) {
-                clothAmount = Integer.parseInt(entry);
+               setClothAmount(Integer.parseInt(entry));
             } else {
                 break;
             }
@@ -159,16 +167,12 @@ public class Cloth {
 
             entry = Database.getData();
             if (!entry.equals("-ND-")) {
-                clothName = entry;
+               setClothType(entry);
             } else {
                 break;
             }
 
-            dailyWashOrder.add(new Cloth(clothName,clothAmount ));
-
-
-
-
+            dailyWashOrder.add(new Cloth(getClothType(), getClothAmount()));
 
 
         }

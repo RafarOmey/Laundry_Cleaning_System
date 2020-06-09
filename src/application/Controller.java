@@ -279,6 +279,7 @@ public class Controller {
         colDailyWashOrderName.setCellValueFactory(new PropertyValueFactory<>("ClothType"));
         colDailyWashOrderAmount.setCellValueFactory(new PropertyValueFactory<>("ClothAmount"));
         ObservableList<Cloth> dailyWashOrder = FXCollections.observableArrayList();
+
         Cloth cloth = new Cloth();
         cloth.populateDailyWashOrderTable(dailyWashOrder);
 
