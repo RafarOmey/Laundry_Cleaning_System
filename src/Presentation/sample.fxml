@@ -98,7 +98,7 @@
                         <TableColumn fx:id="colDailyWashOrderAmount" prefWidth="111.0" text="Amount" />
                     </columns>
                 </TableView>
-                <Button layoutX="118.0" layoutY="330.0" mnemonicParsing="false" onAction="#showDailyWashOrder" prefHeight="31.0" prefWidth="166.0" text="Show Daily WashOrder" />
+                <Button layoutX="118.0" layoutY="330.0" mnemonicParsing="false" onAction="#showDailyWashOrder" prefHeight="31.0" prefWidth="225.0" text="Show Daily WashOrder" />
             </children>
         </AnchorPane>
         <AnchorPane fx:id="paneLoginScreen" prefHeight="480.0" prefWidth="612.0">

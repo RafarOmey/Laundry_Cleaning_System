@@ -151,7 +151,7 @@ public class Cloth {
         Select.selectClothCount();
         int clothes = Integer.parseInt(Database.getData());
 
-        for (int count = 1; count < clothes; count++) {
+        for (int count = 1; count <= clothes; count++) {
 
             Select.selectDailyWashOrderAmount(count);
 
