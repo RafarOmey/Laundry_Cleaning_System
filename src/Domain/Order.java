@@ -86,10 +86,8 @@ public class Order {
         int orderNumber2;
         int progressIDCheck = 0;
 
-
         Select.selectMaxProgressIDOrderHistory(getOrderNumber());
         entry = Database.getData();
-
 
         if (!entry.equals("-ND-")) {
             progressIDCheck = Integer.parseInt(entry);
@@ -120,10 +118,8 @@ public class Order {
                     break;
                 }
 
-
                 System.out.println(count1 + " of " + count2 + " clothID= " + clothID + " OrderNumber= " + orderNumber2 + " ClothName= " + clothName);
                 count1++;
-
 
             } while (true);
 

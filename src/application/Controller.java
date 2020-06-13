@@ -87,6 +87,7 @@ public class Controller {
 
             if (text.matches("[0-9]*")) {
                 return change;
+
             }
 
 
@@ -178,12 +179,12 @@ public class Controller {
                     order.setPhoneNO(Integer.parseInt(tfCreateOrderPhoneNO.getText()));
                     order.setDeliveryPoint(Integer.parseInt(tfDeliveryPointID.getText()));
                     order.setProgressID(1);
-                    order.setOrderNumber(order.getMaxOrderNumber());
 
 
                     order.setEmployeeID(Integer.parseInt(tfUN.getText()));
 
                     order.createOrder(labelCreateOrder);
+                    order.setOrderNumber(order.getMaxOrderNumber());
 
                     order.changeLog(labelCreateOrder);
 
@@ -276,14 +277,14 @@ public class Controller {
     }
 
     public void showDailyWashOrder() {
-        colDailyWashOrderName.setCellValueFactory(new PropertyValueFactory<>("ClothType"));
-        colDailyWashOrderAmount.setCellValueFactory(new PropertyValueFactory<>("ClothAmount"));
+
         ObservableList<Cloth> dailyWashOrder = FXCollections.observableArrayList();
 
         Cloth cloth = new Cloth();
         cloth.populateDailyWashOrderTable(dailyWashOrder);
 
-
+        colDailyWashOrderName.setCellValueFactory(new PropertyValueFactory<>("ClothType"));
+        colDailyWashOrderAmount.setCellValueFactory(new PropertyValueFactory<>("ClothAmount"));
         tableViewDailyWashOrder.setItems(dailyWashOrder);
 
 

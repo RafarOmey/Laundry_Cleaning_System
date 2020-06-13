@@ -10,9 +10,9 @@ public class Select {
 
         Database.selectSQL("SELECT count( tblWashOrder.fldClothID) from tblWashOrder        INNER JOIN tblOrderHistory " +
                 " ON tblWashOrder.fldOrderNumber = \n" +
-                "                tblOrderHistory.fldOrderNumber where fldOrderProgressID=1 and fldClothID= " +count +
-                "\t\t\t\t and  fldDate >=(select (convert(VARCHAR(10),getdate(),103))) AND fldDate <= (select (convert(VARCHAR(10)" +
-                ",getdate()+1,103))) ");
+                "                tblOrderHistory.fldOrderNumber where fldOrderProgressID=1 and fldClothID= " + count +
+                "\t\t\t\t and  fldDate >=(select (convert(VARCHAR(10),getdate(),101))) AND fldDate <= (select (convert(VARCHAR(10)" +
+                ",getdate()+1,101))) ");
 
     }
 
@@ -40,6 +40,7 @@ public class Select {
     /**
      * @param employeeID employeeID to get the name for
      */
+    
     public static void selectEmployeeName(int employeeID) {
         Database.selectSQL("select fldName from tblEmployee where fldEmployeeID=" + employeeID);
 

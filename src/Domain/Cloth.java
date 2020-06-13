@@ -148,7 +148,7 @@ public class Cloth {
         String entry = "";
 
 
-        Select.selectClothCount();
+        Select. selectClothCount();
         int clothes = Integer.parseInt(Database.getData());
 
         for (int count = 1; count <= clothes; count++) {
